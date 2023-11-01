@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg411"
+   sodipodi:docname="ellipsis.svg"
+   xml:space="preserve"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs415" /><sodipodi:namedview
+     id="namedview413"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.1407621"
+     inkscape:cx="165.67871"
+     inkscape:cy="248.51807"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg411" /><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+     d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
+     id="path409"
+     style="fill:#ffffff;fill-opacity:1" /><path
+     d="m 111.42373,255.94189 a 38.031005,38.031005 0 1 1 76.062,0 38.031005,38.031005 0 1 1 -76.062,0 z m 108.66,0 a 38.031005,38.031005 0 1 1 76.06201,0 38.031005,38.031005 0 1 1 -76.06201,0 z m 146.69102,-38.031 a 38.031005,38.031005 0 1 1 0,76.06201 38.031005,38.031005 0 1 1 0,-76.06201 z"
+     id="path534"
+     style="stroke-width:0.679125;fill:#ffffff;fill-opacity:1" /></svg>

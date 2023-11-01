@@ -1,0 +1,53 @@
+{
+  "name": "ideanote",
+  "private": true,
+  "version": "0.0.0",
+  "main": "main.js",
+  "description": "A note-taking app",
+  "author": "Korange",
+  "build": {
+    "appId": "work.korange.ideanote",
+    "productName": "ideaNote",
+    "copyright": "Copyright 2023 Korange",
+    "win": {
+      "__target": "squirrel",
+      "target": "portable",
+      "icon": "./apps.ico"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron:start": "vite build && electron .",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "axios": "^1.5.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.4.1",
+    "@electron-forge/maker-deb": "^6.4.1",
+    "@electron-forge/maker-rpm": "^6.4.1",
+    "@electron-forge/maker-squirrel": "^6.4.1",
+    "@electron-forge/maker-wix": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.1",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "autoprefixer": "^10.4.15",
+    "electron": "^26.1.0",
+    "electron-wix-msi": "^5.0.0",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.5"
+  }
+}
