@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="flex max-h-screen h-screen">
+    <div class="flex max-h-screen max-w-[100vw] h-screen overflow-hidden">
       <div class="fixed left-[180px] lg:left-[200px] w-screen h-screen bg-black opacity-60 z-50" v-if="false"></div>
-      <div id="sidebar1" class="bg-[#262626] w-[180px] lg:w-[200px] h-screen select-none">
+      <div id="sidebar1" class="bg-[#262626] min-w-[180px] lg:min-w-[200px] w-[180px] lg:w-[200px] h-screen select-none overflow-x-hidden">
         <div class="bg-[#202020] hover:bg-[#1d1d1d] duration-200 h-[54px] text-white flex px-4" @click="openNotebookMenu">
           <div class="flex flex-col justify-center">
             <img :src="`${currentNotebook}/.icon.png`" alt="" class="w-[27px] h-[27px] bg-white rounded-full">
@@ -120,11 +120,11 @@
               <font-awesome-icon icon="fa-solid fa-circle-plus" class="text-[22px] oapcity-90"/>
             </button>
             <div v-if="newNoteMenu" class=" absolute bg-[#262626] z-50 w-44 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]">
-              <div class="hover:bg-[#3f3f3f] px-4 pb-1">
+              <div class="hover:bg-[#3f3f3f] px-4 pb-1" @click="createNote('md')">
                 <font-awesome-icon icon="fa-regular fa-file-lines" class="w-6 textt-[#FFB800] text-[#ffcd42] text-[1.24rem] mr-2 mt-1 before" />
                 Markdown
               </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]" @click="createNote('plaintext')">
+              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]" @click="createNote('txt')">
                 <font-awesome-icon icon="fa-solid fa-t" class="w-6 textt-[#FFB800] text-[#628eff] text-[1.24rem] mr-2 mt-1 before" />
                 Plaintext
               </div>
@@ -156,8 +156,9 @@
 
         <div class="overflow-y-scroll max-h-[calc(100vh-54px)] overflow-x-hidden">
           <div v-for="n in notes" @click="readNote(n.name)" class="flex border-b border-b-[#ffffff15] py-3 px-5 duration-200 hover:bg-[#2b2b2b] hover:bg-[#ffffff10]" :class="{'bg-[#2b2b2b] bg-[#ffffff10]': n == opening}">
-            <font-awesome-icon v-if="((n.name).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'txt'" icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#ffcd42] text-[1.035rem] mr-2 mt-1" />
+            <font-awesome-icon v-if="((n.name).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'txt'" icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#427eff] text-[1.035rem] mr-2 mt-1" />
             <font-awesome-icon v-if="((n.name).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'png'" icon="fa-regular fa-image" class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1" />
+            <font-awesome-icon v-if="((n.name).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'md'" icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#ffcd42] text-[1.035rem] mr-2 mt-1" />
             <div>
               <button class="w-full h-full text-left">
                 <div class="text-[1.035rem]" v-if="((n.name).replace(/^.*[\\/]/, '')).match('&&&&untitled-')">New Note...</div>
@@ -193,15 +194,15 @@
           </div>
         </div>
 
-        <div class="flex justify-center h-[calc(100%-103px)]">
+        <div class="flex justify-center h-[calc(100%-103px)] overflow-hidden">
           <!--<div class="w-full max-w-[44rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white">
             <div class="font-bold text-2xl mb-1.5 border-b pb-1 border-b-white text-white"><font-awesome-icon icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#ffcd42] text-[1.24rem] mr-2 mt-1 before absolute -translate-x-6 translate-y-0.5" /><input type="text" value="Note Name" class="bg-transparent"></div>    
             <textarea id="my-text-area" class="bg-transparent w-full h-full" style="outline: none !important;"></textarea>
           </div>-->
-          <div class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white">
+          <div class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white overflow-y-scroll">
           <div class="font-bold text-2xl mb-1.5 border-b pb-1 border-b-white text-white"><!--<font-awesome-icon icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#ffcd42] text-[1.24rem] mr-2 mt-1 before absolute -translate-x-6 translate-y-0.5" />-->
             <input type="text" @change="changeNoteTitle" v-model="notetitle" style="outline: none !important; caret-color: white;" class="bg-transparent w-full" placeholder="Note Name"></div>   
-            <textarea v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'txt'" v-model="textarea" placeholder="Type something..." v-on:input="save()" class="bg-transparent w-full h-full" style="outline: none !important; caret-color: white;"></textarea>
+            <textarea v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'txt' || ((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'md'" v-model="textarea" placeholder="Type something..." v-on:input="save()" id="editor" class="bg-transparent w-full h-full" style="outline: none !important; caret-color: white;"></textarea>
             <img v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'png'" :src="opening">
           </div>
         </div>
@@ -249,14 +250,69 @@
 </template>
 
 <style>
+@import '../../node_modules/easymde/dist/easymde.min.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+  overflow: hidden;
+}
+
+.editor-toolbar{
+  background-color: #262626;
+  border: none;
+  margin-bottom: 16px;
+  margin-top: 12px;
+  padding: 0px;
+  border-radius: 9999px;
+}
+
+div.CodeMirror.cm-s-easymde.CodeMirror-wrap{
+  background-color: #1f1f1f;
+  color: white;
+  border: none;
+  padding: 0px;
+}
+
+.cm-header-1{
+  font-size: calc(1.325rem + .9vw) !important;
+}
+
+.cm-header-2{
+  font-size: calc(1.3rem + .6vw) !important;
+}
+
+.cm-strong:not(.cm-formatting){
+  text-decoration: underline; /* 下線 */
+  text-decoration-thickness: 0.5em; /* 線の太さ */
+  text-decoration-color: rgba(255, 228, 0, 0.4); /* 線の色 */
+  text-underline-offset: -0.2em; /* 線の位置。テキストに重なるようにやや上部にする */
+  text-decoration-skip-ink: none;
+}
+
+.cm-strong.cm-formatting{
+  text-decoration: underline; /* 下線 */
+  text-decoration-thickness: 0.5em; /* 線の太さ */
+  text-decoration-color: rgba(255, 228, 0, 0.9); /* 線の色 */
+  text-underline-offset: -0.2em; /* 線の位置。テキストに重なるようにやや上部にする */
+  text-decoration-skip-ink: none;
+}
+
+.cm-formatting:not(.cm-quote){
+  font-size: small;
+  opacity: 0.5;
+}
+
+.CodeMirror-cursor{
+  border-left: 1px solid #fff;
+}
 </style>
 
 <script>
 import plaintext from './Plaintext.vue'
-
+import EasyMDE from 'easymde'
 //axios.defaults.withCredentials = true;
 
 export default {
@@ -269,7 +325,7 @@ export default {
       dirs: [],
       textarea: "",
       notetitle: "",
-      opening: "/null.null",
+      opening: "/Untitled.txt",
       createFolderForm: false,
       foldertitle: "",
       notes: [],
@@ -367,8 +423,26 @@ export default {
           console.error(error)
        })
     },
-
+    save(){
+      console.log("Saving a note...")
+      window.electronAPI.saveNote(this.opening, this.textarea)
+      window.electronAPI.setCurrentNotebook(this.notebook)
+    },
     readNote(notee){
+      try{
+        if(this.easyMDE){
+        this.easyMDE.toTextArea()
+        }
+      }catch{}
+      try{
+        clearInterval(this.mdSave)
+      }catch{}
+
+      this.opening="null.txt"
+      const elements = document.querySelectorAll('.EasyMDEContainer');
+      elements.forEach((element) => {
+        element.remove();
+      });
       window.electronAPI.readFile(notee)
        .then(result => {
           this.ext = notee.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]
@@ -381,6 +455,30 @@ export default {
           
           this.textarea = result
           this.opening = notee
+
+          // Markdown
+          if(((notee).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'md'){
+            let easyMDE = new EasyMDE({
+              element: document.getElementById('editor'),
+              spellChecker: false,
+              lineWrapping: true,
+              toolbar: false,
+              status: false,
+              forceSync: true,
+              initialValue: result,
+              shortcuts: {
+                "togglePreview": null,
+                "toggleFullScreen": null,
+                "toggleSideBySide": null
+              }
+            });
+            
+            let open = this.opening
+
+            easyMDE.codemirror.on("change", () => {
+              window.electronAPI.saveNote(open, easyMDE.value())
+            });
+          }
        }).catch(error => {
           console.error(error)
        })
@@ -408,11 +506,6 @@ export default {
       window.electronAPI.setCurrentNotebook(n)
       location.reload()
     },
-    save(){
-      console.log("Saving a note...")
-      window.electronAPI.saveNote(this.opening, this.textarea)
-      window.electronAPI.setCurrentNotebook(this.notebook)
-    },
     openNotebookMenu(){
       if (this.NotebookMenu){
         this.NotebookMenu = false
@@ -431,8 +524,8 @@ export default {
           location.reload()
         })
     },
-    createNote(){
-      let noteName = `&&&&untitled-${Math.random().toString(36).slice(-8)}.txt`;
+    createNote(filetype){
+      let noteName = `&&&&untitled-${Math.random().toString(36).slice(-8)}.${filetype}`;
       console.log("Creating note to "+this.currentNotebook+"\\"+this.openingDir.replace(/^.*[\\/]/, '')+"\\"+noteName)
       //window.electronAPI.createNote(this.currentNotebook+"\\"+(this.openingDir+"\\")+noteName, "")
       window.electronAPI.createNote(`${this.currentNotebook}/${this.openingDir.replace(/^.*[\\/]/, '')}/${noteName}`, "")

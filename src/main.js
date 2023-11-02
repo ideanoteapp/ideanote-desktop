@@ -13,8 +13,10 @@ import { faCaretDown, faCode, faPlus, faScroll, faTrash, faGear, faCirclePlus, f
 /* import specific icons */
 import { faFileLines, faFilePdf, faImage, faSquareCheck} from '@fortawesome/free-regular-svg-icons'
 
+import { faMarkdown } from '@fortawesome/free-brands-svg-icons'
+
 /* add icons to the library */
-library.add(faCaretDown, faImage, faStar, faPlus, faScroll, faTrash, faGear, faCode, faFilePdf, faSquareCheck, faUpload, faFileLines, faMagnifyingGlass, faCirclePlus, faEye, faT)
+library.add(faCaretDown, faImage, faMarkdown, faStar, faPlus, faScroll, faTrash, faGear, faCode, faFilePdf, faSquareCheck, faUpload, faFileLines, faMagnifyingGlass, faCirclePlus, faEye, faT)
 
 createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)
