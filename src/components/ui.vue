@@ -202,7 +202,7 @@
           <div class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white overflow-y-scroll">
           <div class="font-bold text-2xl mb-1.5 border-b pb-1 border-b-white text-white"><!--<font-awesome-icon icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#ffcd42] text-[1.24rem] mr-2 mt-1 before absolute -translate-x-6 translate-y-0.5" />-->
             <input type="text" @change="changeNoteTitle" v-model="notetitle" style="outline: none !important; caret-color: white;" class="bg-transparent w-full" placeholder="Note Name"></div>   
-            <textarea v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'txt' || ((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'md'" v-model="textarea" placeholder="Type something..." v-on:input="save()" id="editor" class="bg-transparent w-full h-full" style="outline: none !important; caret-color: white;"></textarea>
+            <textarea v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'txt' || ((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'md'" v-model="textarea" placeholder="Type something..." v-on:input="save()" ref="editor" id="editor" class="bg-transparent w-full h-full" style="outline: none !important; caret-color: white;"></textarea>
             <img v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'png'" :src="opening">
           </div>
         </div>
@@ -429,14 +429,7 @@ export default {
       window.electronAPI.setCurrentNotebook(this.notebook)
     },
     readNote(notee){
-      try{
-        if(this.easyMDE){
-        this.easyMDE.toTextArea()
-        }
-      }catch{}
-      try{
-        clearInterval(this.mdSave)
-      }catch{}
+      this.$refs.editor.style.display = 'block'
 
       this.opening="null.txt"
       const elements = document.querySelectorAll('.EasyMDEContainer');
