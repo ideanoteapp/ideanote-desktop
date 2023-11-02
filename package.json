@@ -32,6 +32,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "axios": "^1.5.1",
     "electron-squirrel-startup": "^1.0.0",
+    "monaco-editor": "^0.44.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
@@ -44,6 +45,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^6.4.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.15",
+    "easymde": "^2.18.0",
     "electron": "^26.1.0",
     "electron-wix-msi": "^5.0.0",
     "postcss": "^8.4.29",
