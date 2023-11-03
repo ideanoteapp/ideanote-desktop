@@ -11,6 +11,12 @@ import HelloWorld from './components/HelloWorld.vue'
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#app{
+  position: absolute;
+  top: 0px;
+  width: 100vw;
+}
 </style>
 
 <script>
