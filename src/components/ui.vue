@@ -128,8 +128,8 @@
                 <font-awesome-icon icon="fa-solid fa-t" class="w-6 textt-[#FFB800] text-[#628eff] text-[1.24rem] mr-2 mt-1 before" />
                 Plaintext
               </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
-                <font-awesome-icon icon="fa-solid fa-scroll" @click="createNote('scrap')" class="w-6 textt-[#FFB800] text-[#ffd562] text-[1.24rem] mr-2 mt-1 before" />
+              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]" @click="createNote('scrap')">
+                <font-awesome-icon icon="fa-solid fa-scroll" class="w-6 textt-[#FFB800] text-[#ffd562] text-[1.24rem] mr-2 mt-1 before" />
                 Scrap
               </div>
               <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
@@ -159,6 +159,7 @@
             <font-awesome-icon v-if="((n.name).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'txt'" icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#427eff] text-[1.035rem] mr-2 mt-1" />
             <font-awesome-icon v-if="((n.name).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'png'" icon="fa-regular fa-image" class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1" />
             <font-awesome-icon v-if="((n.name).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'md'" icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#ffcd42] text-[1.035rem] mr-2 mt-1" />
+            <font-awesome-icon v-if="((n.name).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'scrap'" icon="fa-solid fa-scroll" class="textt-[#FFB800] text-[#ff9742] text-[1.035rem] mr-2 mt-1" />
             <div>
               <button class="w-full h-full text-left">
                 <div class="text-[1.035rem]" v-if="((n.name).replace(/^.*[\\/]/, '')).match('&&&&untitled-')">New Note...</div>
@@ -204,6 +205,7 @@
             <input type="text" @change="changeNoteTitle" v-model="notetitle" style="outline: none !important; caret-color: white;" class="bg-transparent w-full" placeholder="Note Name"></div>   
             <textarea v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'txt' || ((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'md'" v-model="textarea" placeholder="Type something..." v-on:input="save()" ref="editor" id="editor" class="bg-transparent w-full h-full" style="outline: none !important; caret-color: white;"></textarea>
             <img v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'png'" :src="opening">
+            <scrap v-if="((opening).replace(/^.*[\\/]/, '').match(/[^.]+$/s))[0] == 'scrap'" :text="textarea" @save="saveScrap" />
           </div>
         </div>
       </div>
@@ -311,13 +313,13 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap{
 </style>
 
 <script>
-import plaintext from './Plaintext.vue'
+import scrap from './Scrap.vue'
 import EasyMDE from 'easymde'
 //axios.defaults.withCredentials = true;
 
 export default {
   components: {
-    plaintext
+    scrap
   },
   data: () => {
     return {
@@ -428,8 +430,13 @@ export default {
       window.electronAPI.saveNote(this.opening, this.textarea)
       window.electronAPI.setCurrentNotebook(this.notebook)
     },
+    saveScrap(data){
+      console.log("Saving a scrap...")
+      window.electronAPI.saveNote(this.opening, data)
+      window.electronAPI.setCurrentNotebook(this.notebook)
+    },
     readNote(notee){
-      this.$refs.editor.style.display = 'block'
+      try{this.$refs.editor.style.display = 'block'}catch{}
 
       this.opening="null.txt"
       const elements = document.querySelectorAll('.EasyMDEContainer');
