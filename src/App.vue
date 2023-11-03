@@ -38,7 +38,16 @@ export default {
     };
   },
   mounted(){
-    
+    window.electronAPI.listNotebooks()
+      .then(result => {
+        if(result === undefined || result.length == 0){
+          this.main = false;
+          this.welcome_ = true;
+        }else{
+          this.main = true
+          this.welcome_ = false;
+        }
+      })
   },
   methods:{
     openmain(){
