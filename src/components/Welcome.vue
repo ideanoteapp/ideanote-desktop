@@ -11,14 +11,6 @@
 
         <div class="text-center" v-if="slide==1">
           <img src="../../icon.png" class="inline mb-3">
-          <div class="text-2xl font-bold">ideaNoteを使うのは初めてですか？</div>
-          <p>もしideaNoteを初めて使用する場合は、<br>「新しく始める」をクリックしてください、</p>
-          <div><button class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4" @click="slide=2">新しく始める</button></div>
-          <div><button class="py-2 px-3 rounded-lg bg-[#4e4e4e] w-64 mt-4">既存のノートブックを読み込む</button></div>
-        </div>
-
-        <div class="text-center" v-if="slide==2">
-          <img src="../../icon.png" class="inline mb-3">
           <div class="text-2xl font-bold">ノートブックに名前を付けてください</div>
           <p class="opacity-90 text-sm">ノートブックは、ノートを保管する場所を表します。</p>
           <input type="text" v-model="notebookname" class="bg-[#3f3f3f] py-2 px-3 rounded-lg text-center mt-4 w-64" placeholder="Notebook">
@@ -42,6 +34,15 @@ export default {
       slide: 0,
       notebookname: ""
     };
+  },
+  mounted: () => {
+    window.electronAPI.listNotebooks()
+        .then(result => {
+          this.notebooks = result
+          this.NotebookMenu = true
+        })
+
+    
   },
   methods:{
     go(){
