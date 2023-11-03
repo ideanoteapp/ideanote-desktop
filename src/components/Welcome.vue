@@ -45,7 +45,6 @@ export default {
   },
   methods:{
     go(){
-      window.electronAPI.setCurrentNotebook(this.notebookname)
       window.electronAPI.newNotebook(this.notebookname)
         .then(result => {
           this.$emit('end', "");

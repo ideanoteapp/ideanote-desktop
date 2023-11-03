@@ -172,6 +172,9 @@ app.whenReady().then(() => {
   ipcMain.handle('newnotebook', (event, message) => {
     newNotebook(message)
     fs.copyFileSync("./app.ico", path.join(path.join(app.getPath('userData'), "notebooks", message, ".icon.png")))
+    data = fs.readFileSync(path.join(userDataPath, 'currentnotebook.txt'),{encoding: "utf-8"})
+    data = path.join(app.getPath('userData'), "notebooks", message)
+    fs.writeFileSync(path.join(userDataPath, 'currentnotebook.txt'), data,{encoding: "utf-8"})
   }) 
   
   ipcMain.handle('createnote', (event, message) => {
@@ -247,6 +250,13 @@ app.whenReady().then(() => {
   ipcMain.handle('setcurrentnotebook', (event, message) => {
     data = fs.readFileSync(path.join(userDataPath, 'currentnotebook.txt'),{encoding: "utf-8"})
     data = message
+    fs.writeFileSync(path.join(userDataPath, 'currentnotebook.txt'), data,{encoding: "utf-8"})
+  })
+
+  ipcMain.handle('setcurrentnotebookwp', (event, message) => {
+    data = fs.readFileSync(path.join(userDataPath, 'currentnotebook.txt'),{encoding: "utf-8"})
+    data = (userDataPath+"/notebooks")+ "/"+ message
+    console.log("!!!!!" + data)
     fs.writeFileSync(path.join(userDataPath, 'currentnotebook.txt'), data,{encoding: "utf-8"})
   })
 
