@@ -1,4 +1,31 @@
 <template>
+
+  <div class="fixed bottom-4 left-4 bg-[#3f3f3f] text-white rounded-md sm:shadow-md text-sm sm:hover:bottom-5 duration-200">
+        <button @click="this.sendFeedbackForm = true" class="px-3 py-2 flex">
+            <img src="../../icon.png" class="w-6 h-6 mr-1.5">
+            <span class="flex flex-col justify-center">
+                意見を送る
+            </span>
+          </button>
+    </div>
+
+    <div class="fixed top-0 left-0 w-screen h-screen bg-[#00000070] flex justify-center" v-if="sendFeedbackForm">
+    <div class="flex flex-col justify-center">
+      <div class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white">
+        <form class="text-center" @submit.prevent="sendFeedback">
+          <div class="text-2xl font-bold pb-2.5">意見を送る</div>
+          <input type="text" v-model="feedback" class="bg-[#262626] rounded-lg py-2 px-3 text-white text-center w-64" placeholder="例）〇〇という機能が欲しい">
+
+          <div><button class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4" @click="sendFeedback">送信</button></div>
+        </form>
+      </div>
+    </div>
+</div>
+
+
+<!---------->
+
+
   <div>
     <div class="flex max-h-screen max-w-[100vw] h-screen overflow-hidden">
       <div class="fixed left-[180px] lg:left-[200px] w-screen h-screen bg-black opacity-60 z-50" v-if="false"></div>
@@ -32,10 +59,10 @@
                 </button>
               </div>
               
-              <div class="hover:bg-[#3f3f3f] px-4 pb-1 text-white z-50">
+              <!--<div class="hover:bg-[#3f3f3f] px-4 pb-1 text-white z-50">
                 <font-awesome-icon icon="fa-solid fa-gear" class="text-sm w-6 textt-[#FFB800] mt-1 text-[#42ff6b] text-[1.2rem] mr-1 before" />
                 ノートブック設定
-              </div>
+              </div>-->
 
               <div class="hover:bg-[#3f3f3f] text-white z-50">
                 <button class="px-4 pb-1" @click="deleteNotebook">
@@ -101,19 +128,19 @@
 
       <div id="sidebar2" class="bg-[#2E2E2E] w-[286px] text-white lg:w-[386px] h-screen">
         <div class="bg-[#242424] duration-200 h-[54px] w-[286px] lg:w-[386px] text-white flex px-4">
-          <div class="flex flex-col justify-center">
+          <!--<div class="flex flex-col justify-center">
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="text-[20px] opacity-90"/>
-          </div>
+          </div>-->
 
           <div class="flex flex-col justify-center ml-2.5 flex-grow mb-0.5 text-center">
             {{openingDir.replace(/^.*[\\/]/, '')}}
           </div>
 
-          <div class="flex flex-col justify-center ml-2.5 mr-1">
+          <!--<div class="flex flex-col justify-center ml-2.5 mr-1">
             <button>
               <font-awesome-icon icon="fa-regular fa-file-lines" class="text-[20px] mr-1" />
             </button>
-          </div>
+          </div>-->
 
           <div class="flex flex-col justify-center ml-2.5 mr-1">
             <button @click="this.newNoteMenu = !this.newNoteMenu">
@@ -164,7 +191,7 @@
               <button class="w-full h-full text-left">
                 <div class="text-[1.035rem]" v-if="((n.name).replace(/^.*[\\/]/, '')).match('&&&&untitled-')">New Note...</div>
                 <div class="text-[1.035rem]" v-else>{{(n.name).replace(/^.*[\\/]/, '').split('.').slice(0, -1).join('.')}}</div>
-                <div class="opacity-80 text-sm overflow-hidden h-[2.5rem]">{{n.info}}...</div>
+                <!--<div class="opacity-80 text-sm overflow-hidden h-[2.5rem]">{{n.info}}...</div>-->
               </button>
             </div>
           </div>
@@ -176,10 +203,6 @@
           <!-- Left icons -->
 
           <div class="flex flex-col justify-center ml-2.5 flex-grow mb-0.5">
-          </div>
-
-          <div class="flex flex-col justify-center ml-2.5 mr-1">
-            <font-awesome-icon icon="fa-solid fa-eye" class="text-[20px] opacity-90" />
           </div>
 
           <div class="flex flex-col justify-center ml-2.5 mr-1">
@@ -315,6 +338,7 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap{
 <script>
 import scrap from './Scrap.vue'
 import EasyMDE from 'easymde'
+import axios from 'axios';
 //axios.defaults.withCredentials = true;
 
 export default {
@@ -341,7 +365,9 @@ export default {
       notebookname: "",
       ext: "",
       openingDir: "",
-      opening_Dir: ""
+      opening_Dir: "",
+      sendFeedbackForm: false,
+      feedback: ""
     };
   },
   mounted(){
@@ -374,6 +400,19 @@ export default {
      
   },
   methods:{
+    sendFeedback(){
+      axios.post(`https://ideanotebeta-emailworker.onrender.com/send/`, {"content": this.feedback})
+            .then(response => {
+                
+              })
+            .catch(error => {
+                // POSTリクエストが失敗した場合の処理
+                console.error(error);
+      });
+      this.sendFeedbackForm = false
+      this.feedback = ""
+      alert("ご意見ありがとうございました。")
+    },
     selectRoot(){
       window.electronAPI.getFiles(this.currentNotebook)
         .then(result => {
