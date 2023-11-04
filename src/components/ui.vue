@@ -401,17 +401,18 @@ export default {
   },
   methods:{
     sendFeedback(){
-      axios.post(`https://ideanotebeta-emailworker.onrender.com/send/`, {"content": this.feedback})
+      axios.post(`https://app.formester.com/forms/ec2b098d-bc7e-4d23-974a-5862383ff006/submissions.json`, {"content": this.feedback})
             .then(response => {
-                
+              this.sendFeedbackForm = false
+              this.feedback = ""
+              alert("ご意見ありがとうございました。")
               })
             .catch(error => {
                 // POSTリクエストが失敗した場合の処理
                 console.error(error);
+                alert("エラーが発生しました。")
       });
-      this.sendFeedbackForm = false
-      this.feedback = ""
-      alert("ご意見ありがとうございました。")
+      
     },
     selectRoot(){
       window.electronAPI.getFiles(this.currentNotebook)
