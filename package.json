@@ -1,7 +1,7 @@
 {
   "name": "ideanote",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "main.js",
   "description": "A note-taking app",
   "author": "Korange",
@@ -10,9 +10,8 @@
     "productName": "ideaNote",
     "copyright": "Copyright 2023 Korange",
     "win": {
-      "__target": "squirrel",
-      "target": "portable",
-      "icon": "./apps.ico"
+      "target": "squirrel",
+      "icon": "./app.ico"
     }
   },
   "scripts": {
