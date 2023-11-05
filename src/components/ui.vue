@@ -653,13 +653,13 @@ export default {
   },
   methods: {
     sendFeedback() {
+      this.sendFeedbackForm = false;
       axios
         .post(
           `https://app.formester.com/forms/ec2b098d-bc7e-4d23-974a-5862383ff006/submissions.json`,
           { content: this.feedback },
         )
         .then((response) => {
-          this.sendFeedbackForm = false;
           this.feedback = "";
           alert("ご意見ありがとうございました。");
         })
