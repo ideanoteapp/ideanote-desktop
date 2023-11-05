@@ -21,7 +21,8 @@
     "electron:start": "vite build && electron .",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "clean": "npx prettier -w ./"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
