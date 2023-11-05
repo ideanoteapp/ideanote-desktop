@@ -179,7 +179,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle('newnotebook', (event, message) => {
     newNotebook(message)
-    fs.copyFileSync("/.icon.png", path.join(path.join(app.getPath('userData'), "notebooks", message, ".icon.png")))
+    //fs.copyFileSync("../.icon.png", path.join(path.join(app.getPath('userData'), "notebooks", message, ".icon.png")))
     data = fs.readFileSync(path.join(userDataPath, 'currentnotebook.txt'),{encoding: "utf-8"})
     data = path.join(app.getPath('userData'), "notebooks", message)
     fs.writeFileSync(path.join(userDataPath, 'currentnotebook.txt'), data,{encoding: "utf-8"})
