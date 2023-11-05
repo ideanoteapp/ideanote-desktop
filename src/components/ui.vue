@@ -102,7 +102,7 @@
 
         <div @click="selectRoot" class="mx-2 text-white mt-3 hover:bg-[#353535] rounded-lg select-none" :class="{'bg-[#353535]': openingDir==''}">
           <button class="flex py-2 px-2 w-full">
-            <img src="../assets/root.png" alt="" class="w-[29px] h-[29px] mr-2 bg-white rounded-full">
+            <img src="../assets/root.png" alt="" class="w-[29px] h-[29px] mr-2 bg-[#ff3f3f] rounded-full">
             <div class="flex flex-col justify-center mb-1">
               ルート
             </div>
@@ -111,7 +111,7 @@
 
         <div class=" mx-2 text-white flex mt-1 hover:bg-[#353535] rounded-lg" v-for="i in dirs" @click="openDir(i)" :class="{'bg-[#353535]': openingDir == i}">
           <button class="flex py-2 px-2 w-full">
-            <img src="../assets/folder.png" alt="" class="w-[29px] h-[29px] mr-2 bg-white rounded-full">
+            <img src="../assets/folder.png" alt="" class="w-[29px] h-[29px] bg-[#353535] mr-2 rounded-full border-none">
             <div class="flex flex-col justify-center mb-1">
               {{i.replace(/^.*[\\/]/, '')}}
             </div>
