@@ -268,7 +268,8 @@
                 />
                 Scrap
               </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
+              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+              @click="createNote('todo')">
                 <font-awesome-icon
                   icon="fa-regular fa-square-check"
                   class="w-6 textt-[#FFB800] text-[#4ae245] text-[1.24rem] mr-2 mt-1 before"
@@ -330,6 +331,13 @@
               "
               icon="fa-solid fa-scroll"
               class="textt-[#FFB800] text-[#ff9742] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
+              v-if="
+                n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'todo'
+              "
+              icon="fa-regular fa-square-check"
+              class="textt-[#FFB800] text-[#42ff48] text-[1.035rem] mr-2 mt-1"
             />
             <div>
               <button class="w-full h-full text-left">
@@ -433,6 +441,14 @@
             <scrap
               v-if="
                 opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap'
+              "
+              :text="textarea"
+              @save="saveScrap"
+            />
+
+            <todo
+              v-if="
+                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'todo'
               "
               :text="textarea"
               @save="saveScrap"
@@ -592,6 +608,7 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
 
 <script>
 import scrap from "./Scrap.vue";
+import todo from "./ToDo.vue"
 import EasyMDE from "easymde";
 import axios from "axios";
 //axios.defaults.withCredentials = true;
@@ -599,6 +616,7 @@ import axios from "axios";
 export default {
   components: {
     scrap,
+    todo
   },
   data: () => {
     return {
