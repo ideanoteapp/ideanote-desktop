@@ -18,6 +18,14 @@ if (!fs.existsSync(configPath)) {
     console.log('currentnotebook.txt Already exists.');
 }
 
+// もしnotebooksフォルダがなかったら、作る
+if (!fs.existsSync(path.join(userDataPath, "notebooks/"))) {
+  fs.mkdirSync(path.join(userDataPath, "notebooks/"));
+  console.log('dir:notebooks Created.');
+} else {
+  console.log('dir:notebooks Already exists.');
+}
+
 function getFilesInDirectory(dir) {
   let files = fs.readdirSync(dir);
   let fileList = [];
@@ -171,7 +179,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle('newnotebook', (event, message) => {
     newNotebook(message)
-    fs.copyFileSync("./app.ico", path.join(path.join(app.getPath('userData'), "notebooks", message, ".icon.png")))
+    //fs.copyFileSync("../.icon.png", path.join(path.join(app.getPath('userData'), "notebooks", message, ".icon.png")))
     data = fs.readFileSync(path.join(userDataPath, 'currentnotebook.txt'),{encoding: "utf-8"})
     data = path.join(app.getPath('userData'), "notebooks", message)
     fs.writeFileSync(path.join(userDataPath, 'currentnotebook.txt'), data,{encoding: "utf-8"})
@@ -250,13 +258,6 @@ app.whenReady().then(() => {
   ipcMain.handle('setcurrentnotebook', (event, message) => {
     data = fs.readFileSync(path.join(userDataPath, 'currentnotebook.txt'),{encoding: "utf-8"})
     data = message
-    fs.writeFileSync(path.join(userDataPath, 'currentnotebook.txt'), data,{encoding: "utf-8"})
-  })
-
-  ipcMain.handle('setcurrentnotebookwp', (event, message) => {
-    data = fs.readFileSync(path.join(userDataPath, 'currentnotebook.txt'),{encoding: "utf-8"})
-    data = (userDataPath+"/notebooks")+ "/"+ message
-    console.log("!!!!!" + data)
     fs.writeFileSync(path.join(userDataPath, 'currentnotebook.txt'), data,{encoding: "utf-8"})
   })
 

@@ -2,30 +2,34 @@
   <div class="mt-3"></div>
 
   <div class="h-[calc(100%-50px)] flex flex-col">
-    <div class="flex-grow">
+    <div class="">
       <div
         v-for="i in list"
-        class="bg-[#262626] mb-3 flex rounded-lg text-white px-4 py-2 border border-[#3a3a3a]"
+        class="flex rounded-lg text-white px-4 py-1"
       >
-        <div class="flex-grow">{{ i }}</div>
-        <!--<font-awesome-icon icon="fa-solid fa-trash" class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]" />-->
+        <div class="flex-grow text-white flex">
+          <input type="checkbox" name="" id="" @change="save" v-model="i.checked" class="w-6 h-6">
+           <div class="ml-3 flex flex-grow flex-col justify-center">
+            {{ i.text }}
+           </div>
+           <button @click="remove(i.text)"><font-awesome-icon icon="fa-solid fa-trash" class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]" /></button>
+          </div>
+        
       </div>
     </div>
-    <div class="h-px w-full bg-white my-5"></div>
     <form
       @submit.prevent="addText"
-      class="flex items-end bg-[#262626] rounded-lg border border-[#3a3a3a]"
+      class="flex items-end bg-[#262626] mt-4 rounded-lg border border-[#3a3a3a]"
     >
-      <textarea
+      <input
         v-model="input"
-        class="rounded-lg text-white px-4 py-2 flex-grow bg-transparent"
+        class="rounded-lg text-white flex-grow p-2 bg-transparent"
         style="outline: none !important; resize: none; caret-color: white"
-        rows="5"
         placeholder="Type something..."
-      ></textarea>
+      >
       <button
         type="submit"
-        class="mx-3 mb-3 rounded-lg w-10 h-10 flex justify-center flex-col text-center bg-[#2F497D]"
+        class="rounded-lg w-10 h-10 flex justify-center flex-col text-center bg-[#2F497D]"
       >
         <div class="flex justify-center w-full flex-row">
           <font-awesome-icon icon="fa-solid fa-plus" class="text-white" />
@@ -91,10 +95,17 @@ export default {
   },
   methods: {
     addText() {
-      this.list.push(this.input);
+      this.list.push({checked: false, text: this.input});
       this.input = "";
       this.$emit("save", JSON.stringify(this.list));
     },
+    save(){
+      this.$emit("save", JSON.stringify(this.list))
+    },
+    remove(text){
+      this.list = this.list.filter(item => item.text !== text);
+      this.$emit("save", JSON.stringify(this.list))
+    }
   },
 };
 </script>
