@@ -21,7 +21,8 @@
     "electron:start": "vite build && electron .",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "clean": "npx prettier -w ./"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
@@ -47,7 +48,14 @@
     "easymde": "^2.18.0",
     "electron": "^26.1.0",
     "electron-wix-msi": "^5.0.0",
+    "eslint": "^8.53.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.2.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.18.1",
     "postcss": "^8.4.29",
+    "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.5"
   }
