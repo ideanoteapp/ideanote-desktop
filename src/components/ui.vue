@@ -9,9 +9,16 @@
   </div>
 
   <div
-    class="fixed top-0 left-0 w-screen h-screen bg-[#00000070] flex justify-center"
+    class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
     v-if="sendFeedbackForm"
   >
+    <button class="fixed top-4 z-50 right-4" @click="this.sendFeedbackForm = false">
+      <div class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg">
+        <div class="flex flex-col justify-center">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </div>
+      </div>
+    </button>
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
@@ -467,9 +474,15 @@
   </div>
 
   <div
-    class="fixed top-0 left-0 w-screen h-screen bg-[#00000070] flex justify-center"
+    class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
     v-if="createFolderForm"
-  >
+  ><button class="fixed top-4 z-50 right-4" @click="this.createFolderForm = false">
+      <div class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg">
+        <div class="flex flex-col justify-center">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </div>
+      </div>
+    </button>
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
@@ -521,9 +534,15 @@
   </div>
 
   <div
-    class="fixed top-0 left-0 w-screen h-screen bg-[#00000070] flex justify-center"
+    class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
     v-if="createNotebookForm"
-  >
+  ><button class="fixed top-4 z-50 right-4" @click="this.createNotebookForm = false">
+      <div class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg">
+        <div class="flex flex-col justify-center">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </div>
+      </div>
+    </button>
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
