@@ -165,7 +165,7 @@
             </button>
           </div>
 
-          <div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
+          <!--<div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
 
           <div class="hover:bg-[#3f3f3f] text-white z-50">
             <button class="px-4 @b-1">
@@ -175,7 +175,7 @@
               />
               全体設定
             </button>
-          </div>
+          </div>-->
         </div>
 
         <div
@@ -297,13 +297,13 @@
                 />
                 ToDo
               </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
+              <!--<div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
                 <font-awesome-icon
                   icon="fa-solid fa-code"
                   class="w-6 textt-[#FFB800] text-[#8f4eff] text-[1.24rem] mr-2 mt-1 before"
                 />
                 Code
-              </div>
+              </div>-->
               <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]" @click="uploadFile">
                 <font-awesome-icon
                   icon="fa-solid fa-upload"
@@ -488,31 +488,7 @@
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
       >
         <div class="text-center">
-          <div class="text-2xl font-bold">新しいフォルダを作成</div>
-          <div class="text-md font-semibold pt-2 py-2.5">フォルダの色</div>
-          <div class="flex justify-center mb-3">
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-red-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-orange-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-yellow-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-green-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-blue-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-purple-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-black border-2 border-white"
-            ></div>
-          </div>
+          <div class="text-2xl font-bold mb-3">新しいフォルダを作成</div>      
           <div class="text-md font-semibold pt-2 py-2.5">フォルダの名前</div>
           <input
             type="text"
