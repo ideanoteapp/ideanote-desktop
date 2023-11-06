@@ -297,13 +297,6 @@
                 />
                 Code
               </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
-                <font-awesome-icon
-                  icon="fa-regular fa-file-pdf"
-                  class="w-6 textt-[#FFB800] text-[#df45e2] text-[1.24rem] mr-2 mt-1 before"
-                />
-                PDF
-              </div>
               <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]" @click="uploadFile">
                 <font-awesome-icon
                   icon="fa-solid fa-upload"
