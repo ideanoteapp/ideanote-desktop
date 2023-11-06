@@ -21,6 +21,7 @@ import {
   faStar,
   faMagnifyingGlass,
   faT,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* import specific icons */
@@ -52,6 +53,7 @@ library.add(
   faCirclePlus,
   faEye,
   faT,
+  faXmark
 );
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
