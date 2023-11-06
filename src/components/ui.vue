@@ -9,9 +9,16 @@
   </div>
 
   <div
-    class="fixed top-0 left-0 w-screen h-screen bg-[#00000070] flex justify-center"
+    class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
     v-if="sendFeedbackForm"
   >
+    <button class="fixed top-4 z-50 right-4" @click="this.sendFeedbackForm = false">
+      <div class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg">
+        <div class="flex flex-col justify-center">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </div>
+      </div>
+    </button>
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
@@ -158,7 +165,7 @@
             </button>
           </div>
 
-          <div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
+          <!--<div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
 
           <div class="hover:bg-[#3f3f3f] text-white z-50">
             <button class="px-4 @b-1">
@@ -168,7 +175,7 @@
               />
               全体設定
             </button>
-          </div>
+          </div>-->
         </div>
 
         <div
@@ -290,21 +297,14 @@
                 />
                 ToDo
               </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
+              <!--<div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
                 <font-awesome-icon
                   icon="fa-solid fa-code"
                   class="w-6 textt-[#FFB800] text-[#8f4eff] text-[1.24rem] mr-2 mt-1 before"
                 />
                 Code
-              </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
-                <font-awesome-icon
-                  icon="fa-regular fa-file-pdf"
-                  class="w-6 textt-[#FFB800] text-[#df45e2] text-[1.24rem] mr-2 mt-1 before"
-                />
-                PDF
-              </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
+              </div>-->
+              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]" @click="uploadFile">
                 <font-awesome-icon
                   icon="fa-solid fa-upload"
                   class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.24rem] mr-2 mt-1 before"
@@ -418,7 +418,7 @@
             <textarea id="my-text-area" class="bg-transparent w-full h-full" style="outline: none !important;"></textarea>
           </div>-->
           <div
-            class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white overflow-y-scroll"
+            v-if="opened" class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white overflow-y-scroll"
           >
             <div
               class="font-bold text-2xl mb-1.5 border-b pb-1 border-b-white text-white"
@@ -474,39 +474,21 @@
   </div>
 
   <div
-    class="fixed top-0 left-0 w-screen h-screen bg-[#00000070] flex justify-center"
+    class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
     v-if="createFolderForm"
-  >
+  ><button class="fixed top-4 z-50 right-4" @click="this.createFolderForm = false">
+      <div class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg">
+        <div class="flex flex-col justify-center">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </div>
+      </div>
+    </button>
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
       >
         <div class="text-center">
-          <div class="text-2xl font-bold">新しいフォルダを作成</div>
-          <div class="text-md font-semibold pt-2 py-2.5">フォルダの色</div>
-          <div class="flex justify-center mb-3">
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-red-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-orange-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-yellow-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-green-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-blue-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-purple-500 border-2 border-white"
-            ></div>
-            <div
-              class="w-8 h-8 mx-0.5 rounded-full bg-black border-2 border-white"
-            ></div>
-          </div>
+          <div class="text-2xl font-bold mb-3">新しいフォルダを作成</div>      
           <div class="text-md font-semibold pt-2 py-2.5">フォルダの名前</div>
           <input
             type="text"
@@ -528,9 +510,15 @@
   </div>
 
   <div
-    class="fixed top-0 left-0 w-screen h-screen bg-[#00000070] flex justify-center"
+    class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
     v-if="createNotebookForm"
-  >
+  ><button class="fixed top-4 z-50 right-4" @click="this.createNotebookForm = false">
+      <div class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg">
+        <div class="flex flex-col justify-center">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </div>
+      </div>
+    </button>
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
@@ -635,6 +623,7 @@ export default {
   data: () => {
     return {
       currentNotebook: "",
+      opened: false,
       dirs: [],
       textarea: "",
       notetitle: "",
@@ -770,6 +759,7 @@ export default {
       window.electronAPI.setCurrentNotebook(this.notebook);
     },
     readNote(notee) {
+      this.opened = true
       try {
         this.$refs.editor.style.display = "block";
       } catch {}
@@ -866,6 +856,58 @@ export default {
         location.reload();
       });
     },
+    uploadFile() {
+      this.newNoteMenu = false
+      if (this.openingDir == ""){
+        window.electronAPI.uploadFile(this.currentNotebook).then((_result) => {
+          if (this.openingDir == "") {
+        window.electronAPI
+          .getFiles(this.currentNotebook)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        window.electronAPI
+          .openDir(this.openingDir)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+        });
+      }else{
+        window.electronAPI.uploadFile(this.openingDir).then((_result) => {
+          if (this.openingDir == "") {
+        window.electronAPI
+          .getFiles(this.currentNotebook)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        window.electronAPI
+          .openDir(this.openingDir)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        
+        }})
+
+
+
+
+      
+    }},
     createNote(filetype) {
       let noteName = `&&&&untitled-${Math.random()
         .toString(36)
