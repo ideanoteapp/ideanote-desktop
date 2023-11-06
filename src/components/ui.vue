@@ -418,7 +418,7 @@
             <textarea id="my-text-area" class="bg-transparent w-full h-full" style="outline: none !important;"></textarea>
           </div>-->
           <div
-            class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white overflow-y-scroll"
+            v-if="opened" class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white overflow-y-scroll"
           >
             <div
               class="font-bold text-2xl mb-1.5 border-b pb-1 border-b-white text-white"
@@ -623,6 +623,7 @@ export default {
   data: () => {
     return {
       currentNotebook: "",
+      opened: false,
       dirs: [],
       textarea: "",
       notetitle: "",
@@ -758,6 +759,7 @@ export default {
       window.electronAPI.setCurrentNotebook(this.notebook);
     },
     readNote(notee) {
+      this.opened = true
       try {
         this.$refs.editor.style.display = "block";
       } catch {}
