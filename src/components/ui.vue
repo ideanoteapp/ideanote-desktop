@@ -304,7 +304,7 @@
                 />
                 PDF
               </div>
-              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
+              <div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]" @click="uploadFile">
                 <font-awesome-icon
                   icon="fa-solid fa-upload"
                   class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.24rem] mr-2 mt-1 before"
@@ -866,6 +866,58 @@ export default {
         location.reload();
       });
     },
+    uploadFile() {
+      this.newNoteMenu = false
+      if (this.openingDir == ""){
+        window.electronAPI.uploadFile(this.currentNotebook).then((_result) => {
+          if (this.openingDir == "") {
+        window.electronAPI
+          .getFiles(this.currentNotebook)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        window.electronAPI
+          .openDir(this.openingDir)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+        });
+      }else{
+        window.electronAPI.uploadFile(this.openingDir).then((_result) => {
+          if (this.openingDir == "") {
+        window.electronAPI
+          .getFiles(this.currentNotebook)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        window.electronAPI
+          .openDir(this.openingDir)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        
+        }})
+
+
+
+
+      
+    }},
     createNote(filetype) {
       let noteName = `&&&&untitled-${Math.random()
         .toString(36)

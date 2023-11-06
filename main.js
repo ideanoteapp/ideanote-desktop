@@ -212,6 +212,22 @@ app.whenReady().then(() => {
     }
   });  
 
+  ipcMain.handle('uploadfile', async (event, message) => {
+    try {
+      const filePath = await dialog.showOpenDialog({ properties: ['openFile'], filters: [
+        { name: '', extensions: ['md', 'txt', 'scrap', 'todo', 'png'] }
+      ] });
+      if (!filePath.canceled) {
+        const sourcePath = filePath.filePaths[0];
+        const targetPath = path.join(message, sourcePath.replace(/^.*[\\/]/, ""));
+        fs.copyFileSync(sourcePath, targetPath);
+      }
+    } catch (error) {
+      console.error('Error occurred: ', error);
+      // Handle the error appropriately
+    }
+  });  
+
   ipcMain.handle('listnotebooks', (event) => {
     return getDirs(path.join(app.getPath('userData'), "notebooks"))
   })
