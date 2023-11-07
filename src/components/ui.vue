@@ -370,7 +370,7 @@
                       .join(".")
                   }}
                 </div>
-                <!--<div class="opacity-80 text-sm overflow-hidden h-[2.5rem]">{{n.info}}...</div>-->
+                <div class="opacity-80 text-sm overflow-hidden max-h-[2.5rem]">{{n.info.replace("\n", " ")}}</div>
               </button>
             </div>
           </div>
@@ -752,6 +752,25 @@ export default {
       console.log("Saving a note...");
       window.electronAPI.saveNote(this.opening, this.textarea);
       window.electronAPI.setCurrentNotebook(this.notebook);
+      if (this.openingDir == "") {
+        window.electronAPI
+          .getFiles(this.currentNotebook)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        window.electronAPI
+          .openDir(this.openingDir)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     },
     saveScrap(data) {
       console.log("Saving a scrap...");
@@ -808,6 +827,25 @@ export default {
 
             easyMDE.codemirror.on("change", () => {
               window.electronAPI.saveNote(open, easyMDE.value());
+              if (this.openingDir == "") {
+        window.electronAPI
+          .getFiles(this.currentNotebook)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        window.electronAPI
+          .openDir(this.openingDir)
+          .then((result) => {
+            this.notes = result;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
             });
           }
         })
