@@ -37,7 +37,11 @@ function getFilesInDirectory(dir) {
           //fileList = fileList.concat(getFilesInDirectory(filePath));
       } else {
           let noteinfo = "" 
-          fileList.push({"name": filePath, "info": "lorem ipsum dor..."});
+          if(filePath.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == "md" || filePath.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == "txt"){
+            fileList.push({"name": filePath, "info": fs.readFileSync(filePath, {encoding: "utf-8"})});
+          }else{
+            fileList.push({"name": filePath, "info": ""});
+          }
       }
   });
 
