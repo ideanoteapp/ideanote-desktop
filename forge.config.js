@@ -2,7 +2,7 @@ module.exports = {
   packagerConfig: {
     asar: true,
     icon: "./app.ico",
-    name: "ideaNote beta",
+    name: "ideaNote",
   },
   rebuildConfig: {},
   makers: [
@@ -13,7 +13,7 @@ module.exports = {
         iconUrl: "https://media.korange.work/ideanote.ico",
         setupIcon: "./app.ico",
         authors: "Korange",
-        description: "Beta version of ideaNote",
+        description: "A note-taking app",
       },
     },
     {
