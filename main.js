@@ -1,11 +1,14 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
 const fs = require('fs');
+const axios = require('axios')
 //const { esbuildVersion } = require("vite");
 
 let notebook = "C:/Users/korange/Documents/ROBLOX/AutoSaves/"
 
 if(require('electron-squirrel-startup')) app.quit();
+
+
 
 // もし設定ファイルがないなら、作る
 const userDataPath = app.getPath('userData');
@@ -288,6 +291,28 @@ app.whenReady().then(() => {
   })
 
   createWindow();
+
+  const currentVersion = "1.0.0"
+  axios.get('https://ideanote-updates.korange.work/info.json', {})
+  .then((response) => {
+    let { latest, download } = response.data;
+    if (currentVersion != latest){
+      const options = {
+        type: 'question',  // none/info/error/question/warning
+        title: 'ideaNote',
+        message: 'アップデートが利用可能です',
+        detail: `バージョン ${latest} へのアップデートが利用可能です。`,
+        buttons: ['今すぐアップデートする', '後で'],
+        cancelId: -1  // Esc で閉じられたときの戻り値
+      };
+      
+      let selected = dialog.showMessageBoxSync(options);
+      if (selected == 0){
+        const { shell } = require('electron')
+        shell.openExternal(download)
+      }
+    }
+  })
   
 
   app.on("activate", () => {
@@ -296,6 +321,7 @@ app.whenReady().then(() => {
     }
   });
 });
+
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
