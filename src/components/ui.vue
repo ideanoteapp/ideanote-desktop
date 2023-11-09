@@ -4,7 +4,7 @@
   >
     <button @click="this.sendFeedbackForm = true" class="px-3 py-2 flex">
       <img src="../../icon.png" class="w-6 h-6 mr-1.5" />
-      <span class="flex flex-col justify-center"> 意見を送る </span>
+      <span class="flex flex-col justify-center"> {{t.send_feedback}} </span>
     </button>
   </div>
 
@@ -24,12 +24,12 @@
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
       >
         <form class="text-center" @submit.prevent="sendFeedback">
-          <div class="text-2xl font-bold pb-2.5">意見を送る</div>
+          <div class="text-2xl font-bold pb-2.5">{{ t.send_feedback }}</div>
           <input
             type="text"
             v-model="feedback"
             class="bg-[#262626] rounded-lg py-2 px-3 text-white text-center w-64"
-            placeholder="例）〇〇という機能が欲しい"
+            :placeholder="t.feedback_ex"
           />
 
           <div>
@@ -37,7 +37,7 @@
               class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
               @click="sendFeedback"
             >
-              送信
+              {{ t.send }}
             </button>
           </div>
         </form>
@@ -118,7 +118,7 @@
                 icon="fa-solid fa-star"
                 class="w-6 textt-[#FFB800] text-[#ffcd42] text-[1.2rem] mr-1 mt-1 before"
               />
-              アイコンを変更
+              {{ t.change_icon }}
             </button>
           </div>
 
@@ -128,12 +128,14 @@
               </div>-->
 
           <div class="hover:bg-[#3f3f3f] text-white z-50">
-            <button class="px-4 pb-1" @click="deleteNotebook">
+            <button class="px-4 pb-1 flex" @click="deleteNotebook">
               <font-awesome-icon
                 icon="fa-solid fa-trash"
                 class="text-sm w-6 textt-[#FFB800] mt-1 text-[#ff4242] text-[1.2rem] mr-1 before"
               />
-              ノートブックを削除
+              <div>
+                {{t.delete_notebook}}
+              </div>
             </button>
           </div>
 
@@ -161,7 +163,7 @@
                 icon="fa-solid fa-plus"
                 class="w-6 textt-[#FFB800] text-[1.2rem] mr-1 mt-1 before"
               />
-              新しいノートブック
+              {{ t.new_notebook }}
             </button>
           </div>
 
@@ -189,7 +191,9 @@
               alt=""
               class="w-[29px] h-[29px] mr-2 bg-[#ff3f3f] rounded-full"
             />
-            <div class="flex flex-col justify-center mb-1">ルート</div>
+            <div class="flex flex-col justify-center mb-1">
+              {{ t.root }}
+            </div>
           </button>
         </div>
 
@@ -220,7 +224,7 @@
             class="text-[20px] mr-2 duration-100"
           />
           <div class="flex flex-col justify-center mb-1 text-sm">
-            新しいフォルダ
+            {{ t.create_folder }}
           </div>
         </div>
       </div>
@@ -309,7 +313,7 @@
                   icon="fa-solid fa-upload"
                   class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.24rem] mr-2 mt-1 before"
                 />
-                アップロード
+                {{t.upload}}
               </div>
             </div>
           </div>
@@ -406,7 +410,7 @@
                   icon="fa-solid fa-trash"
                   class="w-6 textt-[#FFB800] text-[#ff6262] text-[1.2rem] mr-1 mt-1 before"
                 />
-                ノートを削除
+                {{t.delete_note}}
               </div>
             </div>
           </div>
@@ -488,8 +492,8 @@
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
       >
         <div class="text-center">
-          <div class="text-2xl font-bold mb-3">新しいフォルダを作成</div>      
-          <div class="text-md font-semibold pt-2 py-2.5">フォルダの名前</div>
+          <div class="text-2xl font-bold mb-3">{{t.create_folder}}</div>      
+          <div class="text-md font-semibold pt-2 py-2.5">{{ t.folder_name }}</div>
           <input
             type="text"
             v-model="foldertitle"
@@ -501,7 +505,7 @@
               class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
               @click="createFolder(foldertitle)"
             >
-              作成
+              {{t.create}}
             </button>
           </div>
         </div>
@@ -524,8 +528,8 @@
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
       >
         <div class="text-center">
-          <div class="text-2xl font-bold">新しいノートブックを作成</div>
-          <div class="text-md font-semibold pt-4 py-2.5">ノートブック名</div>
+          <div class="text-2xl font-bold">{{t.create_notebook}}</div>
+          <div class="text-md font-semibold pt-4 py-2.5">{{ t.notebook_name }}</div>
           <input
             type="text"
             v-model="notebookname"
@@ -538,7 +542,7 @@
               class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
               @click="createNotebook()"
             >
-              作成
+              {{ t.create }}
             </button>
           </div>
         </div>
@@ -644,9 +648,15 @@ export default {
       opening_Dir: "",
       sendFeedbackForm: false,
       feedback: "",
+      t: {}
     };
   },
   mounted() {
+    window.electronAPI.getTexts().then((result) => {
+      this.t = result
+      console.log(this.t)
+    })
+
     window.electronAPI
       .getCurrentNotebook()
       .then((result) => {
