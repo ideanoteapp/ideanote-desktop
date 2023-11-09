@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("electronAPI", {
+  getTexts: () => ipcRenderer.invoke("gettexts"),
   getDirs: (notebook) => ipcRenderer.invoke("getdirs", notebook),
   getFiles: (notebook) => ipcRenderer.invoke("getfiles", notebook),
   readFile: (file) => ipcRenderer.invoke("readfile", file),

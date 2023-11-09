@@ -1,14 +1,59 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
 const fs = require('fs');
-const axios = require('axios')
+const axios = require('axios');
+const { text } = require("@fortawesome/fontawesome-svg-core");
 //const { esbuildVersion } = require("vite");
 
 let notebook = "C:/Users/korange/Documents/ROBLOX/AutoSaves/"
 
 if(require('electron-squirrel-startup')) app.quit();
 
+console.log(Intl.DateTimeFormat().resolvedOptions().locale)
 
+const text_ja = {
+  "send_feedback": "意見を送る",
+  "create_notebook": "新しいノートブックを作成",
+  "notebook_name": "ノートブック名",
+  "create": "作成",
+  "delete_note": "ノートを削除",
+  "upload": "アップロード",
+  "create_folder": "新しいフォルダ",
+  "new_notebook": "新しいノートブック",
+  "delete_notebook": "ノートブックを削除",
+  "change_icon": "アイコンを変更",
+  "send": "送信",
+  "feedback_ex": "例）〇〇という機能が欲しい",
+  "folder_name": "フォルダの名前",
+  "root": "ルート",
+  "next": "進む",
+  "set_notebook_name": "ノートブックに名前を付けてください",
+  "notebook_description": "ノートブックは、ノートを保管する場所を表します。",
+  "start_setup": "セットアップを開始する",
+  "welcome": "ideaNoteへようこそ"
+}
+
+const text_en = {
+  "send_feedback": "Send Feedback",
+  "create_notebook": "Create a Notebook",
+  "notebook_name": "Notebook Name",
+  "create": "Create",
+  "delete_note": "Delete Note",
+  "upload": "Upload",
+  "create_folder": "New Folder",
+  "new_notebook": "New Notebook",
+  "delete_notebook": "Delete Notebook",
+  "change_icon": "Change icon",
+  "send": "Send",
+  "feedback_ex": "I want the...",
+  "folder_name": "Folder name",
+  "root": "Root",
+  "next": "Next",
+  "set_notebook_name": "Name your notebook!",
+  "notebook_description": "A notebook represents a place where you store your notes.",
+  "start_setup": "Get Started",
+  "welcome": "Welcome to ideaNote"
+}
 
 // もし設定ファイルがないなら、作る
 const userDataPath = app.getPath('userData');
@@ -165,6 +210,14 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  ipcMain.handle('gettexts', (event) =>{
+    if(Intl.DateTimeFormat().resolvedOptions().locale == "ja-JP"){
+      return text_ja;
+    }else{
+      return text_en;
+    }
+  })
+
   ipcMain.handle('getdirs', (event, message) =>{
     return getDirectorys(message)
   })
