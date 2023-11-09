@@ -9,13 +9,13 @@
         >
           <div class="text-center" v-if="slide == 0">
             <img src="../../icon.png" class="inline mb-3" />
-            <div class="text-2xl font-bold">ideaNoteへようこそ</div>
+            <div class="text-2xl font-bold">{{ t.welcome }}</div>
             <div>
               <button
                 class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
                 @click="slide = 1"
               >
-                セットアップを開始する
+                {{t.start_setup}}
               </button>
             </div>
           </div>
@@ -23,10 +23,10 @@
           <div class="text-center" v-if="slide == 1">
             <img src="../../icon.png" class="inline mb-3" />
             <div class="text-2xl font-bold">
-              ノートブックに名前を付けてください
+              {{t.set_notebook_name}}
             </div>
             <p class="opacity-90 text-sm">
-              ノートブックは、ノートを保管する場所を表します。
+              {{t.notebook_description}}
             </p>
             <input
               type="text"
@@ -39,7 +39,7 @@
                 class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
                 @click="go"
               >
-                進む
+                {{ t.next }}
               </button>
             </div>
           </div>
@@ -60,13 +60,14 @@ export default {
     return {
       slide: 0,
       notebookname: "",
+      t: {}
     };
   },
-  mounted: () => {
-    window.electronAPI.listNotebooks().then((result) => {
-      this.notebooks = result;
-      this.NotebookMenu = true;
-    });
+  mounted(){
+    window.electronAPI.getTexts().then((result) => {
+      this.t = result
+      console.log(this.t)
+    })
   },
   methods: {
     go() {
