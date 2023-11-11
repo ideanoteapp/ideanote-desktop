@@ -246,11 +246,11 @@
             {{ openingDir.replace(/^.*[\\/]/, "") }}
           </div>
 
-          <!--<div class="flex flex-col justify-center ml-2.5 mr-1">
-            <button>
+          <div class="flex flex-col justify-center ml-2.5 mr-1">
+            <button @click="createNote('md')">
               <font-awesome-icon icon="fa-regular fa-file-lines" class="text-[20px] mr-1" />
             </button>
-          </div>-->
+          </div>
 
           <div class="flex flex-col justify-center ml-2.5 mr-1">
             <button @click="this.newNoteMenu = !this.newNoteMenu">
