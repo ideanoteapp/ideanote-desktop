@@ -47,15 +47,15 @@
 
   <!---------->
 
-  <div>
+  <div :style="{'font-family: Serif;': uiFont == 'Serif'}">
     <div class="flex max-h-screen max-w-[100vw] h-screen overflow-hidden">
       <div
-        class="fixed left-[180px] lg:left-[200px] w-screen h-screen bg-black opacity-60 z-50"
+        class="fixed left-[180px] lg:left-[200px] w-screen h-screen bg-black opacity-60"
         v-if="false"
       ></div>
       <div
         id="sidebar1"
-        class="bg-[#262626] min-w-[180px] lg:min-w-[200px] w-[180px] lg:w-[200px] h-screen select-none overflow-x-hidden"
+        class="bg-[#262626] min-w-[180px] lg:min-w-[200px] w-[180px] z-10 lg:w-[200px] h-screen select-none overflow-x-hidden"
       >
         <div
           class="bg-[#202020] hover:bg-[#1d1d1d] duration-200 h-[54px] text-white flex px-4"
@@ -167,17 +167,17 @@
             </button>
           </div>
 
-          <!--<div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
+          <div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
 
-          <div class="hover:bg-[#3f3f3f] text-white z-50">
-            <button class="px-4 @b-1">
+          <div class="hover:bg-[#3f3f3f] text-white z-50" @click="openPreferences">
+            <button class="px-4 pb-1">
               <font-awesome-icon
                 icon="fa-solid fa-gear"
                 class="text-sm w-6 textt-[#FFB800] mt-1 text-[#f3f3f3] text-[1.2rem] mr-1 before"
               />
               全体設定
             </button>
-          </div>-->
+          </div>
         </div>
 
         <div
@@ -431,7 +431,7 @@
             <textarea id="my-text-area" class="bg-transparent w-full h-full" style="outline: none !important;"></textarea>
           </div>-->
           <div
-            v-if="opened" class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white overflow-y-scroll"
+            v-if="opened" id="editor-pane" class="w-full max-w-[35rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white" :class="{'overflow-y-hidden': opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] != 'md'}, {'overflow-y-scroll': opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'}"
           >
             <div
               class="font-bold text-2xl mb-1.5 border-b pb-1 border-b-white text-white"
@@ -457,18 +457,7 @@
               class="bg-transparent w-full h-full"
               style="outline: none !important; caret-color: white"
             ></textarea>
-            <div class="h-full" :class="{'hidden': !mdParsed && opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'}">
-              <textarea
-              v-model="textarea"
-              placeholder="Type something..."
-              v-on:input="save()"
-              ref="editor"
-              id="editor"
-              class="bg-transparent w-full h-full"
-              style="outline: none !important; caret-color: white"
-            ></textarea>
-            </div>
-            <div v-html="mdContent" class="mdcontent flex flex-col" ></div>
+            
             <img
               v-if="
                 opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'
@@ -490,6 +479,19 @@
               :text="textarea"
               @save="saveScrap"
             />
+
+            <div class="h-full" :class="{'hidden': !mdParsed && opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'}">
+              <textarea
+              v-model="textarea"
+              placeholder="Type something..."
+              v-on:input="save()"
+              ref="editor"
+              id="editor"
+              class="bg-transparent w-full h-full"
+              style="outline: none !important; caret-color: white"
+            ></textarea>
+            </div>
+            <div v-html="mdContent" class="mdcontent flex flex-col" :class="{'hidden': mdParsed}" ></div>
           </div>
         </div>
       </div>
@@ -531,7 +533,7 @@
       </div>
     </div>
   </div>
-
+  
   <div
     class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
     v-if="createNotebookForm"
@@ -564,6 +566,30 @@
               {{ t.create }}
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div
+    class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
+    v-if="preferences"
+  ><button class="fixed top-4 z-50 right-4" @click="this.preferences = false">
+      <div class="w-9 h-9 text-left flex justify-center fles-col text-white bg-[#b93232] rounded-lg">
+        <div class="flex flex-col justify-center">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </div>
+      </div>
+    </button>
+    <div class="flex flex-col justify-center">
+      <div
+        class="flex justify-left bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
+      >
+        <div class="text-center">
+          <div class="text-xl font-bold mb-4">全体設定</div>
+          まだここには何もありません。<br>次のバージョンでここに設定を追加する予定です。
         </div>
       </div>
     </div>
@@ -723,7 +749,8 @@ export default {
       t: {},
       mdParsed: false,
       mdContent: "",
-      easyMDE: undefined
+      easyMDE: undefined,
+      preferences: false
     };
   },
   mounted() {
@@ -758,6 +785,9 @@ export default {
     let textarea_ = "";
   },
   methods: {
+    openPreferences(){
+      this.preferences = true
+    },
     previewMd(){
       this.mdParsed = true
       this.mdContent = marked.parse(this.easyMDE.value())
