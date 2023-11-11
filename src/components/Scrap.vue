@@ -8,7 +8,9 @@
         class="bg-[#262626] mb-3 flex rounded-lg text-white px-4 py-2 border border-[#3a3a3a]"
       >
         <div class="flex-grow text">{{ i }}</div>
-        <!--<font-awesome-icon icon="fa-solid fa-trash" class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]" />-->
+        <button @click="remove(i)">
+          <font-awesome-icon icon="fa-solid fa-trash" class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]" />
+        </button>
       </div>
     </div>
     <div class="h-px w-full bg-white my-5"></div>
@@ -95,6 +97,10 @@ export default {
       this.input = "";
       this.$emit("save", JSON.stringify(this.list));
     },
+    remove(text) {
+      this.list = this.list.filter(item => item !== text);
+      this.$emit("save", JSON.stringify(this.list))
+    }
   },
 };
 </script>
