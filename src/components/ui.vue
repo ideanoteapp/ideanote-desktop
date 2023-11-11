@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed bottom-4 left-4 bg-[#3f3f3f] text-white rounded-md sm:shadow-md text-sm sm:hover:bottom-5 duration-200"
+    class="fixed bottom-4 left-4 bg-[#3f3f3f] z-50 text-white rounded-md sm:shadow-md text-sm sm:hover:bottom-5 duration-200"
   >
     <button @click="this.sendFeedbackForm = true" class="px-3 py-2 flex">
       <img src="../../icon.png" class="w-6 h-6 mr-1.5" />
