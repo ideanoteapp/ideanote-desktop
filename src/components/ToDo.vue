@@ -9,7 +9,7 @@
       >
         <div class="flex-grow text-white flex">
           <input type="checkbox" name="" id="" @change="save" v-model="i.checked" class="w-6 h-6">
-           <div class="ml-3 flex flex-grow flex-col justify-center">
+           <div class="ml-3 flex flex-grow flex-col justify-center text">
             {{ i.text }}
            </div>
            <button @click="remove(i.text)"><font-awesome-icon icon="fa-solid fa-trash" class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]" /></button>
