@@ -7,7 +7,7 @@
         v-for="i in list"
         class="bg-[#262626] mb-3 flex rounded-lg text-white px-4 py-2 border border-[#3a3a3a]"
       >
-        <div class="flex-grow">{{ i }}</div>
+        <div class="flex-grow text">{{ i }}</div>
         <!--<font-awesome-icon icon="fa-solid fa-trash" class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]" />-->
       </div>
     </div>
