@@ -480,7 +480,8 @@
               @save="saveScrap"
             />
 
-            <div class="h-full" :class="{'hidden': !mdParsed && opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'}">
+            <div v-html="mdContent" class="mdcontent flex flex-col" :class="{'hidden': mdParsed == true}" ></div>
+            <div class="h-full" :class="{'hidden': mdParsed == false && opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'}">
               <textarea
               v-model="textarea"
               placeholder="Type something..."
@@ -491,7 +492,7 @@
               style="outline: none !important; caret-color: white"
             ></textarea>
             </div>
-            <div v-html="mdContent" class="mdcontent flex flex-col" :class="{'hidden': mdParsed}" ></div>
+            
           </div>
         </div>
       </div>
@@ -790,7 +791,10 @@ export default {
     },
     previewMd(){
       this.mdParsed = true
-      this.mdContent = marked.parse(this.easyMDE.value())
+      window.electronAPI.readFile(this.opening)
+        .then((result) => {
+          this.mdContent = marked.parse(result)
+        })
     },
     sendFeedback() {
       this.sendFeedbackForm = false;
@@ -943,11 +947,13 @@ export default {
             });
 
             let open = this.opening;
-            if(md){
-              this.previewMd()
-            }
+            
             this.easyMDE.codemirror.on("change", () => {
               window.electronAPI.saveNote(open, this.easyMDE.value());
+              window.electronAPI.readFile(this.opening)
+              .then((result) => {
+                this.mdContent = marked.parse(result)
+              })
               if (this.openingDir == "") {
         window.electronAPI
           .getFiles(this.currentNotebook)
