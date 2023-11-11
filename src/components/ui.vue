@@ -324,7 +324,7 @@
         >
           <div
             v-for="n in notes"
-            @click="readNote(n.name)"
+            @click="readNote(n.name, true)"
             class="flex border-b border-b-[#ffffff15] py-3 px-5 duration-200 hover:bg-[#2b2b2b] hover:bg-[#ffffff10]"
             :class="{ 'bg-[#2b2b2b] bg-[#ffffff10]': n == opening }"
           >
@@ -391,6 +391,15 @@
             class="flex flex-col justify-center ml-2.5 flex-grow mb-0.5"
           ></div>
 
+          <div class="ml-2.5 mr-1 flex flex-col justify-center" v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'">
+            <button class="flex flex-col justify-center" @click="previewMd" v-if="!mdParsed">
+              <font-awesome-icon icon="fa-solid fa-eye-slash" class="text-[20px] opacity-90" />
+            </button>
+            <button class="flex flex-col justify-center" @click="this.mdParsed= false; this.readNote(opening)" v-else>
+              <font-awesome-icon icon="fa-solid fa-eye" class="text-[20px] opacity-90" />
+            </button>
+          </div>
+
           <div class="flex flex-col justify-center ml-2.5 mr-1">
             <button @click="this.NoteMenu = !this.NoteMenu">
               <img
@@ -439,9 +448,17 @@
             </div>
             <textarea
               v-if="
-                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'txt' ||
-                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'
+                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'txt'
               "
+              v-model="textarea"
+              placeholder="Type something..."
+              v-on:input="save()"
+              id="texteditor"
+              class="bg-transparent w-full h-full"
+              style="outline: none !important; caret-color: white"
+            ></textarea>
+            <div class="h-full" :class="{'hidden': !mdParsed && opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'}">
+              <textarea
               v-model="textarea"
               placeholder="Type something..."
               v-on:input="save()"
@@ -450,6 +467,8 @@
               class="bg-transparent w-full h-full"
               style="outline: none !important; caret-color: white"
             ></textarea>
+            </div>
+            <div v-html="mdContent" class="mdcontent flex flex-col" ></div>
             <img
               v-if="
                 opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'
@@ -597,18 +616,71 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
 .cm-strong.cm-formatting {
   text-decoration: underline; /* 下線 */
   text-decoration-thickness: 0.5em; /* 線の太さ */
-  text-decoration-color: rgba(255, 228, 0, 0.9); /* 線の色 */
+  text-decoration-color: rgba(255, 228, 0, 0.6); /* 線の色 */
   text-underline-offset: -0.2em; /* 線の位置。テキストに重なるようにやや上部にする */
   text-decoration-skip-ink: none;
 }
 
 .cm-formatting:not(.cm-quote) {
-  font-size: small;
-  opacity: 0.5;
+  opacity: 0.7;
+}
+
+.cm-quote{
+  color: white !important;
+  opacity: 0.9;
 }
 
 .CodeMirror-cursor {
   border-left: 1px solid #fff;
+}
+
+/*----------*/
+
+.mdcontent h1{
+  font-size: calc(1.325rem + 0.9vw);
+  font-weight: bold;
+}
+
+.mdcontent h2{
+  font-size: calc(1.3rem + 0.6vw) !important;
+  font-weight: bold;
+}
+
+.mdcontent h3{
+  font-size: calc(1.2rem + 0.3vw) !important;
+  font-weight: bold;
+}
+
+.mdcontent h4{
+  font-size: calc(1.1rem + 0.2vw) !important;
+  font-weight: bold;
+}
+
+.mdcontent h5{
+  font-size: calc(1.05rem + 0.1vw) !important;
+  font-weight: bold;
+}
+
+.mdcontent h6{
+  font-size: calc(1rem) !important;
+  font-weight: bold;
+}
+
+.mdcontent strong{
+  text-decoration: underline; /* 下線 */
+  text-decoration-thickness: 0.5em; /* 線の太さ */
+  text-decoration-color: rgba(255, 230, 0, 0.5); /* 線の色 */
+  text-underline-offset: -0.2em; /* 線の位置。テキストに重なるようにやや上部にする */
+  text-decoration-skip-ink: none;
+  font-weight: bold;
+}
+
+.mdcontent blockquote{
+  border-left: 6px solid #ffffff50;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 6px;
 }
 </style>
 
@@ -617,7 +689,7 @@ import scrap from "./Scrap.vue";
 import todo from "./ToDo.vue"
 import EasyMDE from "easymde";
 import axios from "axios";
-//axios.defaults.withCredentials = true;
+import marked from "marked/marked.min.js"
 
 export default {
   components: {
@@ -648,7 +720,10 @@ export default {
       opening_Dir: "",
       sendFeedbackForm: false,
       feedback: "",
-      t: {}
+      t: {},
+      mdParsed: false,
+      mdContent: "",
+      easyMDE: undefined
     };
   },
   mounted() {
@@ -683,6 +758,10 @@ export default {
     let textarea_ = "";
   },
   methods: {
+    previewMd(){
+      this.mdParsed = true
+      this.mdContent = marked.parse(this.easyMDE.value())
+    },
     sendFeedback() {
       this.sendFeedbackForm = false;
       axios
@@ -787,7 +866,7 @@ export default {
       window.electronAPI.saveNote(this.opening, data);
       window.electronAPI.setCurrentNotebook(this.notebook);
     },
-    readNote(notee) {
+    readNote(notee, md=false) {
       this.opened = true
       try {
         this.$refs.editor.style.display = "block";
@@ -818,7 +897,7 @@ export default {
 
           // Markdown
           if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "md") {
-            let easyMDE = new EasyMDE({
+            this.easyMDE = new EasyMDE({
               element: document.getElementById("editor"),
               spellChecker: false,
               lineWrapping: true,
@@ -834,9 +913,11 @@ export default {
             });
 
             let open = this.opening;
-
-            easyMDE.codemirror.on("change", () => {
-              window.electronAPI.saveNote(open, easyMDE.value());
+            if(md){
+              this.previewMd()
+            }
+            this.easyMDE.codemirror.on("change", () => {
+              window.electronAPI.saveNote(open, this.easyMDE.value());
               if (this.openingDir == "") {
         window.electronAPI
           .getFiles(this.currentNotebook)
