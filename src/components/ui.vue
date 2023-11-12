@@ -516,12 +516,10 @@
               style="outline: none !important; caret-color: white"
             ></textarea>
 
-            <img
-              v-if="
-                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'
-              "
-              :src="opening"
-            />
+            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'" class="h-full">
+              <img :src="opening" />
+            </div>
+            
             <scrap
               v-if="
                 opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap'
