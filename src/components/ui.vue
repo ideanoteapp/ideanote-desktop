@@ -457,6 +457,29 @@
               v-if="NoteMenu"
               class="absolute bg-[#262626] z-50 min-w-44 right-4 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
             >
+            <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="copyImg()"
+                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'"
+              >
+                <font-awesome-icon
+                  icon="fa-brands fa-markdown"
+                  class="w-6 textt-[#FFB800] text-[#6289ff] text-[1.2rem] mr-1 mt-1 before"
+                />
+                埋め込みコードをコピー
+              </div>
+
+            <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="copyPath()"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-paperclip"
+                  class="w-6 textt-[#FFB800] text-[#ffffffcc] text-[1.2rem] mr-1 mt-1 before"
+                />
+                パスをコピー
+              </div>
+
               <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
                 @click="deleteNote()"
@@ -519,7 +542,7 @@
             <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'" class="h-full">
               <img :src="opening" />
             </div>
-            
+
             <scrap
               v-if="
                 opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap'
@@ -686,6 +709,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.CodeMirror-scroll{
+  max-width: 39rem;
+}
 
 body {
   overflow: hidden;
@@ -872,10 +899,22 @@ export default {
     openPreferences() {
       this.preferences = true;
     },
+    copyPath(){
+      var copyStr = this.opening.replace(this.currentNotebook, "{notebook}")
+      copyStr = copyStr.replace(/\\/g, "/")
+      navigator.clipboard.writeText(copyStr)
+      this.NoteMenu = false
+    },
+    copyImg(){
+      var copyStr = this.opening.replace(this.currentNotebook, "{notebook}")
+      copyStr = copyStr.replace(/\\/g, "/")
+      navigator.clipboard.writeText(`![](${copyStr})`)
+      this.NoteMenu = false
+    },
     previewMd() {
       this.mdParsed = true;
       window.electronAPI.readFile(this.opening).then((result) => {
-        this.mdContent = marked.parse(result);
+        this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
       });
     },
     sendFeedback() {
@@ -1033,7 +1072,7 @@ export default {
             this.easyMDE.codemirror.on("change", () => {
               window.electronAPI.saveNote(open, this.easyMDE.value());
               window.electronAPI.readFile(this.opening).then((result) => {
-                this.mdContent = marked.parse(result);
+                this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
               });
               if (this.openingDir == "") {
                 window.electronAPI
