@@ -363,6 +363,21 @@
               class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
             />
             <font-awesome-icon
+              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp'"
+              icon="fa-regular fa-image"
+              class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
+              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg'"
+              icon="fa-regular fa-image"
+              class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
+              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'"
+              icon="fa-regular fa-image"
+              class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
               v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'"
               icon="fa-regular fa-file-lines"
               class="textt-[#FFB800] text-[#ffcd42] text-[1.035rem] mr-2 mt-1"
@@ -457,6 +472,32 @@
               v-if="NoteMenu"
               class="absolute bg-[#262626] z-50 min-w-44 right-4 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
             >
+            <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="copyImg()"
+                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
+                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg' ||
+                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' ||
+                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp'"
+              >
+                <font-awesome-icon
+                  icon="fa-brands fa-markdown"
+                  class="w-6 textt-[#FFB800] text-[#6289ff] text-[1.2rem] mr-1 mt-1 before"
+                />
+                埋め込みコードをコピー
+              </div>
+
+            <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="copyPath()"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-paperclip"
+                  class="w-6 textt-[#FFB800] text-[#ffffffcc] text-[1.2rem] mr-1 mt-1 before"
+                />
+                パスをコピー
+              </div>
+
               <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
                 @click="deleteNote()"
@@ -516,12 +557,14 @@
               style="outline: none !important; caret-color: white"
             ></textarea>
 
-            <img
-              v-if="
-                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'
-              "
-              :src="opening"
-            />
+            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
+                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp' ||
+                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' ||
+                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'"
+                       class="h-full">
+              <img :src="opening" />
+            </div>
+
             <scrap
               v-if="
                 opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap'
@@ -675,7 +718,12 @@
       >
         <div class="text-center">
           <div class="text-xl font-bold mb-4">全体設定</div>
-          まだここには何もありません。<br />次のバージョンでここに設定を追加する予定です。
+          フォント
+          <select v-model="font" @change="fontChange" class="bg-[#202020] text-white rounded-lg p-3">
+            <option value="">Default</option>
+            <option value="sans-serif">Sans Serif</option>
+            <option value="serif">Serif</option>
+          </select>
         </div>
       </div>
     </div>
@@ -688,6 +736,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.CodeMirror-scroll{
+  max-width: 39rem;
+}
 
 body {
   overflow: hidden;
@@ -810,6 +862,7 @@ export default {
   },
   data: () => {
     return {
+      font: "",
       currentNotebook: "",
       opened: false,
       dirs: [],
@@ -833,7 +886,7 @@ export default {
       sendFeedbackForm: false,
       feedback: "",
       t: {},
-      mdParsed: false,
+      mdParsed: true,
       mdContent: "",
       easyMDE: undefined,
       preferences: false,
@@ -869,15 +922,39 @@ export default {
       });
 
     let textarea_ = "";
+
+    window.electronAPI.getFont()
+      .then((result) => {
+        this.font = result
+        this.fontChange()
+      })
   },
   methods: {
+    fontChange(){
+      const app = document.querySelector("#app");
+      app.style.fontFamily = this.font;
+      window.electronAPI.setFont(this.font)
+      
+    },
     openPreferences() {
       this.preferences = true;
+    },
+    copyPath(){
+      var copyStr = this.opening.replace(this.currentNotebook, "{notebook}")
+      copyStr = copyStr.replace(/\\/g, "/")
+      navigator.clipboard.writeText(copyStr)
+      this.NoteMenu = false
+    },
+    copyImg(){
+      var copyStr = this.opening.replace(this.currentNotebook, "{notebook}")
+      copyStr = copyStr.replace(/\\/g, "/")
+      navigator.clipboard.writeText(`![](${copyStr})`)
+      this.NoteMenu = false
     },
     previewMd() {
       this.mdParsed = true;
       window.electronAPI.readFile(this.opening).then((result) => {
-        this.mdContent = marked.parse(result);
+        this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
       });
     },
     sendFeedback() {
@@ -1035,7 +1112,7 @@ export default {
             this.easyMDE.codemirror.on("change", () => {
               window.electronAPI.saveNote(open, this.easyMDE.value());
               window.electronAPI.readFile(this.opening).then((result) => {
-                this.mdContent = marked.parse(result);
+                this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
               });
               if (this.openingDir == "") {
                 window.electronAPI

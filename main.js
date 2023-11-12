@@ -284,6 +284,14 @@ app.whenReady().then(() => {
     });
   });
 
+  ipcMain.handle("setfont", (event, message) => {
+    fs.writeFileSync(path.join(userDataPath, "font.txt"), message)
+  });
+
+  ipcMain.handle("getfont", (event, message) => {
+    return fs.readFileSync(path.join(userDataPath, "font.txt"), {encoding: 'utf-8'})
+  });
+
   ipcMain.handle("seticon", async (event, message) => {
     try {
       const filePath = await dialog.showOpenDialog({
@@ -306,7 +314,7 @@ app.whenReady().then(() => {
       const filePath = await dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [
-          { name: "", extensions: ["md", "txt", "scrap", "todo", "png"] },
+          { name: 'Markdown, Plaintext, Scrap, ToDo, Images', extensions: ["md", "txt", "scrap", "todo", "png", "jpeg", "jpg", "webp"] },
         ],
       });
       if (!filePath.canceled) {
@@ -394,7 +402,7 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  const currentVersion = "1.3.0";
+  const currentVersion = "1.4.0";
   axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {
