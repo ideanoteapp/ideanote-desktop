@@ -363,6 +363,21 @@
               class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
             />
             <font-awesome-icon
+              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp'"
+              icon="fa-regular fa-image"
+              class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
+              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg'"
+              icon="fa-regular fa-image"
+              class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
+              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'"
+              icon="fa-regular fa-image"
+              class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
               v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'"
               icon="fa-regular fa-file-lines"
               class="textt-[#FFB800] text-[#ffcd42] text-[1.035rem] mr-2 mt-1"
@@ -460,7 +475,10 @@
             <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
                 @click="copyImg()"
-                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'"
+                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
+                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg' ||
+                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' ||
+                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp'"
               >
                 <font-awesome-icon
                   icon="fa-brands fa-markdown"
@@ -539,7 +557,7 @@
               style="outline: none !important; caret-color: white"
             ></textarea>
 
-            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png'" class="h-full">
+            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' || opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp' || opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' || opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'" class="h-full">
               <img :src="opening" />
             </div>
 
