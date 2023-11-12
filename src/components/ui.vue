@@ -833,7 +833,7 @@ export default {
       sendFeedbackForm: false,
       feedback: "",
       t: {},
-      mdParsed: false,
+      mdParsed: true,
       mdContent: "",
       easyMDE: undefined,
       preferences: false,
