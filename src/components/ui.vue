@@ -557,7 +557,11 @@
               style="outline: none !important; caret-color: white"
             ></textarea>
 
-            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' || opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp' || opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' || opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'" class="h-full">
+            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
+                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp' ||
+                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' ||
+                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'"
+                       class="h-full">
               <img :src="opening" />
             </div>
 
@@ -714,7 +718,12 @@
       >
         <div class="text-center">
           <div class="text-xl font-bold mb-4">全体設定</div>
-          まだここには何もありません。<br />次のバージョンでここに設定を追加する予定です。
+          フォント
+          <select v-model="font" @change="fontChange" class="bg-[#202020] text-white rounded-lg p-3">
+            <option value="">Default</option>
+            <option value="sans-serif">Sans Serif</option>
+            <option value="serif">Serif</option>
+          </select>
         </div>
       </div>
     </div>
@@ -853,6 +862,7 @@ export default {
   },
   data: () => {
     return {
+      font: "",
       currentNotebook: "",
       opened: false,
       dirs: [],
@@ -912,8 +922,20 @@ export default {
       });
 
     let textarea_ = "";
+
+    window.electronAPI.getFont()
+      .then((result) => {
+        this.font = result
+        this.fontChange()
+      })
   },
   methods: {
+    fontChange(){
+      const app = document.querySelector("#app");
+      app.style.fontFamily = this.font;
+      window.electronAPI.setFont(this.font)
+      
+    },
     openPreferences() {
       this.preferences = true;
     },

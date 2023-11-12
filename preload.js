@@ -1,6 +1,8 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("electronAPI", {
+  setFont: (font) => ipcRenderer.invoke('setfont', font),
+  getFont: () => ipcRenderer.invoke("getfont"),
   getTexts: () => ipcRenderer.invoke("gettexts"),
   getDirs: (notebook) => ipcRenderer.invoke("getdirs", notebook),
   getFiles: (notebook) => ipcRenderer.invoke("getfiles", notebook),
@@ -22,5 +24,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
   setIcon: (notebook) => ipcRenderer.invoke("seticon", notebook),
   deleteNotebook: (notebook) => ipcRenderer.invoke("deletenotebook", notebook),
   changeNoteTitle: (old, newer) =>
-    ipcRenderer.invoke("changenotetitle", [old, newer]),
+    ipcRenderer.invoke("changenotetitle", [old, newer])
 });
