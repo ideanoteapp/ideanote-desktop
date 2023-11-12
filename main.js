@@ -306,7 +306,7 @@ app.whenReady().then(() => {
       const filePath = await dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [
-          { name: "", extensions: ["md", "txt", "scrap", "todo", "png"] },
+          { name: '.md, .txt, .scrap, .todo, .png', extensions: ["md", "txt", "scrap", "todo", "png"] },
         ],
       });
       if (!filePath.canceled) {
