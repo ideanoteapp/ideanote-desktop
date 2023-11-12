@@ -2,21 +2,36 @@
   <div class="mt-3"></div>
 
   <div class="h-[calc(100%-50px)] flex flex-col">
-    <div class="flex-grow">
+    <div class="flex-grow overflow-y-scroll">
       <div
         v-for="i in list"
         class="bg-[#262626] mb-3 flex rounded-lg text-white px-4 py-2 border border-[#3a3a3a]"
-      >
-        <div class="flex-grow text">{{ i }}</div>
-        <button @click="remove(i)">
-          <font-awesome-icon
-            icon="fa-solid fa-trash"
-            class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]"
-          />
-        </button>
+      > 
+        <div class="flex w-full flex-grow" v-if="typeof i === 'string' || i instanceof String">
+          <div class="flex-grow">{{ i }}</div>
+            <button @click="remove(i)" class="">
+              <font-awesome-icon
+                icon="fa-solid fa-trash"
+                class="text-[#4d4c4c] duration-100 hover:text-[#ff6262]"
+              />
+            </button>
+        </div>
+
+        <div class="flex items-start w-full" v-else>
+          <div class="flex-grow text flex flex-col">
+            <div class="text-[.7rem] opacity-60 flex-grow">{{ i.date }}</div>
+              <div>{{ i.text }}</div>
+            </div>
+            <button @click="remove(i)" class="">
+              <font-awesome-icon
+                icon="fa-solid fa-trash"
+                class="text-[#4d4c4c] duration-100 hover:text-[#ff6262]"
+              />
+            </button>
+        </div>
       </div>
     </div>
-    <div class="h-px w-full bg-white my-5"></div>
+    <div class="h-px w-full bg-white mb-5 mt-2"></div>
     <form
       @submit.prevent="addText"
       class="flex items-end bg-[#262626] rounded-lg border border-[#3a3a3a]"
@@ -25,7 +40,7 @@
         v-model="input"
         class="rounded-lg text-white px-4 py-2 flex-grow bg-transparent"
         style="outline: none !important; resize: none; caret-color: white"
-        rows="5"
+        rows="4"
         placeholder="Type something..."
       ></textarea>
       <button
@@ -96,7 +111,8 @@ export default {
   },
   methods: {
     addText() {
-      this.list.push(this.input);
+      var d = new Date()
+      this.list.push({"text": this.input, "date": `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${d.getMinutes()}`});
       this.input = "";
       this.$emit("save", JSON.stringify(this.list));
     },
