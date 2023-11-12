@@ -284,6 +284,14 @@ app.whenReady().then(() => {
     });
   });
 
+  ipcMain.handle("setfont", (event, message) => {
+    fs.writeFileSync(path.join(userDataPath, "font.txt"), message)
+  });
+
+  ipcMain.handle("getfont", (event, message) => {
+    return fs.readFileSync(path.join(userDataPath, "font.txt"), {encoding: 'utf-8'})
+  });
+
   ipcMain.handle("seticon", async (event, message) => {
     try {
       const filePath = await dialog.showOpenDialog({
