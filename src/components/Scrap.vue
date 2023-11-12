@@ -9,7 +9,10 @@
       >
         <div class="flex-grow text">{{ i }}</div>
         <button @click="remove(i)">
-          <font-awesome-icon icon="fa-solid fa-trash" class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]" />
+          <font-awesome-icon
+            icon="fa-solid fa-trash"
+            class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]"
+          />
         </button>
       </div>
     </div>
@@ -98,9 +101,9 @@ export default {
       this.$emit("save", JSON.stringify(this.list));
     },
     remove(text) {
-      this.list = this.list.filter(item => item !== text);
-      this.$emit("save", JSON.stringify(this.list))
-    }
+      this.list = this.list.filter((item) => item !== text);
+      this.$emit("save", JSON.stringify(this.list));
+    },
   },
 };
 </script>

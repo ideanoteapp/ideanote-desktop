@@ -22,7 +22,7 @@ import {
   faMagnifyingGlass,
   faT,
   faXmark,
-  faEyeSlash
+  faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* import specific icons */
@@ -55,7 +55,7 @@ library.add(
   faEye,
   faT,
   faXmark,
-  faEyeSlash
+  faEyeSlash,
 );
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

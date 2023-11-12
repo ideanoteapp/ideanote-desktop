@@ -15,7 +15,7 @@
                 class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
                 @click="slide = 1"
               >
-                {{t.start_setup}}
+                {{ t.start_setup }}
               </button>
             </div>
           </div>
@@ -23,10 +23,10 @@
           <div class="text-center" v-if="slide == 1">
             <img src="../../icon.png" class="inline mb-3" />
             <div class="text-2xl font-bold">
-              {{t.set_notebook_name}}
+              {{ t.set_notebook_name }}
             </div>
             <p class="opacity-90 text-sm">
-              {{t.notebook_description}}
+              {{ t.notebook_description }}
             </p>
             <input
               type="text"
@@ -60,14 +60,14 @@ export default {
     return {
       slide: 0,
       notebookname: "",
-      t: {}
+      t: {},
     };
   },
-  mounted(){
+  mounted() {
     window.electronAPI.getTexts().then((result) => {
-      this.t = result
-      console.log(this.t)
-    })
+      this.t = result;
+      console.log(this.t);
+    });
   },
   methods: {
     go() {
