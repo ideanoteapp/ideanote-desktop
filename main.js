@@ -80,30 +80,34 @@ function getFilesInDirectory(dir) {
   let fileList = [];
 
   files.forEach((file) => {
-    const filePath = path.join(dir, file);
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
-      // fileList = fileList.concat(getFilesInDirectory(filePath));
-    } else {
-      let noteinfo = "";
-      if (
-        filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "md" ||
-        filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"
-      ) {
-        fileList.push({
-          name: filePath,
-          info: fs.readFileSync(filePath, { encoding: "utf-8" }),
-          mtime: stat.mtime,
-        });
+      const filePath = path.join(dir, file);
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+          // fileList = fileList.concat(getFilesInDirectory(filePath));
       } else {
-        fileList.push({ name: filePath, info: "", mtime: stat.mtime });
+          let noteinfo = "" 
+          if(filePath.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == "md" || filePath.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == "txt"){
+            fileList.push({"name": filePath, "info": fs.readFileSync(filePath, {encoding: "utf-8"}), "mtime": stat.mtime});
+          }else{
+            fileList.push({"name": filePath, "info": "", "mtime": stat.mtime});
+          }
       }
-    }
   });
 
   // ファイルを更新日時順に並び替え
   fileList.sort((a, b) => {
-    return b.mtime.getTime() - a.mtime.getTime();
+    // "[pin]"がついているかどうかで比較
+    const isAPinned = a.name.includes("[pin]");
+    const isBPinned = b.name.includes("[pin]");
+
+    if (isAPinned && !isBPinned) {
+      return -1; // aを前に
+    } else if (!isAPinned && isBPinned) {
+      return 1; // bを前に
+    } else {
+      // どちらも[pin]がついているかどちらもついていない場合は更新日時で比較
+      return b.mtime.getTime() - a.mtime.getTime();
+    }
   });
 
   return fileList;
