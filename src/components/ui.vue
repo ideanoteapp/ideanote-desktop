@@ -353,6 +353,13 @@
             :class="{ 'bg-[#2b2b2b] bg-[#ffffff10]': n == opening }"
           >
             <font-awesome-icon
+              v-if="
+                n.name.replace(/^.*[\\/]/, '').includes('[pin]')
+              "
+              icon="fa-solid fa-thumbtack"
+              class="textt-[#FFB800] text-[#ffffffc8] text-[1.035rem] mr-3.5 mt-1"
+            />
+            <font-awesome-icon
               v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'txt'"
               icon="fa-regular fa-file-lines"
               class="textt-[#FFB800] text-[#427eff] text-[1.035rem] mr-2 mt-1"
@@ -396,6 +403,7 @@
               icon="fa-regular fa-square-check"
               class="textt-[#FFB800] text-[#42ff48] text-[1.035rem] mr-2 mt-1"
             />
+            
             <div>
               <button class="w-full h-full text-left">
                 <div
