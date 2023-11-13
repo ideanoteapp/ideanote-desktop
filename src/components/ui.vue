@@ -1062,16 +1062,20 @@ export default {
       window.electronAPI.setCurrentNotebook(this.notebook);
     },
     readNote(notee, md = false) {
+      this.editor = ""
+      this.easyMDE = undefined
+      const elements = document.querySelectorAll(".EasyMDEContainer");
+      elements.forEach((element) => {
+        element.remove();
+      });
+
       this.opened = true;
       try {
         this.$refs.editor.style.display = "block";
       } catch {}
 
       this.opening = "null.txt";
-      const elements = document.querySelectorAll(".EasyMDEContainer");
-      elements.forEach((element) => {
-        element.remove();
-      });
+      
       window.electronAPI
         .readFile(notee)
         .then((result) => {
@@ -1087,11 +1091,14 @@ export default {
             this.notetitle = this.notetitle.split(".").slice(0, -1).join(".");
           }
 
-          this.textarea = result;
+          if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"){
+            this.textarea = result;
+          }
           this.opening = notee;
 
           // Markdown
           if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "md") {
+            this.textarea = result;
             this.easyMDE = new EasyMDE({
               element: document.getElementById("editor"),
               spellChecker: false,
