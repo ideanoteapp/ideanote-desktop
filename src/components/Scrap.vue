@@ -42,6 +42,7 @@
         style="outline: none !important; resize: none; caret-color: white"
         rows="4"
         placeholder="Type something..."
+        @keydown.enter="keydown"
       ></textarea>
       <button
         type="submit"
@@ -102,12 +103,6 @@ export default {
     if (this.text != undefined) {
       this.list = JSON.parse(this.text);
     }
-
-    document.body.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
-        this.addText();
-      }
-    });
   },
   methods: {
     addText() {
@@ -120,6 +115,11 @@ export default {
       this.list = this.list.filter((item) => item !== text);
       this.$emit("save", JSON.stringify(this.list));
     },
+    keydown(e){
+      if (e.ctrlKey){
+        this.addText()
+      }
+    }
   },
 };
 </script>
