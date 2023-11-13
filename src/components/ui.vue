@@ -541,15 +541,15 @@
             "
           >
             <div
-              class="font-bold text-2xl mb-1.5 border-b pb-1 border-b-white text-white"
+              class="font-bold mb-1.5 border-b pb-1 mr-2 border-b-white text-white"
             >
               <!--<font-awesome-icon icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#ffcd42] text-[1.24rem] mr-2 mt-1 before absolute -translate-x-6 translate-y-0.5" />-->
               <input
                 type="text"
                 @change="changeNoteTitle"
                 v-model="notetitle"
-                style="outline: none !important; caret-color: white"
-                class="bg-transparent w-full"
+                style="outline: none !important; caret-color: white;"
+                class="bg-transparent text-2xl flex-grow w-full focus:bg-[#303030] focus:mb-1.5 focus:text-[1.4rem] focus:rounded-lg focus:py-1.5 focus:pl-4 focus:pr-[-1rem]"
                 placeholder="Note Name"
               />
             </div>
@@ -989,9 +989,13 @@ export default {
       });
     },
     changeNoteTitle() {
+      document.activeElement.blur()
+
       window.electronAPI
         .changeNoteTitle(this.opening, this.notetitle + "." + this.ext)
-        .then((_result) => {
+        .then((res) => {
+          this.readNote(res)
+          //alert(res)
           if (this.openingDir == "") {
             window.electronAPI
               .getFiles(this.currentNotebook)
@@ -1001,6 +1005,7 @@ export default {
               .catch((error) => {
                 console.error(error);
               });
+            
           } else {
             window.electronAPI
               .openDir(this.openingDir)

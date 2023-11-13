@@ -343,10 +343,11 @@ app.whenReady().then(() => {
     console.log(
       "New note path is " + path.join(path.dirname(message[0]), message[1]),
     );
-    return fs.renameSync(
+    fs.renameSync(
       message[0],
       path.join(path.dirname(message[0]), message[1]),
     );
+    return path.join(path.dirname(message[0]), message[1])
   });
 
   ipcMain.handle("getcurrentnotebook", (event) => {
