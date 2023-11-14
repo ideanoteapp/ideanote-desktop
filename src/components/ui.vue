@@ -1170,7 +1170,9 @@ export default {
             });
 
             let open = this.opening;
-
+            window.electronAPI.readFile(this.opening).then((result) => {
+                this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
+              });
             this.easyMDE.codemirror.on("change", () => {
               window.electronAPI.saveNote(open, this.easyMDE.value());
               window.electronAPI.readFile(this.opening).then((result) => {
