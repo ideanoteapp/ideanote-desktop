@@ -36,7 +36,17 @@ const text_ja = {
   copy_path: "パスをコピー",
   copy_embed: "埋め込みコードをコピー",
   unpin: "ピン留めを解除",
-  pin_note: "ノートをピン留め"
+  pin_note: "ノートをピン留め",
+  warning: "警告",
+  deletenotebook_message: "この動作はノートブックの中のファイルをすべて削除します。",
+  deletenotebook_message2: "本当にこのノートブックを削除しますか？",
+  delete: "削除",
+  cancel: "キャンセル",
+  update: "アップデートが利用可能です",
+  update_message_left: "バージョン ",
+  update_message_right: " へのアップデートが利用可能です。",
+  update_now: "今すぐアップデートする",
+  later: "後で"
 };
 
 const text_en = {
@@ -65,8 +75,26 @@ const text_en = {
   copy_path: "Copy Path",
   copy_embed: "Copy Embed Code",
   unpin: "Unpin Note",
-  pin_note: "Pin Note"
+  pin_note: "Pin Note",
+  warning: "Warning",
+  deletenotebook_message: "This action will delete all files in the notebook.",
+  deletenotebook_message2: "Are you sure you want to delete this notebook?",
+  delete: "Delete",
+  cancel: "Cancel",
+  update: "Update is available!",
+  update_message_left: "Update to v",
+  update_message_right: " is available.",
+  update_now: "Update now",
+  later: "Later"
 };
+
+let t = {}
+
+if (Intl.DateTimeFormat().resolvedOptions().locale == "ja-JP") {
+  t = text_ja;
+} else {
+  t = text_en;
+}
 
 // もし設定ファイルがないなら、作る
 const userDataPath = app.getPath("userData");
@@ -250,8 +278,10 @@ function createWindow() {
 
   // リンククリック時に OS のデフォルトブラウザで開く
   const handleUrlOpen = (event, url) => {
-    event.preventDefault();
-    shell.openExternal(url);  
+    if(url.includes("http")){
+      event.preventDefault();
+      shell.openExternal(url);
+    }  
   };
 
   // リンククリック時のイベントハンドラを登録
@@ -331,7 +361,6 @@ app.whenReady().then(() => {
       }
     } catch (error) {
       console.error("Error occurred: ", error);
-      // Handle the error appropriately
     }
   });
 
@@ -353,7 +382,6 @@ app.whenReady().then(() => {
       }
     } catch (error) {
       console.error("Error occurred: ", error);
-      // Handle the error appropriately
     }
   });
 
@@ -381,10 +409,10 @@ app.whenReady().then(() => {
   ipcMain.handle("deletenotebook", (event, message) => {
     const options = {
       type: "question",
-      title: "警告",
-      message: "この動作はノートブックの中のファイルをすべて削除します。",
-      detail: "本当にこのノートブックを削除しますか？",
-      buttons: ["削除", "キャンセル"],
+      title: t.warning,
+      message: t.deletenotebook_message,
+      detail: t.deletenotebook_message2,
+      buttons: [t.delete, t.cancel],
       cancelId: -1,
     };
 
@@ -436,12 +464,12 @@ app.whenReady().then(() => {
       let { latest, download } = response.data;
       if (currentVersion != latest) {
         const options = {
-          type: "question", // none/info/error/question/warning
+          type: "question",
           title: "ideaNote",
-          message: "アップデートが利用可能です",
-          detail: `バージョン ${latest} へのアップデートが利用可能です。`,
-          buttons: ["今すぐアップデートする", "後で"],
-          cancelId: -1, // Esc で閉じられたときの戻り値
+          message: t.update,
+          detail: `${t.update_message_left}${latest}${t.update_message_right}`,
+          buttons: [t.update_now, t.later],
+          cancelId: -1
         };
 
         let selected = dialog.showMessageBoxSync(options);
