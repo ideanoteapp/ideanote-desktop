@@ -830,6 +830,10 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   border-left: 1px solid #fff;
 }
 
+.cm-link{
+  color: #84a4f0 !important;
+}
+
 /*----------*/
 
 .mdcontent h1 {
@@ -877,6 +881,11 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   display: flex;
   flex-direction: column;
   margin: 6px;
+}
+
+.mdcontent a {
+  color: #84a4f0;
+  text-decoration: underline;
 }
 </style>
 
