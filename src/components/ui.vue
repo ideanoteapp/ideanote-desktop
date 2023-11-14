@@ -482,6 +482,30 @@
             >
             <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="pinNote()"
+                v-if="opening.includes('[pin]') == false"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-thumbtack"
+                  class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before"
+                />
+                ノートをピン留め
+              </div>
+
+              <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="unpinNote()"
+                v-if="opening.includes('[pin]') == true"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-thumbtack"
+                  class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before transform rotate-180"
+                />
+                ピン留めを解除
+              </div>
+
+            <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
                 @click="copyImg()"
                 v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg' ||
@@ -938,6 +962,15 @@ export default {
       })
   },
   methods: {
+    pinNote(){
+      this.notetitle = "[pin] " + this.notetitle
+      this.changeNoteTitle()
+    },
+    unpinNote(){
+      this.notetitle = this.notetitle.replace("[pin] ", "")
+      this.notetitle = this.notetitle.replace("[pin]", "")
+      this.changeNoteTitle()
+    },
     fontChange(){
       const app = document.querySelector("#app");
       app.style.fontFamily = this.font;
