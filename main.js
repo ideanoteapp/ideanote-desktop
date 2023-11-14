@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const axios = require("axios");
@@ -235,6 +235,16 @@ function createWindow() {
 
   win.loadFile("dist/index.html");
   //win.loadURL("http://localhost:5173");
+
+  // リンククリック時に OS のデフォルトブラウザで開く
+  const handleUrlOpen = (event, url) => {
+    event.preventDefault();
+    shell.openExternal(url);  
+  };
+
+  // リンククリック時のイベントハンドラを登録
+  win.webContents.on('will-navigate', handleUrlOpen);
+  win.webContents.on('new-window', handleUrlOpen);
 }
 
 app.whenReady().then(() => {
