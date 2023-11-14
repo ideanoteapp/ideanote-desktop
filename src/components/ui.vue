@@ -191,7 +191,7 @@
                 icon="fa-solid fa-gear"
                 class="text-sm w-6 textt-[#FFB800] mt-1 text-[#f3f3f3] text-[1.2rem] mr-1 before"
               />
-              全体設定
+              {{t.preferences}}
             </button>
           </div>
         </div>
@@ -489,7 +489,7 @@
                   icon="fa-solid fa-thumbtack"
                   class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before"
                 />
-                ノートをピン留め
+                {{t.pin_note}}
               </div>
 
               <div
@@ -501,7 +501,7 @@
                   icon="fa-solid fa-thumbtack"
                   class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before transform rotate-180"
                 />
-                ピン留めを解除
+                {{t.unpin}}
               </div>
 
             <div
@@ -516,7 +516,7 @@
                   icon="fa-brands fa-markdown"
                   class="w-6 textt-[#FFB800] text-[#6289ff] text-[1.2rem] mr-1 mt-1 before"
                 />
-                埋め込みコードをコピー
+                {{t.copy_embed}}
               </div>
 
             <div
@@ -527,7 +527,7 @@
                   icon="fa-solid fa-paperclip"
                   class="w-6 textt-[#FFB800] text-[#ffffffcc] text-[1.2rem] mr-1 mt-1 before"
                 />
-                パスをコピー
+                {{t.copy_path}}
               </div>
 
               <div
@@ -749,9 +749,9 @@
         class="flex justify-left bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
       >
         <div class="text-center">
-          <div class="text-xl font-bold mb-4">全体設定</div>
-          フォント
-          <select v-model="font" @change="fontChange" class="bg-[#202020] text-white rounded-lg p-3">
+          <div class="text-xl font-bold mb-4">{{t.preferences}}</div>
+          {{t.font}}
+          <select v-model="font" @change="fontChange" class="bg-[#202020] text-white ml-3 rounded-lg p-3">
             <option value="">Default</option>
             <option value="sans-serif">Sans Serif</option>
             <option value="serif">Serif</option>

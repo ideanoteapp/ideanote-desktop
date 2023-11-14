@@ -31,6 +31,12 @@ const text_ja = {
   notebook_description: "ノートブックは、ノートを保管する場所を表します。",
   start_setup: "セットアップを開始する",
   welcome: "ideaNoteへようこそ",
+  preferences: "全体設定",
+  font: "フォント",
+  copy_path: "パスをコピー",
+  copy_embed: "埋め込みコードをコピー",
+  unpin: "ピン留めを解除",
+  pin_note: "ノートをピン留め"
 };
 
 const text_en = {
@@ -54,6 +60,12 @@ const text_en = {
     "A notebook represents a place where you store your notes.",
   start_setup: "Get Started",
   welcome: "Welcome to ideaNote",
+  preferences: "Preferences",
+  font: "Font",
+  copy_path: "Copy Path",
+  copy_embed: "Copy Embed Code",
+  unpin: "Unpin Note",
+  pin_note: "Pin Note"
 };
 
 // もし設定ファイルがないなら、作る
