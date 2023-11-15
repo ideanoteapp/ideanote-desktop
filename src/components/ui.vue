@@ -191,7 +191,7 @@
                 icon="fa-solid fa-gear"
                 class="text-sm w-6 textt-[#FFB800] mt-1 text-[#f3f3f3] text-[1.2rem] mr-1 before"
               />
-              全体設定
+              {{t.preferences}}
             </button>
           </div>
         </div>
@@ -353,6 +353,13 @@
             :class="{ 'bg-[#2b2b2b] bg-[#ffffff10]': n == opening }"
           >
             <font-awesome-icon
+              v-if="
+                n.name.replace(/^.*[\\/]/, '').includes('[pin]')
+              "
+              icon="fa-solid fa-thumbtack"
+              class="textt-[#FFB800] text-[#ffffffc8] text-[1.035rem] mr-3.5 mt-1"
+            />
+            <font-awesome-icon
               v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'txt'"
               icon="fa-regular fa-file-lines"
               class="textt-[#FFB800] text-[#427eff] text-[1.035rem] mr-2 mt-1"
@@ -396,6 +403,7 @@
               icon="fa-regular fa-square-check"
               class="textt-[#FFB800] text-[#42ff48] text-[1.035rem] mr-2 mt-1"
             />
+            
             <div>
               <button class="w-full h-full text-left">
                 <div
@@ -474,6 +482,30 @@
             >
             <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="pinNote()"
+                v-if="opening.includes('[pin]') == false"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-thumbtack"
+                  class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before"
+                />
+                {{t.pin_note}}
+              </div>
+
+              <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="unpinNote()"
+                v-if="opening.includes('[pin]') == true"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-thumbtack"
+                  class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before transform rotate-180"
+                />
+                {{t.unpin}}
+              </div>
+
+            <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
                 @click="copyImg()"
                 v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg' ||
@@ -484,7 +516,7 @@
                   icon="fa-brands fa-markdown"
                   class="w-6 textt-[#FFB800] text-[#6289ff] text-[1.2rem] mr-1 mt-1 before"
                 />
-                埋め込みコードをコピー
+                {{t.copy_embed}}
               </div>
 
             <div
@@ -495,7 +527,7 @@
                   icon="fa-solid fa-paperclip"
                   class="w-6 textt-[#FFB800] text-[#ffffffcc] text-[1.2rem] mr-1 mt-1 before"
                 />
-                パスをコピー
+                {{t.copy_path}}
               </div>
 
               <div
@@ -533,15 +565,15 @@
             "
           >
             <div
-              class="font-bold text-2xl mb-1.5 border-b pb-1 border-b-white text-white"
+              class="font-bold mb-1.5 border-b pb-1 mr-2 border-b-white text-white"
             >
               <!--<font-awesome-icon icon="fa-regular fa-file-lines" class="textt-[#FFB800] text-[#ffcd42] text-[1.24rem] mr-2 mt-1 before absolute -translate-x-6 translate-y-0.5" />-->
               <input
                 type="text"
                 @change="changeNoteTitle"
                 v-model="notetitle"
-                style="outline: none !important; caret-color: white"
-                class="bg-transparent w-full"
+                style="outline: none !important; caret-color: white;"
+                class="bg-transparent text-2xl flex-grow w-full focus:bg-[#303030] focus:mb-1.5 focus:text-[1.4rem] focus:rounded-lg focus:py-1.5 focus:pl-4 focus:pr-[-1rem]"
                 placeholder="Note Name"
               />
             </div>
@@ -717,9 +749,9 @@
         class="flex justify-left bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
       >
         <div class="text-center">
-          <div class="text-xl font-bold mb-4">全体設定</div>
-          フォント
-          <select v-model="font" @change="fontChange" class="bg-[#202020] text-white rounded-lg p-3">
+          <div class="text-xl font-bold mb-4">{{t.preferences}}</div>
+          {{t.font}}
+          <select v-model="font" @change="fontChange" class="bg-[#202020] text-white ml-3 rounded-lg p-3">
             <option value="">Default</option>
             <option value="sans-serif">Sans Serif</option>
             <option value="serif">Serif</option>
@@ -798,6 +830,10 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   border-left: 1px solid #fff;
 }
 
+.cm-link{
+  color: #84a4f0 !important;
+}
+
 /*----------*/
 
 .mdcontent h1 {
@@ -845,6 +881,11 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   display: flex;
   flex-direction: column;
   margin: 6px;
+}
+
+.mdcontent a {
+  color: #84a4f0;
+  text-decoration: underline;
 }
 </style>
 
@@ -930,6 +971,15 @@ export default {
       })
   },
   methods: {
+    pinNote(){
+      this.notetitle = "[pin] " + this.notetitle
+      this.changeNoteTitle()
+    },
+    unpinNote(){
+      this.notetitle = this.notetitle.replace("[pin] ", "")
+      this.notetitle = this.notetitle.replace("[pin]", "")
+      this.changeNoteTitle()
+    },
     fontChange(){
       const app = document.querySelector("#app");
       app.style.fontFamily = this.font;
@@ -981,9 +1031,13 @@ export default {
       });
     },
     changeNoteTitle() {
+      document.activeElement.blur()
+
       window.electronAPI
         .changeNoteTitle(this.opening, this.notetitle + "." + this.ext)
-        .then((_result) => {
+        .then((res) => {
+          this.readNote(res)
+          //alert(res)
           if (this.openingDir == "") {
             window.electronAPI
               .getFiles(this.currentNotebook)
@@ -993,6 +1047,7 @@ export default {
               .catch((error) => {
                 console.error(error);
               });
+            
           } else {
             window.electronAPI
               .openDir(this.openingDir)
@@ -1062,16 +1117,20 @@ export default {
       window.electronAPI.setCurrentNotebook(this.notebook);
     },
     readNote(notee, md = false) {
+      this.editor = ""
+      this.easyMDE = undefined
+      const elements = document.querySelectorAll(".EasyMDEContainer");
+      elements.forEach((element) => {
+        element.remove();
+      });
+
       this.opened = true;
       try {
         this.$refs.editor.style.display = "block";
       } catch {}
 
       this.opening = "null.txt";
-      const elements = document.querySelectorAll(".EasyMDEContainer");
-      elements.forEach((element) => {
-        element.remove();
-      });
+      
       window.electronAPI
         .readFile(notee)
         .then((result) => {
@@ -1087,11 +1146,14 @@ export default {
             this.notetitle = this.notetitle.split(".").slice(0, -1).join(".");
           }
 
-          this.textarea = result;
+          if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"){
+            this.textarea = result;
+          }
           this.opening = notee;
 
           // Markdown
           if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "md") {
+            this.textarea = result;
             this.easyMDE = new EasyMDE({
               element: document.getElementById("editor"),
               spellChecker: false,
@@ -1108,7 +1170,9 @@ export default {
             });
 
             let open = this.opening;
-
+            window.electronAPI.readFile(this.opening).then((result) => {
+                this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
+              });
             this.easyMDE.codemirror.on("change", () => {
               window.electronAPI.saveNote(open, this.easyMDE.value());
               window.electronAPI.readFile(this.opening).then((result) => {

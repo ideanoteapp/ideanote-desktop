@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const axios = require("axios");
@@ -31,6 +31,22 @@ const text_ja = {
   notebook_description: "ノートブックは、ノートを保管する場所を表します。",
   start_setup: "セットアップを開始する",
   welcome: "ideaNoteへようこそ",
+  preferences: "全体設定",
+  font: "フォント",
+  copy_path: "パスをコピー",
+  copy_embed: "埋め込みコードをコピー",
+  unpin: "ピン留めを解除",
+  pin_note: "ノートをピン留め",
+  warning: "警告",
+  deletenotebook_message: "この動作はノートブックの中のファイルをすべて削除します。",
+  deletenotebook_message2: "本当にこのノートブックを削除しますか？",
+  delete: "削除",
+  cancel: "キャンセル",
+  update: "アップデートが利用可能です",
+  update_message_left: "バージョン ",
+  update_message_right: " へのアップデートが利用可能です。",
+  update_now: "今すぐアップデートする",
+  later: "後で"
 };
 
 const text_en = {
@@ -54,7 +70,31 @@ const text_en = {
     "A notebook represents a place where you store your notes.",
   start_setup: "Get Started",
   welcome: "Welcome to ideaNote",
+  preferences: "Preferences",
+  font: "Font",
+  copy_path: "Copy Path",
+  copy_embed: "Copy Embed Code",
+  unpin: "Unpin Note",
+  pin_note: "Pin Note",
+  warning: "Warning",
+  deletenotebook_message: "This action will delete all files in the notebook.",
+  deletenotebook_message2: "Are you sure you want to delete this notebook?",
+  delete: "Delete",
+  cancel: "Cancel",
+  update: "Update is available!",
+  update_message_left: "Update to v",
+  update_message_right: " is available.",
+  update_now: "Update now",
+  later: "Later"
 };
+
+let t = {}
+
+if (Intl.DateTimeFormat().resolvedOptions().locale == "ja-JP") {
+  t = text_ja;
+} else {
+  t = text_en;
+}
 
 // もし設定ファイルがないなら、作る
 const userDataPath = app.getPath("userData");
@@ -80,30 +120,34 @@ function getFilesInDirectory(dir) {
   let fileList = [];
 
   files.forEach((file) => {
-    const filePath = path.join(dir, file);
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
-      // fileList = fileList.concat(getFilesInDirectory(filePath));
-    } else {
-      let noteinfo = "";
-      if (
-        filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "md" ||
-        filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"
-      ) {
-        fileList.push({
-          name: filePath,
-          info: fs.readFileSync(filePath, { encoding: "utf-8" }),
-          mtime: stat.mtime,
-        });
+      const filePath = path.join(dir, file);
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+          // fileList = fileList.concat(getFilesInDirectory(filePath));
       } else {
-        fileList.push({ name: filePath, info: "", mtime: stat.mtime });
+          let noteinfo = "" 
+          if(filePath.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == "md" || filePath.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == "txt"){
+            fileList.push({"name": filePath, "info": fs.readFileSync(filePath, {encoding: "utf-8"}), "mtime": stat.mtime});
+          }else{
+            fileList.push({"name": filePath, "info": "", "mtime": stat.mtime});
+          }
       }
-    }
   });
 
   // ファイルを更新日時順に並び替え
   fileList.sort((a, b) => {
-    return b.mtime.getTime() - a.mtime.getTime();
+    // "[pin]"がついているかどうかで比較
+    const isAPinned = a.name.includes("[pin]");
+    const isBPinned = b.name.includes("[pin]");
+
+    if (isAPinned && !isBPinned) {
+      return -1; // aを前に
+    } else if (!isAPinned && isBPinned) {
+      return 1; // bを前に
+    } else {
+      // どちらも[pin]がついているかどちらもついていない場合は更新日時で比較
+      return b.mtime.getTime() - a.mtime.getTime();
+    }
   });
 
   return fileList;
@@ -231,6 +275,18 @@ function createWindow() {
 
   win.loadFile("dist/index.html");
   //win.loadURL("http://localhost:5173");
+
+  // リンククリック時に OS のデフォルトブラウザで開く
+  const handleUrlOpen = (event, url) => {
+    if(url.includes("http")){
+      event.preventDefault();
+      shell.openExternal(url);
+    }  
+  };
+
+  // リンククリック時のイベントハンドラを登録
+  win.webContents.on('will-navigate', handleUrlOpen);
+  win.webContents.on('new-window', handleUrlOpen);
 }
 
 app.whenReady().then(() => {
@@ -305,7 +361,6 @@ app.whenReady().then(() => {
       }
     } catch (error) {
       console.error("Error occurred: ", error);
-      // Handle the error appropriately
     }
   });
 
@@ -327,7 +382,6 @@ app.whenReady().then(() => {
       }
     } catch (error) {
       console.error("Error occurred: ", error);
-      // Handle the error appropriately
     }
   });
 
@@ -339,10 +393,11 @@ app.whenReady().then(() => {
     console.log(
       "New note path is " + path.join(path.dirname(message[0]), message[1]),
     );
-    return fs.renameSync(
+    fs.renameSync(
       message[0],
       path.join(path.dirname(message[0]), message[1]),
     );
+    return path.join(path.dirname(message[0]), message[1])
   });
 
   ipcMain.handle("getcurrentnotebook", (event) => {
@@ -354,10 +409,10 @@ app.whenReady().then(() => {
   ipcMain.handle("deletenotebook", (event, message) => {
     const options = {
       type: "question",
-      title: "警告",
-      message: "この動作はノートブックの中のファイルをすべて削除します。",
-      detail: "本当にこのノートブックを削除しますか？",
-      buttons: ["削除", "キャンセル"],
+      title: t.warning,
+      message: t.deletenotebook_message,
+      detail: t.deletenotebook_message2,
+      buttons: [t.delete, t.cancel],
       cancelId: -1,
     };
 
@@ -402,19 +457,19 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  const currentVersion = "1.4.0";
+  const currentVersion = "1.5.0";
   axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {
       let { latest, download } = response.data;
       if (currentVersion != latest) {
         const options = {
-          type: "question", // none/info/error/question/warning
+          type: "question",
           title: "ideaNote",
-          message: "アップデートが利用可能です",
-          detail: `バージョン ${latest} へのアップデートが利用可能です。`,
-          buttons: ["今すぐアップデートする", "後で"],
-          cancelId: -1, // Esc で閉じられたときの戻り値
+          message: t.update,
+          detail: `${t.update_message_left}${latest}${t.update_message_right}`,
+          buttons: [t.update_now, t.later],
+          cancelId: -1
         };
 
         let selected = dialog.showMessageBoxSync(options);
