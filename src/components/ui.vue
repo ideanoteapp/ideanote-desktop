@@ -615,7 +615,7 @@
 
             <div
               v-html="mdContent"
-              class="mdcontent flex flex-col"
+              class="mdcontent"
               :class="{ hidden: mdParsed == true }"
             ></div>
             <div
@@ -887,6 +887,22 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   color: #84a4f0;
   text-decoration: underline;
 }
+
+.mdcontent ul, ol{
+  display: flex;
+  flex-direction: column;
+}
+
+.mdcontent ul li{
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.mdcontent ol li{
+  list-style: decimal;
+  list-style-position: inside;
+}
+
 </style>
 
 <script>
