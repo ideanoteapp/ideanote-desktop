@@ -1319,6 +1319,8 @@ export default {
           this.textarea = "";
           this.opening =
             this.currentNotebook + "\\" + this.openingDir + "\\" + noteName;
+          
+          this.readNote(`${this.currentNotebook}/${this.openingDir.replace(/^.*[\\/]/,"",)}/${noteName}`)
         });
       if (this.openingDir == "") {
         window.electronAPI
