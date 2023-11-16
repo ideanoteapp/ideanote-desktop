@@ -101,6 +101,7 @@ export default {
   },
   mounted() {
     if (this.text != undefined) {
+      console.log(`Parsing ${this.text}`)
       this.list = JSON.parse(this.text);
     }
   },
