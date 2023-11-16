@@ -1162,7 +1162,10 @@ export default {
             this.notetitle = this.notetitle.split(".").slice(0, -1).join(".");
           }
 
-          if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"){
+          if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "png" &&
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpeg" &&
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpg" &&
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "webp"){
             this.textarea = result;
           }
           this.opening = notee;
