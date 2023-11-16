@@ -615,7 +615,7 @@
 
             <div
               v-html="mdContent"
-              class="mdcontent flex flex-col"
+              class="mdcontent"
               :class="{ hidden: mdParsed == true }"
             ></div>
             <div
@@ -887,6 +887,22 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   color: #84a4f0;
   text-decoration: underline;
 }
+
+.mdcontent ul, ol{
+  display: flex;
+  flex-direction: column;
+}
+
+.mdcontent ul li{
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.mdcontent ol li{
+  list-style: decimal;
+  list-style-position: inside;
+}
+
 </style>
 
 <script>
@@ -1146,7 +1162,10 @@ export default {
             this.notetitle = this.notetitle.split(".").slice(0, -1).join(".");
           }
 
-          if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"){
+          if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "png" &&
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpeg" &&
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpg" &&
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "webp"){
             this.textarea = result;
           }
           this.opening = notee;
@@ -1319,6 +1338,8 @@ export default {
           this.textarea = "";
           this.opening =
             this.currentNotebook + "\\" + this.openingDir + "\\" + noteName;
+          
+          this.readNote(`${this.currentNotebook}/${this.openingDir.replace(/^.*[\\/]/,"",)}/${noteName}`)
         });
       if (this.openingDir == "") {
         window.electronAPI
