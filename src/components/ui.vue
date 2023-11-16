@@ -350,7 +350,7 @@
             v-for="n in notes"
             @click="readNote(n.name, true)"
             class="flex border-b border-b-[#ffffff15] py-3 px-5 duration-200 hover:bg-[#2b2b2b] hover:bg-[#ffffff10]"
-            :class="{ 'bg-[#2b2b2b] bg-[#ffffff10]': n == opening }"
+            :class="{ 'bg-[#2b2b2b] bg-[#ffffff10]': n.name == opening }"
           >
             <font-awesome-icon
               v-if="
