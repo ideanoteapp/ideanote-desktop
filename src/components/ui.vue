@@ -354,7 +354,7 @@
           >
             <font-awesome-icon
               v-if="
-                n.name.replace(/^.*[\\/]/, '').includes('[pin]')
+                n.name.replace(/^.*[\\/]/, '').includes('#pin')
               "
               icon="fa-solid fa-thumbtack"
               class="textt-[#FFB800] text-[#ffffffc8] text-[1.035rem] mr-3.5 mt-1"
@@ -483,7 +483,7 @@
             <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
                 @click="pinNote()"
-                v-if="opening.includes('[pin]') == false"
+                v-if="opening.includes('#pin') == false"
               >
                 <font-awesome-icon
                   icon="fa-solid fa-thumbtack"
@@ -495,7 +495,7 @@
               <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
                 @click="unpinNote()"
-                v-if="opening.includes('[pin]') == true"
+                v-if="opening.includes('#pin') == true"
               >
                 <font-awesome-icon
                   icon="fa-solid fa-thumbtack"
@@ -988,12 +988,12 @@ export default {
   },
   methods: {
     pinNote(){
-      this.notetitle = "[pin] " + this.notetitle
+      this.notetitle = this.notetitle + " #pin"
       this.changeNoteTitle()
     },
     unpinNote(){
-      this.notetitle = this.notetitle.replace("[pin] ", "")
-      this.notetitle = this.notetitle.replace("[pin]", "")
+      this.notetitle = this.notetitle.replace(" #pin", "")
+      this.notetitle = this.notetitle.replace("#pin", "")
       this.changeNoteTitle()
     },
     fontChange(){
