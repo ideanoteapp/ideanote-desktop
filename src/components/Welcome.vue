@@ -55,6 +55,8 @@
 @tailwind utilities;
 </style>
 <script>
+import axios from "axios";
+
 export default {
   data: () => {
     return {
@@ -68,6 +70,18 @@ export default {
       this.t = result;
       console.log(this.t);
     });
+
+    axios
+        .post(
+          `https://ideanote-usercount.korange.work/add/`,
+          {},
+        )
+        .then((response) => {
+
+        })
+        .catch((error) => {
+
+        });
   },
   methods: {
     go() {

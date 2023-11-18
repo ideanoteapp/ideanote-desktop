@@ -136,16 +136,16 @@ function getFilesInDirectory(dir) {
 
   // ファイルを更新日時順に並び替え
   fileList.sort((a, b) => {
-    // "[pin]"がついているかどうかで比較
-    const isAPinned = a.name.includes("[pin]");
-    const isBPinned = b.name.includes("[pin]");
+    // "#pin"がついているかどうかで比較
+    const isAPinned = a.name.includes("#pin");
+    const isBPinned = b.name.includes("#pin");
 
     if (isAPinned && !isBPinned) {
       return -1; // aを前に
     } else if (!isAPinned && isBPinned) {
       return 1; // bを前に
     } else {
-      // どちらも[pin]がついているかどちらもついていない場合は更新日時で比較
+      // どちらも#pinがついているかどちらもついていない場合は更新日時で比較
       return b.mtime.getTime() - a.mtime.getTime();
     }
   });
@@ -457,7 +457,7 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  const currentVersion = "1.5.1";
+  const currentVersion = "1.5.2";
   axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {
