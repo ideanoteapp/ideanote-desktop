@@ -274,6 +274,12 @@ async function readFile(file) {
 }
 
 function createWindow() {
+  let icon
+  if(DEBUG){
+    icon = "./dev.ico"
+  }else{
+    icon = "./app.ico"
+  }
   const win = new BrowserWindow({
     width: 1000,
     height: 700,
@@ -282,7 +288,7 @@ function createWindow() {
     },
     autoHideMenuBar: true,
     title: "ideaNote",
-    icon: "./app.ico",
+    icon: icon,
   });
 
   win.loadFile("dist/index.html");
