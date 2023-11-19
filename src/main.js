@@ -25,6 +25,8 @@ import {
   faEyeSlash,
   faPaperclip,
   faThumbTack,
+  faPen,
+  faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* import specific icons */
@@ -59,7 +61,9 @@ library.add(
   faXmark,
   faEyeSlash,
   faPaperclip,
-  faThumbTack
+  faThumbTack,
+  faPen,
+  faArrowDown
 );
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
