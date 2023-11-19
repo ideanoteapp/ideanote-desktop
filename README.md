@@ -38,6 +38,9 @@ License: MIT License
 ### [📦 Electron Forge](https://github.com/electron/forge/)
 License: MIT License
 
+### [🟢 Vue](https://github.com/vuejs/)
+License: MIT License
+
 ### [⚡ Vite](https://github.com/vitejs/vite)
 License: MIT License
 
