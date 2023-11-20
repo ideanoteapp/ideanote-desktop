@@ -60,7 +60,7 @@
       ></div>
       <div
         id="sidebar1"
-        class="bg-[#262626] min-w-[180px] lg:min-w-[200px] w-[180px] z-10 lg:w-[200px] h-screen select-none overflow-x-hidden"
+        class="hidden sm:block bg-[#262626] min-w-[180px] lg:min-w-[200px] w-[180px] z-10 lg:w-[200px] h-screen select-none overflow-x-hidden"
         v-if="showSidebar"
       >
         <div
@@ -249,7 +249,7 @@
       <div
         id="sidebar2"
         v-if="showSidebar"
-        class="bg-[#2E2E2E] w-[286px] text-white lg:w-[386px] h-screen"
+        class="hidden sm:block bg-[#2E2E2E] w-[286px] text-white lg:w-[386px] h-screen"
       >
         <div
           class="bg-[#242424] duration-200 h-[54px] w-[286px] lg:w-[386px] text-white flex px-4"
@@ -438,7 +438,7 @@
           class="bg-[#242424] duration-200 h-[54px] text-white flex px-4 select-none"
         >
           <!-- Left icons -->
-          <button @click="showSidebar = !showSidebar">
+          <button @click="showSidebar = !showSidebar" class="hidden sm:block">
             <font-awesome-icon icon="fa-regular fa-window-maximize" class="text-[20px] opacity-90" />
           </button>
 
