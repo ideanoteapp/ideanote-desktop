@@ -61,6 +61,7 @@
       <div
         id="sidebar1"
         class="bg-[#262626] min-w-[180px] lg:min-w-[200px] w-[180px] z-10 lg:w-[200px] h-screen select-none overflow-x-hidden"
+        v-if="showSidebar"
       >
         <div
           class="bg-[#202020] hover:bg-[#1d1d1d] duration-200 h-[54px] text-white flex px-4"
@@ -247,6 +248,7 @@
 
       <div
         id="sidebar2"
+        v-if="showSidebar"
         class="bg-[#2E2E2E] w-[286px] text-white lg:w-[386px] h-screen"
       >
         <div
@@ -431,10 +433,14 @@
       </div>
 
       <div id="sidebar2" class="bg-[#1f1f1f] flex-grow h-screen max-h-screen">
+        
         <div
           class="bg-[#242424] duration-200 h-[54px] text-white flex px-4 select-none"
         >
           <!-- Left icons -->
+          <button @click="showSidebar = !showSidebar">
+            <font-awesome-icon icon="fa-regular fa-window-maximize" class="text-[20px] opacity-90" />
+          </button>
 
           <div
             class="flex flex-col justify-center ml-2.5 flex-grow mb-0.5"
@@ -919,6 +925,7 @@ export default {
   },
   data: () => {
     return {
+      showSidebar: true,
       font: "",
       currentNotebook: "",
       opened: false,

@@ -35,6 +35,7 @@ import {
   faFilePdf,
   faImage,
   faSquareCheck,
+  faWindowMaximize,
 } from "@fortawesome/free-regular-svg-icons";
 
 import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
@@ -63,7 +64,8 @@ library.add(
   faPaperclip,
   faThumbTack,
   faPen,
-  faArrowDown
+  faArrowDown,
+  faWindowMaximize
 );
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
