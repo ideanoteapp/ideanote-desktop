@@ -29,7 +29,7 @@
           <div class="flex items-start w-full">
             <div class="flex-grow text flex flex-col">
             <div class="text-[.7rem] opacity-60 flex-grow">{{ i.date }}</div>
-              <div>{{ i.text }}</div>
+              <div v-html="parseURL(i.text)" class="scrap-text"></div>
             </div>
             <button @click="startEdit(index)" class="mr-2">
               <font-awesome-icon
@@ -105,6 +105,11 @@
 * {
   white-space: pre-line;
 }
+
+.scrap-text a{
+  color: #84a4f0;
+  text-decoration: underline;
+}
 </style>
 
 <script>
@@ -140,6 +145,9 @@ export default {
         this.input = "";
         this.$emit("save", JSON.stringify(this.list));
       }
+    },
+    parseURL(string) {
+      return string.replace(/\bhttps?:\/\/\S+/gi, match => `<a href="${match}">${match}</a>`);
     },
     remove(text) {
       this.list = this.list.filter((item) => item !== text);
