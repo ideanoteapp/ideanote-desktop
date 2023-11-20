@@ -117,7 +117,7 @@
             </div>
           </div>
 
-          <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
+          <!--<div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
             <button class="px-4 pb-1" @click="changeIcon">
               <font-awesome-icon
                 icon="fa-solid fa-star"
@@ -125,14 +125,14 @@
               />
               {{ t.change_icon }}
             </button>
-          </div>
+          </div>-->
 
           <!--<div class="hover:bg-[#3f3f3f] px-4 pb-1 text-white z-50">
                 <font-awesome-icon icon="fa-solid fa-gear" class="text-sm w-6 textt-[#FFB800] mt-1 text-[#42ff6b] text-[1.2rem] mr-1 before" />
                 ノートブック設定
               </div>-->
 
-          <div class="hover:bg-[#3f3f3f] text-white z-50">
+          <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
             <button class="px-4 pb-1 flex" @click="deleteNotebook">
               <font-awesome-icon
                 icon="fa-solid fa-trash"
