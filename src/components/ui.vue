@@ -261,7 +261,16 @@
           <div
             class="flex flex-col justify-center ml-2.5 flex-grow mb-0.5 text-center"
           >
-            {{ openingDir.replace(/^.*[\\/]/, "") }}
+            <!--{{ openingDir.replace(/^.*[\\/]/, "") }}-->
+          </div>
+
+          <div class="flex flex-col justify-center ml-2.5 mr-1">
+            <button @click="createNote('scrap')">
+              <font-awesome-icon
+                icon="fa-solid fa-scroll"
+                class="text-[20px] mr-1"
+              />
+            </button>
           </div>
 
           <div class="flex flex-col justify-center ml-2.5 mr-1">
