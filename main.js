@@ -1,3 +1,5 @@
+const DEBUG = true
+
 const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
 const fs = require("fs");
@@ -96,8 +98,18 @@ if (Intl.DateTimeFormat().resolvedOptions().locale == "ja-JP") {
   t = text_en;
 }
 
-// もし設定ファイルがないなら、作る
-const userDataPath = app.getPath("userData");
+let userDataPath
+if(DEBUG){
+  try{
+    fs.mkdirSync(path.join(app.getPath("userData"), "dev"))
+  }catch{
+
+  }
+  userDataPath = path.join(app.getPath("userData"), "dev");
+}else{
+  userDataPath = app.getPath("userData");
+}
+
 const configPath = path.join(userDataPath, "currentnotebook.txt");
 
 if (!fs.existsSync(configPath)) {
@@ -191,7 +203,7 @@ async function createFolder(notebook, name) {
 async function newNotebook(message) {
   return new Promise((resolve, reject) => {
     fs.mkdir(
-      path.join(path.join(app.getPath("userData"), "notebooks"), message),
+      path.join(path.join(userDataPath, "notebooks"), message),
       (err, data) => {
         if (err) {
           reject(err);
@@ -236,11 +248,11 @@ async function setIcon(message) {
     .then((file) => {
       console.log(
         "Copying icon to " +
-          path.join(app.getPath("userData"), "notebooks", message, ".icon.png"),
+          path.join(userDataPath, "notebooks", message, ".icon.png"),
       );
       fs.copyFileSync(
         file,
-        path.join(app.getPath("userData"), "notebooks", message, ".icon.png"),
+        path.join(userDataPath, "notebooks", message, ".icon.png"),
       );
     })
     .catch((error) => {
@@ -262,6 +274,12 @@ async function readFile(file) {
 }
 
 function createWindow() {
+  let icon
+  if(DEBUG){
+    icon = "./dev.ico"
+  }else{
+    icon = "./app.ico"
+  }
   const win = new BrowserWindow({
     width: 1000,
     height: 700,
@@ -270,7 +288,7 @@ function createWindow() {
     },
     autoHideMenuBar: true,
     title: "ideaNote",
-    icon: "./app.ico",
+    icon: icon,
   });
 
   win.loadFile("dist/index.html");
@@ -324,7 +342,7 @@ app.whenReady().then(() => {
     data = fs.readFileSync(path.join(userDataPath, "currentnotebook.txt"), {
       encoding: "utf-8",
     });
-    data = path.join(app.getPath("userData"), "notebooks", message);
+    data = path.join(userDataPath, "notebooks", message);
     fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"), data, {
       encoding: "utf-8",
     });
@@ -386,7 +404,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("listnotebooks", (event) => {
-    return getDirs(path.join(app.getPath("userData"), "notebooks"));
+    return getDirs(path.join(userDataPath, "notebooks"));
   });
 
   ipcMain.handle("changenotetitle", (event, message) => {
@@ -457,7 +475,7 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  const currentVersion = "1.5.2";
+  const currentVersion = "1.6.0";
   axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {

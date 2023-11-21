@@ -25,6 +25,8 @@ import {
   faEyeSlash,
   faPaperclip,
   faThumbTack,
+  faPen,
+  faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* import specific icons */
@@ -33,6 +35,7 @@ import {
   faFilePdf,
   faImage,
   faSquareCheck,
+  faWindowMaximize,
 } from "@fortawesome/free-regular-svg-icons";
 
 import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
@@ -59,7 +62,10 @@ library.add(
   faXmark,
   faEyeSlash,
   faPaperclip,
-  faThumbTack
+  faThumbTack,
+  faPen,
+  faArrowDown,
+  faWindowMaximize
 );
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

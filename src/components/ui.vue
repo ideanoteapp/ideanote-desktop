@@ -60,7 +60,8 @@
       ></div>
       <div
         id="sidebar1"
-        class="bg-[#262626] min-w-[180px] lg:min-w-[200px] w-[180px] z-10 lg:w-[200px] h-screen select-none overflow-x-hidden"
+        class="hidden sm:block bg-[#262626] min-w-[180px] lg:min-w-[200px] w-[180px] z-10 lg:w-[200px] h-screen select-none overflow-x-hidden"
+        v-if="showSidebar"
       >
         <div
           class="bg-[#202020] hover:bg-[#1d1d1d] duration-200 h-[54px] text-white flex px-4"
@@ -117,7 +118,7 @@
             </div>
           </div>
 
-          <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
+          <!--<div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
             <button class="px-4 pb-1" @click="changeIcon">
               <font-awesome-icon
                 icon="fa-solid fa-star"
@@ -125,14 +126,14 @@
               />
               {{ t.change_icon }}
             </button>
-          </div>
+          </div>-->
 
           <!--<div class="hover:bg-[#3f3f3f] px-4 pb-1 text-white z-50">
                 <font-awesome-icon icon="fa-solid fa-gear" class="text-sm w-6 textt-[#FFB800] mt-1 text-[#42ff6b] text-[1.2rem] mr-1 before" />
                 ノートブック設定
               </div>-->
 
-          <div class="hover:bg-[#3f3f3f] text-white z-50">
+          <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
             <button class="px-4 pb-1 flex" @click="deleteNotebook">
               <font-awesome-icon
                 icon="fa-solid fa-trash"
@@ -247,7 +248,8 @@
 
       <div
         id="sidebar2"
-        class="bg-[#2E2E2E] w-[286px] text-white lg:w-[386px] h-screen"
+        v-if="showSidebar"
+        class="hidden sm:block bg-[#2E2E2E] w-[286px] text-white lg:w-[386px] h-screen"
       >
         <div
           class="bg-[#242424] duration-200 h-[54px] w-[286px] lg:w-[386px] text-white flex px-4"
@@ -259,7 +261,16 @@
           <div
             class="flex flex-col justify-center ml-2.5 flex-grow mb-0.5 text-center"
           >
-            {{ openingDir.replace(/^.*[\\/]/, "") }}
+            <!--{{ openingDir.replace(/^.*[\\/]/, "") }}-->
+          </div>
+
+          <div class="flex flex-col justify-center ml-2.5 mr-1">
+            <button @click="createNote('scrap')">
+              <font-awesome-icon
+                icon="fa-solid fa-scroll"
+                class="text-[20px] mr-1"
+              />
+            </button>
           </div>
 
           <div class="flex flex-col justify-center ml-2.5 mr-1">
@@ -431,10 +442,14 @@
       </div>
 
       <div id="sidebar2" class="bg-[#1f1f1f] flex-grow h-screen max-h-screen">
+        
         <div
           class="bg-[#242424] duration-200 h-[54px] text-white flex px-4 select-none"
         >
           <!-- Left icons -->
+          <button @click="showSidebar = !showSidebar" class="hidden sm:block">
+            <font-awesome-icon icon="fa-regular fa-window-maximize" class="text-[20px] opacity-90" />
+          </button>
 
           <div
             class="flex flex-col justify-center ml-2.5 flex-grow mb-0.5"
@@ -919,6 +934,7 @@ export default {
   },
   data: () => {
     return {
+      showSidebar: true,
       font: "",
       currentNotebook: "",
       opened: false,
