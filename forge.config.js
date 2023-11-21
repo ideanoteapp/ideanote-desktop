@@ -17,6 +17,12 @@ module.exports = {
       },
     },
     {
+      name: '@electron-forge/maker-appx',
+      config: {
+        publisher: 'CN=Korange'
+      }
+    },
+    {
       name: "@electron-forge/maker-deb",
       config: {},
     },
