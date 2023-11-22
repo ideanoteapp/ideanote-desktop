@@ -6,7 +6,7 @@
       <div
         v-for="(i, index) in list"
         class="bg-[#262626] mb-3 flex rounded-lg text-white px-4 py-2 border border-[#3a3a3a]"
-        :class="{'border-[#2f497d]': index == editing}"
+        :class="{'border-none bg-white opacity-20 rounded-full h-0 py-[2px]': index == editing}"
       > 
         <div class="flex w-full flex-grow" v-if="typeof i === 'string' || i instanceof String">
           <div class="flex-grow">{{ i }}</div>
@@ -18,11 +18,7 @@
             </button>
         </div>
 
-        <div class="text-center flex-grow text-md py-2" v-else-if="index == editing">
-          <font-awesome-icon
-                icon="fa-solid fa-arrow-down"
-                class="text-white opacity-80 text-xl"
-              />
+        <div v-else-if="index == editing">
         </div>
 
         <div class="flex items-start w-full" v-else>
