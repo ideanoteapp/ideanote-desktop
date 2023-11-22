@@ -23,6 +23,9 @@ You can download the latest version of ideaNote from the [official website](http
 ## 📝 License
 [Apache License 2.0](./LICENSE)
 
+## 🌟 Contributing
+You are always welcome to contribute to ideaNote!
+
 ## 📦 How to Build
 ```
 npm install
