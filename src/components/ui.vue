@@ -918,6 +918,13 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   list-style-position: inside;
 }
 
+/*-----------------------*/
+
+@media(min-width: 1580px) {
+  #editor-pane{
+    max-width: 50rem;
+  }
+}
 </style>
 
 <script>
