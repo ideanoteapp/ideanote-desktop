@@ -134,10 +134,10 @@
               </div>-->
 
           <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
-            <button class="px-4 pb-1 flex" @click="deleteNotebook">
+            <button class="px-4 pb-1 text-left flex" @click="deleteNotebook">
               <font-awesome-icon
                 icon="fa-solid fa-trash"
-                class="text-sm w-6 textt-[#FFB800] mt-1 text-[#ff4242] text-[1.2rem] mr-1 before"
+                class="text-sm w-6 textt-[#FFB800] mt-1 text-[#ff4242] text-[1.2rem] mr-2 before"
               />
               <div>
                 {{ t.delete_notebook }}
@@ -172,10 +172,10 @@
           </div>
 
           <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
-            <button class="px-4 pb-1" @click="this.createNotebookForm = true">
+            <button class="px-4 pb-1 text-left flex" @click="this.createNotebookForm = true">
               <font-awesome-icon
                 icon="fa-solid fa-plus"
-                class="w-6 textt-[#FFB800] text-[1.2rem] mr-1 mt-1 before"
+                class="w-6 textt-[#FFB800] text-[1.2rem] mr-2 mt-1 before"
               />
               {{ t.new_notebook }}
             </button>
@@ -918,6 +918,13 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   list-style-position: inside;
 }
 
+/*-----------------------*/
+
+@media(min-width: 1580px) {
+  #editor-pane{
+    max-width: 50rem;
+  }
+}
 </style>
 
 <script>

@@ -1,4 +1,4 @@
-const DEBUG = true
+const DEBUG = false
 
 const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
@@ -475,7 +475,7 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  const currentVersion = "1.6.0";
+  const currentVersion = "1.6.1";
   axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {

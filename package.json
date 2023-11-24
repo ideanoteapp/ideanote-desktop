@@ -1,17 +1,33 @@
 {
   "name": "ideanote",
   "private": true,
-  "version": "1.6.0",
+  "version": "1.6.1",
   "main": "main.js",
   "description": "A note-taking app",
   "author": "Korange",
   "build": {
     "appId": "work.korange.ideanote",
     "productName": "ideaNote",
+    "directories": {
+      "output": "out"
+    },
     "copyright": "Copyright 2023 Korange",
     "win": {
-      "target": "squirrel",
-      "icon": "./app.ico"
+      "target": [
+        "appx",
+        "squirrel"
+      ]
+    },
+    "appx": {
+      "displayName": "ideaNote_",
+      "applicationId": "Korange.ideanoteapp",
+      "identityName": "53541Korange.ideanoteapp",
+      "publisher": "CN=DCA2199D-2621-4F21-9AEB-F72A8E101F6D",
+      "publisherDisplayName": "Korange"
+    },
+    "squirrelWindows": {
+      "iconUrl": "https://media.korange.work/ideanote.ico",
+      "loadingGif": "./build/Installer.gif"
     }
   },
   "scripts": {
@@ -21,33 +37,29 @@
     "electron:start": "vite build && electron .",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make",
-    "clean": "npx prettier -w ./"
+    "clean": "npx prettier -w ./",
+    "make": "electron-builder build --win --x64"
   },
   "dependencies": {
+    "@electron-forge/maker-appx": "^7.1.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "axios": "^1.6.0",
+    "electron-builder-squirrel-windows": "^24.9.1",
     "electron-squirrel-startup": "^1.0.0",
     "marked": "^9.1.5",
     "monaco-editor": "^0.44.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.4.1",
-    "@electron-forge/maker-deb": "^6.4.1",
-    "@electron-forge/maker-rpm": "^6.4.1",
-    "@electron-forge/maker-squirrel": "^6.4.1",
-    "@electron-forge/maker-wix": "^6.4.2",
-    "@electron-forge/maker-zip": "^6.4.1",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.4.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.15",
     "easymde": "^2.18.0",
     "electron": "^26.1.0",
+    "electron-builder": "^24.6.4",
     "electron-wix-msi": "^5.0.0",
     "eslint": "^8.53.0",
     "eslint-config-standard": "^17.1.0",
