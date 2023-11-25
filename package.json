@@ -23,7 +23,8 @@
       "applicationId": "Korange.ideanoteapp",
       "identityName": "53541Korange.ideanoteapp",
       "publisher": "CN=DCA2199D-2621-4F21-9AEB-F72A8E101F6D",
-      "publisherDisplayName": "Korange"
+      "publisherDisplayName": "Korange",
+      "languages": ["ja_JP", "en_US"]
     },
     "squirrelWindows": {
       "iconUrl": "https://media.korange.work/ideanote.ico",
