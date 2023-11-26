@@ -8,7 +8,7 @@
           class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
         >
           <div class="text-center" v-if="slide == 0">
-            <img src="../../icon.png" class="inline mb-3" />
+            <img src="../../icon.png" class="inline mb-3" width="64" height="64" />
             <div class="text-2xl font-bold">{{ t.welcome }}</div>
             <div>
               <button
@@ -21,7 +21,7 @@
           </div>
 
           <div class="text-center" v-if="slide == 1">
-            <img src="../../icon.png" class="inline mb-3" />
+            <img src="../../icon.png" class="inline mb-3" width="64" height="64" />
             <div class="text-2xl font-bold">
               {{ t.set_notebook_name }}
             </div>
