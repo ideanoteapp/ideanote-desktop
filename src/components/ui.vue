@@ -208,7 +208,7 @@
               alt=""
               class="w-[29px] h-[29px] mr-2 bg-[#ff3f3f] rounded-full"
             />
-            <div class="flex flex-col justify-center mb-1">
+            <div class="flex flex-col text-left justify-center mb-1">
               {{ t.root }}
             </div>
           </button>
@@ -226,7 +226,7 @@
               alt=""
               class="w-[29px] h-[29px] bg-[#353535] mr-2 rounded-full border-none"
             />
-            <div class="flex flex-col justify-center mb-1">
+            <div class="flex flex-col text-left justify-center mb-1">
               {{ i.replace(/^.*[\\/]/, "") }}
             </div>
           </button>
