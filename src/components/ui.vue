@@ -360,7 +360,7 @@
           <div
             v-for="n in notes"
             @click="readNote(n.name, true)"
-            class="flex border-b border-b-[#ffffff15] py-3 px-5 duration-200 hover:bg-[#2b2b2b] hover:bg-[#ffffff10]"
+            class="flex border-b border-b-[#ffffff15] py-3 px-5 duration-200 hover:bg-[#2b2b2b] hover:bg-[#ffffff10] w-[286px] lg:w-[386px]"
             :class="{ 'bg-[#2b2b2b] bg-[#ffffff10]': n.name == opening }"
           >
             <font-awesome-icon
@@ -415,15 +415,15 @@
               class="textt-[#FFB800] text-[#42ff48] text-[1.035rem] mr-2 mt-1"
             />
             
-            <div>
-              <button class="w-full h-full text-left">
+            <div class="max-h-none">
+              <button class="w-full text-left max-h-none">
                 <div
                   class="text-[1.035rem]"
                   v-if="n.name.replace(/^.*[\\/]/, '').match('&&&&untitled-')"
                 >
                   New Note...
                 </div>
-                <div class="text-[1.035rem]" v-else>
+                <div class="text-[1.035rem] break-all" v-else>
                   {{
                     n.name
                       .replace(/^.*[\\/]/, "")
@@ -432,7 +432,7 @@
                       .join(".")
                   }}
                 </div>
-                <div class="opacity-80 text-sm overflow-hidden max-h-[2.5rem]">
+                <div class="opacity-80 text-sm max-h-[2.5rem]">
                   {{ n.info.replace("\n", " ") }}
                 </div>
               </button>
