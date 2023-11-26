@@ -533,6 +533,18 @@
                 />
                 {{t.copy_embed}}
               </div>
+            
+              <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="exportScrap()"
+                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap'"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-download"
+                  class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.2rem] mr-1 mt-1 before"
+                />
+                {{t.export_scrap}}
+              </div>
 
             <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
@@ -1045,6 +1057,10 @@ export default {
       window.electronAPI.readFile(this.opening).then((result) => {
         this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
       });
+    },
+    exportScrap(){
+      window.electronAPI.exportScrap(this.opening)
+      this.NoteMenu = false;
     },
     sendFeedback() {
       this.sendFeedbackForm = false;
