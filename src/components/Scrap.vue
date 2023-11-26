@@ -134,7 +134,7 @@ export default {
     addText() {
       if(this.ifEditing){
         var d = new Date()
-        this.list.splice(this.editing, 1, {"text": this.input, "date": `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${d.getMinutes()} (edited)`});
+        this.list.splice(this.editing, 1, {"text": this.input, "date": this.list[this.editing].date});
         this.input = "";
         this.$emit("save", JSON.stringify(this.list));
         this.ifEditing = false;
