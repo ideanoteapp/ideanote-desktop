@@ -48,7 +48,8 @@ const text_ja = {
   update_message_left: "バージョン ",
   update_message_right: " へのアップデートが利用可能です。",
   update_now: "今すぐアップデートする",
-  later: "後で"
+  later: "後で",
+  export_scrap: "スクラップをエクスポート"
 };
 
 const text_en = {
@@ -87,7 +88,8 @@ const text_en = {
   update_message_left: "Update to v",
   update_message_right: " is available.",
   update_now: "Update now",
-  later: "Later"
+  later: "Later",
+  export_scrap: "Export"
 };
 
 let t = {}
@@ -336,6 +338,27 @@ app.whenReady().then(() => {
     return saveNote(message[0], message[1]);
   });
 
+  ipcMain.handle("exportscrap", (event, message) => {
+    const data = JSON.parse(fs.readFileSync(message, 'utf8'));
+
+    let save = ""
+    for (const key in data) {
+      save = `${save}${data[key].date}\n${data[key].text + "\n\n"}`;
+    }
+
+    const path = dialog.showSaveDialogSync({
+      filters: [
+        { name: 'Text File', extensions: ['txt'] },
+      ]
+    });
+
+    if( path === undefined ){
+      return
+    }
+
+    fs.writeFileSync(path, save)
+  });
+
   ipcMain.handle("newnotebook", (event, message) => {
     newNotebook(message);
     //fs.copyFileSync("../.icon.png", path.join(path.join(app.getPath('userData'), "notebooks", message, ".icon.png")))
@@ -475,7 +498,7 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  const currentVersion = "1.6.1";
+  const currentVersion = "1.7.0";
   axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {

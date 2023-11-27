@@ -24,5 +24,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   setIcon: (notebook) => ipcRenderer.invoke("seticon", notebook),
   deleteNotebook: (notebook) => ipcRenderer.invoke("deletenotebook", notebook),
   changeNoteTitle: (old, newer) =>
-    ipcRenderer.invoke("changenotetitle", [old, newer])
+    ipcRenderer.invoke("changenotetitle", [old, newer]),
+  exportScrap: (message) => ipcRenderer.invoke("exportscrap", message)
 });

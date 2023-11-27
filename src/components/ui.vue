@@ -208,7 +208,7 @@
               alt=""
               class="w-[29px] h-[29px] mr-2 bg-[#ff3f3f] rounded-full"
             />
-            <div class="flex flex-col justify-center mb-1">
+            <div class="flex flex-col text-left justify-center mb-1">
               {{ t.root }}
             </div>
           </button>
@@ -226,7 +226,7 @@
               alt=""
               class="w-[29px] h-[29px] bg-[#353535] mr-2 rounded-full border-none"
             />
-            <div class="flex flex-col justify-center mb-1">
+            <div class="flex flex-col text-left justify-center mb-1">
               {{ i.replace(/^.*[\\/]/, "") }}
             </div>
           </button>
@@ -360,7 +360,7 @@
           <div
             v-for="n in notes"
             @click="readNote(n.name, true)"
-            class="flex border-b border-b-[#ffffff15] py-3 px-5 duration-200 hover:bg-[#2b2b2b] hover:bg-[#ffffff10]"
+            class="flex border-b border-b-[#ffffff15] py-3 px-5 duration-200 hover:bg-[#2b2b2b] hover:bg-[#ffffff10] w-[286px] lg:w-[386px]"
             :class="{ 'bg-[#2b2b2b] bg-[#ffffff10]': n.name == opening }"
           >
             <font-awesome-icon
@@ -415,15 +415,15 @@
               class="textt-[#FFB800] text-[#42ff48] text-[1.035rem] mr-2 mt-1"
             />
             
-            <div>
-              <button class="w-full h-full text-left">
+            <div class="max-h-none">
+              <button class="w-full text-left max-h-none">
                 <div
                   class="text-[1.035rem]"
                   v-if="n.name.replace(/^.*[\\/]/, '').match('&&&&untitled-')"
                 >
                   New Note...
                 </div>
-                <div class="text-[1.035rem]" v-else>
+                <div class="text-[1.035rem] break-all" v-else>
                   {{
                     n.name
                       .replace(/^.*[\\/]/, "")
@@ -432,7 +432,7 @@
                       .join(".")
                   }}
                 </div>
-                <div class="opacity-80 text-sm overflow-hidden max-h-[2.5rem]">
+                <div class="opacity-80 text-sm max-h-[2.5rem] overflow-hidden">
                   {{ n.info.replace("\n", " ") }}
                 </div>
               </button>
@@ -532,6 +532,18 @@
                   class="w-6 textt-[#FFB800] text-[#6289ff] text-[1.2rem] mr-1 mt-1 before"
                 />
                 {{t.copy_embed}}
+              </div>
+            
+              <div
+                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                @click="exportScrap()"
+                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap'"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-download"
+                  class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.2rem] mr-1 mt-1 before"
+                />
+                {{t.export_scrap}}
               </div>
 
             <div
@@ -1046,6 +1058,10 @@ export default {
         this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
       });
     },
+    exportScrap(){
+      window.electronAPI.exportScrap(this.opening)
+      this.NoteMenu = false;
+    },
     sendFeedback() {
       this.sendFeedbackForm = false;
       axios
@@ -1157,6 +1173,7 @@ export default {
     },
     readNote(notee, md = false) {
       this.editor = ""
+      this.textarea = ""
       this.easyMDE = undefined
       const elements = document.querySelectorAll(".EasyMDEContainer");
       elements.forEach((element) => {
