@@ -1173,6 +1173,7 @@ export default {
     },
     readNote(notee, md = false) {
       this.editor = ""
+      this.textarea = ""
       this.easyMDE = undefined
       const elements = document.querySelectorAll(".EasyMDEContainer");
       elements.forEach((element) => {
