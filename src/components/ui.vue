@@ -432,7 +432,7 @@
                       .join(".")
                   }}
                 </div>
-                <div class="opacity-80 text-sm max-h-[2.5rem]">
+                <div class="opacity-80 text-sm max-h-[2.5rem] overflow-hidden">
                   {{ n.info.replace("\n", " ") }}
                 </div>
               </button>
