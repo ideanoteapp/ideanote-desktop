@@ -75,6 +75,9 @@ export default {
   methods: {
     go() {
       window.electronAPI.newNotebook(this.notebookname).then((result) => {
+        if(this.t.next == "進む"){
+          location.href = "https://ideanoteapp.com/welcome"
+        }
         this.$emit("end", "");
       });
     },
