@@ -24,7 +24,9 @@
       "identityName": "53541Korange.ideanoteapp",
       "publisher": "CN=DCA2199D-2621-4F21-9AEB-F72A8E101F6D",
       "publisherDisplayName": "Korange",
-      "languages": ["ja_JP", "en_US"]
+      "languages": ["ja_JP", "en_US"],
+      "backgroundColor": "transparent",
+      "showNameOnTiles": true
     },
     "squirrelWindows": {
       "iconUrl": "https://media.korange.work/ideanote.ico",
