@@ -1,4 +1,5 @@
 const DEBUG = false
+const AutoUpdate = false
 
 const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
@@ -498,8 +499,9 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  const currentVersion = "1.7.1";
-  axios
+  if(AutoUpdate){
+    const currentVersion = "1.7.1";
+    axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {
       let { latest, download } = response.data;
@@ -520,6 +522,7 @@ app.whenReady().then(() => {
         }
       }
     });
+  }
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
