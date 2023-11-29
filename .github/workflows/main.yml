@@ -1,5 +1,5 @@
 name: Build and Release
-permissions: read-all
+permissions: write-all
 
 on:
   workflow_dispatch:
