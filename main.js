@@ -50,7 +50,11 @@ const text_ja = {
   update_message_right: " へのアップデートが利用可能です。",
   update_now: "今すぐアップデートする",
   later: "後で",
-  export_scrap: "スクラップをエクスポート"
+  export_scrap: "スクラップをエクスポート",
+  email: "メールアドレス",
+  yes: "はい",
+  no: "いいえ",
+  feedback_email_text: "開発者による返信を希望しますか？"
 };
 
 const text_en = {
@@ -90,7 +94,11 @@ const text_en = {
   update_message_right: " is available.",
   update_now: "Update now",
   later: "Later",
-  export_scrap: "Export"
+  export_scrap: "Export",
+  email: "Email Address",
+  yes: "Yes",
+  no: "No",
+  feedback_email_text: "Would you like to receive a Response?"
 };
 
 let t = {}
