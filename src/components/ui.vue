@@ -38,6 +38,37 @@
           />
 
           <div>
+            <div class="mt-4">{{t.feedback_email_text}}</div>
+            <div class="flex justify-center">
+              <button
+                type="button"
+                class="mr-1 py-2 px-3 rounded-lg flex-grow mt-2"
+                @click="this.requestReply = true"
+                :class="{'bg-[#3250b9]': requestReply}, {'bg-[#3b3b3b]': !requestReply}"
+              > 
+                {{ t.yes }}
+              </button>
+
+              <button
+                type="button"
+                class="ml-1 py-2 px-3 rounded-lg flex-grow mt-2"
+                @click="this.requestReply = false"
+                :class="{'bg-[#3b3b3b]': requestReply}, {'bg-[#3250b9]': !requestReply}"
+              > 
+                {{t.no}}
+              </button>
+            </div>
+
+            <div v-if="requestReply">
+              <div class="mt-3">{{t.email}}</div>
+              <input
+            type="text"
+            v-model="feedbackEmail"
+            class="bg-[#262626] rounded-lg py-2 px-3 text-white text-center w-64"
+            placeholder="john@example.com"
+          />
+            </div>
+
             <button
               class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
               @click="sendFeedback"
@@ -953,6 +984,8 @@ export default {
   },
   data: () => {
     return {
+      requestReply: false,
+      feedbackEmail: "",
       showSidebar: true,
       font: "",
       currentNotebook: "",
@@ -1067,7 +1100,7 @@ export default {
       axios
         .post(
           `https://app.formester.com/forms/ec2b098d-bc7e-4d23-974a-5862383ff006/submissions.json`,
-          { content: this.feedback },
+          { content: this.feedback, email: this.feedbackEmail },
         )
         .then((response) => {
           this.feedback = "";

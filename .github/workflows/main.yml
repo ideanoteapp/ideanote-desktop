@@ -45,7 +45,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./out/squirrel-windows/ideaNote Setup ${{ github.event.inputs.version }}.exe
-        asset_name: ideaNote-Setup-${{ github.event.inputs.version }}.exe
+        asset_name: ideaNote-Setup.exe
         asset_content_type: application/octet-stream
 
     - name: Upload Artifacts
