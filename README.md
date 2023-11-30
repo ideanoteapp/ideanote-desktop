@@ -50,6 +50,9 @@ License: MIT License
 ### [📝 EasyMDE](https://github.com/Ionaru/easy-markdown-editor)
 License: MIT License
 
+### [🚩 Font Awesome](https://fontawesome.com/)
+[License](https://fontawesome.com/license/free)
+
 ### [🎨 PostCSS](https://github.com/postcss/postcss)
 License: MIT License
 
