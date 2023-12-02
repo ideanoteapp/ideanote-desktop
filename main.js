@@ -347,6 +347,10 @@ app.whenReady().then(() => {
     return saveNote(message[0], message[1]);
   });
 
+  ipcMain.handle("deletefolder", (event, message) => {
+    fs.rmdirSync(message, { recursive: true });
+  });
+
   ipcMain.handle("exportscrap", (event, message) => {
     const data = JSON.parse(fs.readFileSync(message, 'utf8'));
 
