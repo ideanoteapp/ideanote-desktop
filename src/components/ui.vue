@@ -257,9 +257,15 @@
               alt=""
               class="w-[29px] h-[29px] bg-[#353535] mr-2 rounded-full border-none"
             />
-            <div class="flex flex-col text-left justify-center mb-1">
+            <div class="flex flex-col text-left justify-center mb-1 flex-grow">
               {{ i.replace(/^.*[\\/]/, "") }}
             </div>
+            <button @click="deleteFolder(i)" class="mr-1 mt-0.5">
+              <font-awesome-icon
+                icon="fa-solid fa-trash"
+                class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]"
+             />
+            </button>
           </button>
         </div>
 
@@ -1055,6 +1061,11 @@ export default {
       })
   },
   methods: {
+    deleteFolder(folder){
+      window.electronAPI.deleteFolder(folder).then((result) => {
+        location.reload();
+      })
+    },
     pinNote(){
       this.notetitle = this.notetitle + " #pin"
       this.changeNoteTitle()
