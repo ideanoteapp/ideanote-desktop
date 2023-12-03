@@ -512,7 +512,7 @@ app.whenReady().then(() => {
   createWindow();
 
   if(AutoUpdate){
-    const currentVersion = "1.7.4";
+    const currentVersion = "1.8.0";
     axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {
