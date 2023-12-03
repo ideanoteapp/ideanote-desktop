@@ -347,6 +347,10 @@ app.whenReady().then(() => {
     return saveNote(message[0], message[1]);
   });
 
+  ipcMain.handle("deletefolder", (event, message) => {
+    fs.rmdirSync(message, { recursive: true });
+  });
+
   ipcMain.handle("exportscrap", (event, message) => {
     const data = JSON.parse(fs.readFileSync(message, 'utf8'));
 
@@ -508,7 +512,7 @@ app.whenReady().then(() => {
   createWindow();
 
   if(AutoUpdate){
-    const currentVersion = "1.7.4";
+    const currentVersion = "1.8.0";
     axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {
