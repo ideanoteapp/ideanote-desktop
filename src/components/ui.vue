@@ -215,7 +215,7 @@
         </div>
 
         <div
-          class="mx-2 text-white flex mt-1 hover:bg-[#353535] rounded-lg"
+          class="mx-2 text-white flex mt-1 hover:bg-[#353535] rounded-lg group"
           v-for="i in dirs"
           @click="openDir(i)"
           :class="{ 'bg-[#353535]': openingDir == i }"
@@ -229,7 +229,7 @@
             <div class="flex flex-col text-left justify-center mb-1 flex-grow">
               {{ i.replace(/^.*[\\/]/, "") }}
             </div>
-            <button @click="deleteFolder(i)" class="mr-1 mt-0.5">
+            <button @click="deleteFolder(i)" class="mr-1 mt-0.5 hidden group-hover:block">
               <font-awesome-icon
                 icon="fa-solid fa-trash"
                 class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]"
