@@ -423,7 +423,7 @@ app.whenReady().then(() => {
       const filePath = await dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [
-          { name: 'Markdown, Plaintext, Scrap, ToDo, Images', extensions: ["md", "txt", "scrap", "todo", "png", "jpeg", "jpg", "webp"] },
+          { name: 'Markdown, Plaintext, Scrap, ToDo, Images, Musics', extensions: ["md", "txt", "scrap", "todo", "png", "jpeg", "jpg", "webp", "mp3", "wav"] },
         ],
       });
       if (!filePath.canceled) {
