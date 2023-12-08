@@ -402,6 +402,16 @@
               class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
             />
             <font-awesome-icon
+              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'mp3'"
+              icon="fa-solid fa-music"
+              class="textt-[#FFB800] text-[#7b42ff] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
+              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'wav'"
+              icon="fa-solid fa-music"
+              class="textt-[#FFB800] text-[#7b42ff] text-[1.035rem] mr-2 mt-1"
+            />
+            <font-awesome-icon
               v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'"
               icon="fa-regular fa-file-lines"
               class="textt-[#FFB800] text-[#ffcd42] text-[1.035rem] mr-2 mt-1"
@@ -628,6 +638,12 @@
                        opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'"
                        class="h-full">
               <img :src="opening" />
+            </div>
+
+            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'mp3' ||
+                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'wav'"
+                       class="h-full">
+              <audio controls :src="opening" class="w-full"></audio>
             </div>
 
             <scrap
@@ -1216,7 +1232,9 @@ export default {
           if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "png" &&
               notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpeg" &&
               notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpg" &&
-              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "webp"){
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "webp" &&
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "mp3" &&
+              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "wav"){
             this.textarea = result;
           }
           this.opening = notee;
