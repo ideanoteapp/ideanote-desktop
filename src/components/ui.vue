@@ -220,7 +220,7 @@
           @click="openDir(i)"
           :class="{ 'bg-[#353535]': openingDir == i }"
         >
-          <button class="flex py-2 px-2 w-full">
+          <button class="flex py-2 px-2 w-full" v-if="i.replace(/^.*[\\/]/, '').charAt(0) !== '.'">
             <img
               src="../assets/folder.png"
               alt=""
