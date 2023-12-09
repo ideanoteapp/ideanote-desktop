@@ -28,6 +28,7 @@ import {
   faPen,
   faArrowDown,
   faDownload,
+  faMusic,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* import specific icons */
@@ -67,7 +68,8 @@ library.add(
   faPen,
   faArrowDown,
   faWindowMaximize,
-  faDownload
+  faDownload,
+  faMusic
 );
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

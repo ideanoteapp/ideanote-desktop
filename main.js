@@ -423,7 +423,7 @@ app.whenReady().then(() => {
       const filePath = await dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [
-          { name: 'Markdown, Plaintext, Scrap, ToDo, Images', extensions: ["md", "txt", "scrap", "todo", "png", "jpeg", "jpg", "webp"] },
+          { name: 'Markdown, Plaintext, Scrap, ToDo, Images, Musics', extensions: ["md", "txt", "scrap", "todo", "png", "jpeg", "jpg", "webp", "mp3", "wav"] },
         ],
       });
       if (!filePath.canceled) {
@@ -512,7 +512,7 @@ app.whenReady().then(() => {
   createWindow();
 
   if(AutoUpdate){
-    const currentVersion = "1.8.0";
+    const currentVersion = "1.9.0";
     axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {
