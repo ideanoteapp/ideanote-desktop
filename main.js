@@ -55,7 +55,8 @@ const text_ja = {
   yes: "はい",
   no: "いいえ",
   feedback_email_text: "開発者による返信を希望しますか？",
-  donate: "寄付する"
+  donate: "寄付する",
+  sync_guide: "Syncthingでノートを同期"
 };
 
 const text_en = {
@@ -100,7 +101,8 @@ const text_en = {
   yes: "Yes",
   no: "No",
   feedback_email_text: "Would you like to receive a Response?",
-  donate: "Donate"
+  donate: "Donate",
+  sync_guide: "Sync with Syncthing"
 };
 
 let t = {}
