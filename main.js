@@ -54,7 +54,9 @@ const text_ja = {
   email: "メールアドレス",
   yes: "はい",
   no: "いいえ",
-  feedback_email_text: "開発者による返信を希望しますか？"
+  feedback_email_text: "開発者による返信を希望しますか？",
+  donate: "寄付する",
+  sync_guide: "Syncthingでノートを同期"
 };
 
 const text_en = {
@@ -98,7 +100,9 @@ const text_en = {
   email: "Email Address",
   yes: "Yes",
   no: "No",
-  feedback_email_text: "Would you like to receive a Response?"
+  feedback_email_text: "Would you like to receive a Response?",
+  donate: "Donate",
+  sync_guide: "Sync with Syncthing"
 };
 
 let t = {}
@@ -512,7 +516,7 @@ app.whenReady().then(() => {
   createWindow();
 
   if(AutoUpdate){
-    const currentVersion = "1.9.0";
+    const currentVersion = "1.10.0";
     axios
     .get("https://ideanote-updates.korange.work/info.json", {})
     .then((response) => {

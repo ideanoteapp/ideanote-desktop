@@ -132,7 +132,7 @@
                 <font-awesome-icon icon="fa-solid fa-gear" class="text-sm w-6 textt-[#FFB800] mt-1 text-[#42ff6b] text-[1.2rem] mr-1 before" />
                 ノートブック設定
               </div>-->
-
+          
           <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
             <button class="px-4 pb-1 text-left flex" @click="deleteNotebook">
               <font-awesome-icon
@@ -185,6 +185,30 @@
 
           <div
             class="hover:bg-[#3f3f3f] text-white z-50"
+          >
+            <a class="px-4 pb-1 flex" href="https://docs.ideanoteapp.com/syncthing" >
+              <font-awesome-icon
+                icon="fa-regular fa-file-lines"
+                class="text-sm w-6 textt-[#FFB800] mt-1 text-[#81bffd] text-[1.2rem] mr-3 before"
+              />
+              {{t.sync_guide}}
+            </a>
+          </div>
+
+          <div
+            class="hover:bg-[#3f3f3f] text-white z-50 mt-2"
+          >
+            <a class="px-4 pb-1" href="https://github.com/sponsors/k0range/" >
+              <font-awesome-icon
+                icon="fa-solid fa-heart"
+                class="text-sm w-6 textt-[#FFB800] mt-1 text-[#fd8181] text-[1.2rem] mr-1 before"
+              />
+              {{t.donate}}
+            </a>
+          </div>
+
+          <div
+            class="hover:bg-[#3f3f3f] mt-2 text-white z-50"
             @click="openPreferences"
           >
             <button class="px-4 pb-1">
@@ -220,7 +244,7 @@
           @click="openDir(i)"
           :class="{ 'bg-[#353535]': openingDir == i }"
         >
-          <button class="flex py-2 px-2 w-full">
+          <button class="flex py-2 px-2 w-full" v-if="i.replace(/^.*[\\/]/, '').charAt(0) !== '.'">
             <img
               src="../assets/folder.png"
               alt=""
