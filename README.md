@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://github.com/Floorp-Projects/Floorp">
+  <a href="https://github.com/ideanoteapp/ideanote-desktop/">
     <img src="/icon.png" alt="Logo" width="128" height="128">
   </a>
 
