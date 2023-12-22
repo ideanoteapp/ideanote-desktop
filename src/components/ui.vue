@@ -585,6 +585,17 @@
                 />
                 {{t.export_scrap}}
               </div>
+              
+              <div
+                class="mt-1 px-4 pb-1 flex hover:bg-[#3f3f3f]"
+                @click="share()"
+                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap' || opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'"
+              >
+                <img src="../assets/share.png" class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.2rem] mt-1 before inline">
+                <div class="flex flex-col justify-center ml-2">
+                  ideaNote Share
+                </div>
+              </div>
 
             <div
                 class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
@@ -833,6 +844,60 @@
       </div>
     </div>
   </div>
+
+  <div
+    class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
+    v-if="sharing"
+  >
+    <div class="flex flex-col justify-center">
+      <div
+        class="flex justify-left bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
+      >
+        <div class="text-center">
+          <img src="../assets/share.png" class="w-12 h-12 mb-2 inline animate-bounce">
+          <div class="text-xl font-bold mb-4">{{t.sharing}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
+    v-if="sharedForm"
+  >
+    <button class="fixed top-4 z-50 right-4" @click="this.sharedForm = false">
+      <div
+        class="w-9 h-9 text-left flex justify-center fles-col text-white bg-[#b93232] rounded-lg"
+      >
+        <div class="flex flex-col justify-center">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </div>
+      </div>
+    </button>
+    <div class="flex flex-col justify-center">
+      <div
+        class="flex justify-left bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
+      >
+        <div class="text-center">
+          <div>
+            <img src="../assets/share.png" class="w-12 h-12 mb-2 inline">
+          </div>
+          {{t.share_published}}
+          <br>
+          <a :href="sharedUrl" class="text-[#84a4f0]">{{ sharedUrl }}</a>
+
+          <div>
+            <button
+              class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
+              @click="this.sharedForm = false"
+            >
+              {{ t.close }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style>
@@ -1028,6 +1093,9 @@ export default {
       mdContent: "",
       easyMDE: undefined,
       preferences: false,
+      sharedForm: false,
+      sharing: false,
+      sharedUrl: ""
     };
   },
   mounted() {
@@ -1068,6 +1136,24 @@ export default {
       })
   },
   methods: {
+    share(){
+      this.NoteMenu = false;
+      this.sharing = true;
+      window.electronAPI
+        .readFile(this.opening)
+        .then((result) => {
+          axios.post("https://share-api-ideanote.koyeb.app/new/", {"title": this.notetitle, "type": this.opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0], "data": result})
+            .then((res) => {
+              this.sharing = false;
+              this.sharedForm = true;
+              this.sharedUrl = `https://share.ideanoteapp.com/${res.data}/`
+          })
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      
+    },
     deleteFolder(folder){
       window.electronAPI.deleteFolder(folder).then((result) => {
         location.reload();
