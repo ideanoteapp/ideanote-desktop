@@ -56,7 +56,10 @@ const text_ja = {
   no: "いいえ",
   feedback_email_text: "開発者による返信を希望しますか？",
   donate: "寄付する",
-  sync_guide: "Syncthingでノートを同期"
+  sync_guide: "Syncthingでノートを同期",
+  close: "閉じる",
+  share_published: "あなたのノートは、次のURLで共有されました:",
+  sharing: "共有中..."
 };
 
 const text_en = {
@@ -102,7 +105,10 @@ const text_en = {
   no: "No",
   feedback_email_text: "Would you like to receive a Response?",
   donate: "Donate",
-  sync_guide: "Sync with Syncthing"
+  sync_guide: "Sync with Syncthing",
+  close: "Close",
+  share_published: "Your note was shared at:",
+  sharing: "Sharing..."
 };
 
 let t = {}
