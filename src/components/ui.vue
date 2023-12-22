@@ -1139,12 +1139,20 @@ export default {
     share(){
       this.NoteMenu = false;
       this.sharing = true;
-      axios.post("https://share-api-ideanote.koyeb.app/new/", {"title": this.notetitle, "type": this.opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0], "data": this.textarea})
-        .then((res) => {
-          this.sharing = false;
-          this.sharedForm = true;
-          this.sharedUrl = `https://share.ideanoteapp.com/${res.data}/`
+      window.electronAPI
+        .readFile(this.opening)
+        .then((result) => {
+          axios.post("https://share-api-ideanote.koyeb.app/new/", {"title": this.notetitle, "type": this.opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0], "data": result})
+            .then((res) => {
+              this.sharing = false;
+              this.sharedForm = true;
+              this.sharedUrl = `https://share.ideanoteapp.com/${res.data}/`
+          })
         })
+        .catch((error) => {
+          console.error(error);
+        });
+      
     },
     deleteFolder(folder){
       window.electronAPI.deleteFolder(folder).then((result) => {
