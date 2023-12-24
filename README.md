@@ -24,7 +24,8 @@ You can download the latest version of ideaNote from the [official website](http
 [Apache License 2.0](./LICENSE)
 
 ## 🌟 Contributing
-You are always welcome to contribute to ideaNote!
+You are always welcome to contribute to ideaNote!  
+[Contribution Guide](./CONTRIBUTING.md)
 
 ## 📦 How to Build
 ```
