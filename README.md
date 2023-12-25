@@ -9,9 +9,9 @@
        Note-taking app with many features compatible with Markdown.
     <br />
     <br />
-    <a href="https://ideanote.korange.work/en/">Official Site</a>
-    ・
-    <a href="https://dub.sh/ideanote-1-0-0">Download</a>
+    <a class="https://apps.microsoft.com/detail/9N0GB06PTT2W?hl=en-us&gl=EN">
+      <img src="https://get.microsoft.com/images/en-us%20dark.svg" height=64px>
+    </a>
   </p>
 </div>
 
