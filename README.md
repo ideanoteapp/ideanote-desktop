@@ -9,7 +9,7 @@
        Note-taking app with many features compatible with Markdown.
     <br />
     <br />
-    <a class="https://apps.microsoft.com/detail/9N0GB06PTT2W?hl=en-us&gl=EN">
+    <a href="https://apps.microsoft.com/detail/9N0GB06PTT2W?hl=en-us&gl=EN">
       <img src="https://get.microsoft.com/images/en-us%20dark.svg" height=64px>
     </a>
   </p>
