@@ -59,3 +59,7 @@ License: MIT License
 
 ### [🎨 Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
 License: MIT License
+
+## ❤ Special Thanks
+ - [@kaoism@misskey.systems](https://misskey.systems/@kaoism)  
+   Suggested a name of いのっぴ/INoppi
