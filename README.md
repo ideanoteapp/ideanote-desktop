@@ -9,9 +9,9 @@
        Note-taking app with many features compatible with Markdown.
     <br />
     <br />
-    <a href="https://ideanote.korange.work/en/">Official Site</a>
-    ・
-    <a href="https://dub.sh/ideanote-1-0-0">Download</a>
+    <a href="https://apps.microsoft.com/detail/9N0GB06PTT2W?hl=en-us&gl=EN">
+      <img src="https://get.microsoft.com/images/en-us%20dark.svg" height=64px>
+    </a>
   </p>
 </div>
 
@@ -24,7 +24,8 @@ You can download the latest version of ideaNote from the [official website](http
 [Apache License 2.0](./LICENSE)
 
 ## 🌟 Contributing
-You are always welcome to contribute to ideaNote!
+You are always welcome to contribute to ideaNote!  
+[Contribution Guide](./CONTRIBUTING.md)
 
 ## 📦 How to Build
 ```
@@ -58,3 +59,7 @@ License: MIT License
 
 ### [🎨 Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
 License: MIT License
+
+## ❤ Special Thanks
+ - [@kaoism@misskey.systems](https://misskey.systems/@kaoism)  
+   Suggested a name of いのっぴ/INoppi
