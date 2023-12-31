@@ -1,4 +1,4 @@
-const DEBUG = false
+const DEBUG = true
 const AutoUpdate = false
 
 const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
@@ -59,7 +59,10 @@ const text_ja = {
   sync_guide: "Syncthingでノートを同期",
   close: "閉じる",
   share_published: "あなたのノートは、次のURLで共有されました:",
-  sharing: "共有中..."
+  sharing: "共有中...",
+  tell_tutorial: "使い方の説明はいるかな？",
+  teach_me: "教えて！",
+  no_thanks: "結構です",
 };
 
 const text_en = {
@@ -108,7 +111,10 @@ const text_en = {
   sync_guide: "Sync with Syncthing",
   close: "Close",
   share_published: "Your note was shared at:",
-  sharing: "Sharing..."
+  sharing: "Sharing...",
+  tell_tutorial: "Do you need tutorials? (Japanese only)",
+  teach_me: "Teach me!",
+  no_thanks: "No Thanks",
 };
 
 let t = {}
