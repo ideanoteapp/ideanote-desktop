@@ -1,4 +1,4 @@
-const DEBUG = true
+const DEBUG = false
 const AutoUpdate = false
 
 const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
