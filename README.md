@@ -33,33 +33,6 @@ npm install
 npm run make
 ```
 
-## 📄 ideaNote License Notices
-ideaNote utilizes various open-source projects. Below is a comprehensive list of the open-source projects used in ideaNote.
-
-### [🔮 Electron](https://github.com/electron/electron/)
-License: MIT License
-
-### [📦 Electron Forge](https://github.com/electron/forge/)
-License: MIT License
-
-### [🟢 Vue](https://github.com/vuejs/)
-License: MIT License
-
-### [⚡ Vite](https://github.com/vitejs/vite)
-License: MIT License
-
-### [📝 EasyMDE](https://github.com/Ionaru/easy-markdown-editor)
-License: MIT License
-
-### [🚩 Font Awesome](https://fontawesome.com/)
-[License](https://fontawesome.com/license/free)
-
-### [🎨 PostCSS](https://github.com/postcss/postcss)
-License: MIT License
-
-### [🎨 Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
-License: MIT License
-
 ## ❤ Special Thanks
  - [@kaoism@misskey.systems](https://misskey.systems/@kaoism)  
    Suggested a name of いのっぴ/INoppi
