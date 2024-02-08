@@ -1,41 +1,4 @@
 <template>
-  <div
-    class="fixed bottom-4 left-4 bg-[#3f3f3f] z-50 text-white rounded-md sm:shadow-md text-sm sm:hover:bottom-5 duration-200"
-  >
-    <button @click="this.sendFeedbackForm = true" class="px-3 py-2 flex">
-      <img src="../../icon.png" class="w-6 h-6 mr-1.5" />
-      <span class="flex flex-col justify-center"> {{ t.send_feedback }} </span>
-    </button>
-  </div>
-
-  <div
-    class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
-    v-if="sendFeedbackForm"
-  >
-    <inCloseButton @click="this.sendFeedbackForm = false" />
-    <div class="flex flex-col justify-center">
-      <div
-        class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
-      >
-        <form class="text-center" @submit.prevent="sendFeedback">
-          <div class="text-2xl font-bold pb-2.5">{{ t.send_feedback }}</div>
-          <input
-            type="text"
-            v-model="feedback"
-            class="bg-[#262626] rounded-lg py-2 px-3 text-white text-center w-64"
-            :placeholder="t.feedback_ex"
-          />
-
-          <div>
-            <inButton @click="sendFeedback" :text="t.send"/>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!---------->
-  
   <div :style="{ 'font-family: Serif;': uiFont == 'Serif' }">
     <div class="flex max-h-screen max-w-[100vw] h-screen overflow-hidden">
       <div
@@ -1052,8 +1015,6 @@ export default {
       ext: "",
       openingDir: "",
       opening_Dir: "",
-      sendFeedbackForm: false,
-      feedback: "",
       t: {},
       mdParsed: true,
       mdContent: "",
@@ -1164,23 +1125,6 @@ export default {
     exportScrap(){
       window.electronAPI.exportScrap(this.opening)
       this.NoteMenu = false;
-    },
-    sendFeedback() {
-      this.sendFeedbackForm = false;
-      axios
-        .post(
-          `https://app.formester.com/forms/ec2b098d-bc7e-4d23-974a-5862383ff006/submissions.json`,
-          { content: this.feedback },
-        )
-        .then((response) => {
-          this.feedback = "";
-          alert("ご意見ありがとうございました。");
-        })
-        .catch((error) => {
-          // POSTリクエストが失敗した場合の処理
-          console.error(error);
-          alert("エラーが発生しました。");
-        });
     },
     selectRoot() {
       window.electronAPI.getFiles(this.currentNotebook).then((result) => {
