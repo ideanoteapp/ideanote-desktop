@@ -12,18 +12,7 @@
     class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
     v-if="sendFeedbackForm"
   >
-    <button
-      class="fixed top-4 z-50 right-4"
-      @click="this.sendFeedbackForm = false"
-    >
-      <div
-        class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg"
-      >
-        <div class="flex flex-col justify-center">
-          <font-awesome-icon icon="fa-solid fa-xmark" />
-        </div>
-      </div>
-    </button>
+    <inCloseButton @click="this.sendFeedbackForm = false" />
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
@@ -38,12 +27,7 @@
           />
 
           <div>
-            <button
-              class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
-              @click="sendFeedback"
-            >
-              {{ t.send }}
-            </button>
+            <inButton @click="sendFeedback" :text="t.send"/>
           </div>
         </form>
       </div>
@@ -716,18 +700,7 @@
     class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
     v-if="createFolderForm"
   >
-    <button
-      class="fixed top-4 z-50 right-4"
-      @click="this.createFolderForm = false"
-    >
-      <div
-        class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg"
-      >
-        <div class="flex flex-col justify-center">
-          <font-awesome-icon icon="fa-solid fa-xmark" />
-        </div>
-      </div>
-    </button>
+    <inCloseButton @click="this.createFolderForm = false" />
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
@@ -744,12 +717,7 @@
             placeholder="Folder"
           />
           <div>
-            <button
-              class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
-              @click="createFolder(foldertitle)"
-            >
-              {{ t.create }}
-            </button>
+            <inButton @click="createFolder(foldertitle)" :text="t.create"/>
           </div>
         </div>
       </div>
@@ -761,18 +729,7 @@
     class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
     v-if="createNotebookForm"
   >
-    <button
-      class="fixed top-4 z-50 right-4"
-      @click="this.createNotebookForm = false"
-    >
-      <div
-        class="w-9 h-9 text-center flex justify-center fles-col text-white bg-[#b93232] rounded-lg"
-      >
-        <div class="flex flex-col justify-center">
-          <font-awesome-icon icon="fa-solid fa-xmark" />
-        </div>
-      </div>
-    </button>
+    <inCloseButton @click="this.createNotebookForm = false" />
     <div class="flex flex-col justify-center">
       <div
         class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
@@ -790,12 +747,7 @@
           />
 
           <div>
-            <button
-              class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
-              @click="createNotebook()"
-            >
-              {{ t.create }}
-            </button>
+            <inButton @click="createNotebook()" :text="t.create" />
           </div>
         </div>
       </div>
@@ -876,12 +828,7 @@
           <a :href="sharedUrl" class="text-[#84a4f0]">{{ sharedUrl }}</a>
 
           <div>
-            <button
-              class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
-              @click="this.sharedForm = false"
-            >
-              {{ t.close }}
-            </button>
+            <inButton @click="this.sharedForm = false" :text="t.close"/>
           </div>
         </div>
       </div>
@@ -1067,6 +1014,9 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
 <script>
 import scrap from "./Scrap.vue";
 import todo from "./ToDo.vue";
+import inButton from "../components/inButton.vue";
+import inCloseButton from "../components/inCloseButton.vue";
+
 import EasyMDE from "easymde";
 import axios from "axios";
 import marked from "marked/marked.min.js";
@@ -1075,6 +1025,8 @@ export default {
   components: {
     scrap,
     todo,
+    inButton,
+    inCloseButton
   },
   data: () => {
     return {
