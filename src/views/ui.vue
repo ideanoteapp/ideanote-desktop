@@ -51,7 +51,7 @@
   </div>
 
   <!---------->
-
+  
   <div :style="{ 'font-family: Serif;': uiFont == 'Serif' }">
     <div class="flex max-h-screen max-w-[100vw] h-screen overflow-hidden">
       <div
@@ -90,11 +90,15 @@
             <font-awesome-icon icon="fa-solid fa-caret-down" />
           </div>
         </div>
+        <Transition name="fade">
         <div
           class="before:fixed before:top-0 before:left-0 before:w-screen before:h-screen before:bg-black before:opacity-50"
           v-if="NotebookMenu"
           @click="openNotebookMenu"
         ></div>
+        </Transition>
+
+        <Transition name="slide-up">
         <div
           v-if="NotebookMenu"
           @click="openNotebookMenu"
@@ -196,6 +200,7 @@
             </button>
           </div>
         </div>
+        </Transition>
 
         <div
           @click="selectRoot"
@@ -295,6 +300,7 @@
                 class="text-[22px] oapcity-90"
               />
             </button>
+            <Transition name="slide-up">
             <div
               v-if="newNoteMenu"
               class="absolute bg-[#262626] z-50 w-44 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
@@ -357,6 +363,7 @@
                 {{ t.upload }}
               </div>
             </div>
+            </Transition>
           </div>
         </div>
 
@@ -507,6 +514,7 @@
                 class="w-[20px] h-[20px] opacity-90"
               />
             </button>
+            <Transition name="slide-up">
             <div
               v-if="NoteMenu"
               class="absolute bg-[#262626] z-50 min-w-44 right-4 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
@@ -595,6 +603,7 @@
                 {{ t.delete_note }}
               </div>
             </div>
+            </Transition>
           </div>
         </div>
 
@@ -702,6 +711,7 @@
     </div>
   </div>
 
+  <Transition name="fade">
   <div
     class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
     v-if="createFolderForm"
@@ -745,7 +755,8 @@
       </div>
     </div>
   </div>
-
+  </Transition>
+  <Transition name="fade">
   <div
     class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
     v-if="createNotebookForm"
@@ -790,7 +801,8 @@
       </div>
     </div>
   </div>
-
+  </Transition>
+  <Transition name="fade">
   <div
     class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
     v-if="preferences"
@@ -820,6 +832,7 @@
       </div>
     </div>
   </div>
+</Transition>
 
   <div
     class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
@@ -1015,6 +1028,31 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
 .mdcontent ol li{
   list-style: decimal;
   list-style-position: inside;
+}
+
+/* Transition */
+.slide-up-enter-active {
+  transition: all 0.15s ease-out;
+}
+
+.slide-up-leave-active {
+  transition: all 0.15s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /*-----------------------*/
