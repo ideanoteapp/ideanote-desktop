@@ -184,18 +184,6 @@
           <div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
 
           <div
-            class="hover:bg-[#3f3f3f] text-white z-50 mt-2"
-          >
-            <a class="px-4 pb-1" href="https://github.com/sponsors/k0range/" >
-              <font-awesome-icon
-                icon="fa-solid fa-heart"
-                class="text-sm w-6 textt-[#FFB800] mt-1 text-[#fd8181] text-[1.2rem] mr-1 before"
-              />
-              {{t.donate}}
-            </a>
-          </div>
-
-          <div
             class="hover:bg-[#3f3f3f] mt-2 text-white z-50"
             @click="openPreferences"
           >
