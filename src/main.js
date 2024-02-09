@@ -71,7 +71,7 @@ library.add(
   faWindowMaximize,
   faDownload,
   faMusic,
-  faHeart
+  faHeart,
 );
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

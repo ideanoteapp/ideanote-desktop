@@ -38,38 +38,34 @@
           </div>
         </div>
         <Transition name="fade">
-        <div
-          class="before:fixed before:top-0 before:left-0 before:w-screen before:h-screen before:bg-black before:opacity-50"
-          v-if="NotebookMenu"
-          @click="openNotebookMenu"
-        ></div>
+          <div
+            class="before:fixed before:top-0 before:left-0 before:w-screen before:h-screen before:bg-black before:opacity-50"
+            v-if="NotebookMenu"
+            @click="openNotebookMenu"
+          ></div>
         </Transition>
 
         <Transition name="slide-up">
-        <div
-          v-if="NotebookMenu"
-          @click="openNotebookMenu"
-          class="max-h-[calc(100vh-2.5rem)] overflow-scroll absolute bg-[#262626] z-50 w-48 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
-        >
-          <div class="flex px-4">
-            <img
-              :src="`${currentNotebook}/.icon.png`"
-              v-if="notes.includes('.icon.png')"
-              class="rounded-full w-7 h-7"
-            />
-            <img
-              src="/.icon.png"
-              v-else
-              class="rounded-full w-7 h-7"
-            />
-            <div class="ml-2">
-              <div class="text-[1.1rem] font-semibold text-white">
-                {{ currentNotebook.replace(/^.*[\\/]/, "") }}
+          <div
+            v-if="NotebookMenu"
+            @click="openNotebookMenu"
+            class="max-h-[calc(100vh-2.5rem)] overflow-scroll absolute bg-[#262626] z-50 w-48 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
+          >
+            <div class="flex px-4">
+              <img
+                :src="`${currentNotebook}/.icon.png`"
+                v-if="notes.includes('.icon.png')"
+                class="rounded-full w-7 h-7"
+              />
+              <img src="/.icon.png" v-else class="rounded-full w-7 h-7" />
+              <div class="ml-2">
+                <div class="text-[1.1rem] font-semibold text-white">
+                  {{ currentNotebook.replace(/^.*[\\/]/, "") }}
+                </div>
               </div>
             </div>
-          </div>
 
-          <!--<div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
+            <!--<div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
             <button class="px-4 pb-1" @click="changeIcon">
               <font-awesome-icon
                 icon="fa-solid fa-star"
@@ -79,74 +75,73 @@
             </button>
           </div>-->
 
-          <!--<div class="hover:bg-[#3f3f3f] px-4 pb-1 text-white z-50">
+            <!--<div class="hover:bg-[#3f3f3f] px-4 pb-1 text-white z-50">
                 <font-awesome-icon icon="fa-solid fa-gear" class="text-sm w-6 textt-[#FFB800] mt-1 text-[#42ff6b] text-[1.2rem] mr-1 before" />
                 ノートブック設定
               </div>-->
-          
-          <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
-            <button class="px-4 pb-1 text-left flex" @click="deleteNotebook">
-              <font-awesome-icon
-                icon="fa-solid fa-trash"
-                class="text-sm w-6 textt-[#FFB800] mt-1 text-[#ff4242] text-[1.2rem] mr-2 before"
-              />
-              <div>
-                {{ t.delete_notebook }}
-              </div>
-            </button>
-          </div>
 
-          <div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
-
-          <div class="hover:bg-[#3a3a3a]" v-for="n in notebooks">
-            <button
-              v-if="n != currentNotebook"
-              class="flex px-4 py-1.5 w-full h-full"
-              @click="changeNotebook(n)"
-            >
-              <img
-                :src="`${n}/.icon.png`"
-                v-if="notes.includes('.icon.png')"
-                class="w-7 h-7 rounded-full"
-              />
-              <img
-                src="/.icon.png"
-                v-else
-                class="w-7 h-7 rounded-full"
-              />
-              <div class="ml-2">
-                <div class="text-[1.1rem] font-semibold text-white">
-                  {{ n.replace(/^.*[\\/]/, "") }}
+            <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
+              <button class="px-4 pb-1 text-left flex" @click="deleteNotebook">
+                <font-awesome-icon
+                  icon="fa-solid fa-trash"
+                  class="text-sm w-6 textt-[#FFB800] mt-1 text-[#ff4242] text-[1.2rem] mr-2 before"
+                />
+                <div>
+                  {{ t.delete_notebook }}
                 </div>
-              </div>
-            </button>
-          </div>
+              </button>
+            </div>
 
-          <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
-            <button class="px-4 pb-1 text-left flex" @click="this.createNotebookForm = true">
-              <font-awesome-icon
-                icon="fa-solid fa-plus"
-                class="w-6 textt-[#FFB800] text-[1.2rem] mr-2 mt-1 before"
-              />
-              {{ t.new_notebook }}
-            </button>
-          </div>
+            <div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
 
-          <div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
+            <div class="hover:bg-[#3a3a3a]" v-for="n in notebooks">
+              <button
+                v-if="n != currentNotebook"
+                class="flex px-4 py-1.5 w-full h-full"
+                @click="changeNotebook(n)"
+              >
+                <img
+                  :src="`${n}/.icon.png`"
+                  v-if="notes.includes('.icon.png')"
+                  class="w-7 h-7 rounded-full"
+                />
+                <img src="/.icon.png" v-else class="w-7 h-7 rounded-full" />
+                <div class="ml-2">
+                  <div class="text-[1.1rem] font-semibold text-white">
+                    {{ n.replace(/^.*[\\/]/, "") }}
+                  </div>
+                </div>
+              </button>
+            </div>
 
-          <div
-            class="hover:bg-[#3f3f3f] mt-2 text-white z-50"
-            @click="openPreferences"
-          >
-            <button class="px-4 pb-1">
-              <font-awesome-icon
-                icon="fa-solid fa-gear"
-                class="text-sm w-6 textt-[#FFB800] mt-1 text-[#f3f3f3] text-[1.2rem] mr-1 before"
-              />
-              {{t.preferences}}
-            </button>
+            <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
+              <button
+                class="px-4 pb-1 text-left flex"
+                @click="this.createNotebookForm = true"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-plus"
+                  class="w-6 textt-[#FFB800] text-[1.2rem] mr-2 mt-1 before"
+                />
+                {{ t.new_notebook }}
+              </button>
+            </div>
+
+            <div class="bg-[#5f5f5f] w-full h-px mt-2 mb-2"></div>
+
+            <div
+              class="hover:bg-[#3f3f3f] mt-2 text-white z-50"
+              @click="openPreferences"
+            >
+              <button class="px-4 pb-1">
+                <font-awesome-icon
+                  icon="fa-solid fa-gear"
+                  class="text-sm w-6 textt-[#FFB800] mt-1 text-[#f3f3f3] text-[1.2rem] mr-1 before"
+                />
+                {{ t.preferences }}
+              </button>
+            </div>
           </div>
-        </div>
         </Transition>
 
         <div
@@ -172,7 +167,10 @@
           @click="openDir(i)"
           :class="{ 'bg-[#353535]': openingDir == i }"
         >
-          <button class="flex py-2 px-2 w-full" v-if="i.replace(/^.*[\\/]/, '').charAt(0) !== '.'">
+          <button
+            class="flex py-2 px-2 w-full"
+            v-if="i.replace(/^.*[\\/]/, '').charAt(0) !== '.'"
+          >
             <img
               src="../assets/folder.png"
               alt=""
@@ -181,11 +179,14 @@
             <div class="flex flex-col text-left justify-center mb-1 flex-grow">
               {{ i.replace(/^.*[\\/]/, "") }}
             </div>
-            <button @click="deleteFolder(i)" class="mr-1 mt-0.5 hidden group-hover:block">
+            <button
+              @click="deleteFolder(i)"
+              class="mr-1 mt-0.5 hidden group-hover:block"
+            >
               <font-awesome-icon
                 icon="fa-solid fa-trash"
                 class="text-[#4d4c4c] duration-100 hover:text-[#ff6262] mt-1 text-[1rem]"
-             />
+              />
             </button>
           </button>
         </div>
@@ -248,68 +249,68 @@
               />
             </button>
             <Transition name="slide-up">
-            <div
-              v-if="newNoteMenu"
-              class="absolute bg-[#262626] z-50 w-44 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
-            >
               <div
-                class="hover:bg-[#3f3f3f] px-4 pb-1"
-                @click="createNote('md')"
+                v-if="newNoteMenu"
+                class="absolute bg-[#262626] z-50 w-44 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
               >
-                <font-awesome-icon
-                  icon="fa-regular fa-file-lines"
-                  class="w-6 textt-[#FFB800] text-[#ffcd42] text-[1.24rem] mr-2 mt-1 before"
-                />
-                Markdown
-              </div>
-              <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="createNote('txt')"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-t"
-                  class="w-6 textt-[#FFB800] text-[#628eff] text-[1.24rem] mr-2 mt-1 before"
-                />
-                Plaintext
-              </div>
-              <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="createNote('scrap')"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-scroll"
-                  class="w-6 textt-[#FFB800] text-[#ffd562] text-[1.24rem] mr-2 mt-1 before"
-                />
-                Scrap
-              </div>
-              <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="createNote('todo')"
-              >
-                <font-awesome-icon
-                  icon="fa-regular fa-square-check"
-                  class="w-6 textt-[#FFB800] text-[#4ae245] text-[1.24rem] mr-2 mt-1 before"
-                />
-                ToDo
-              </div>
-              <!--<div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
+                <div
+                  class="hover:bg-[#3f3f3f] px-4 pb-1"
+                  @click="createNote('md')"
+                >
+                  <font-awesome-icon
+                    icon="fa-regular fa-file-lines"
+                    class="w-6 textt-[#FFB800] text-[#ffcd42] text-[1.24rem] mr-2 mt-1 before"
+                  />
+                  Markdown
+                </div>
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="createNote('txt')"
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-t"
+                    class="w-6 textt-[#FFB800] text-[#628eff] text-[1.24rem] mr-2 mt-1 before"
+                  />
+                  Plaintext
+                </div>
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="createNote('scrap')"
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-scroll"
+                    class="w-6 textt-[#FFB800] text-[#ffd562] text-[1.24rem] mr-2 mt-1 before"
+                  />
+                  Scrap
+                </div>
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="createNote('todo')"
+                >
+                  <font-awesome-icon
+                    icon="fa-regular fa-square-check"
+                    class="w-6 textt-[#FFB800] text-[#4ae245] text-[1.24rem] mr-2 mt-1 before"
+                  />
+                  ToDo
+                </div>
+                <!--<div class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]">
                 <font-awesome-icon
                   icon="fa-solid fa-code"
                   class="w-6 textt-[#FFB800] text-[#8f4eff] text-[1.24rem] mr-2 mt-1 before"
                 />
                 Code
               </div>-->
-              <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="uploadFile"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-upload"
-                  class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.24rem] mr-2 mt-1 before"
-                />
-                {{ t.upload }}
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="uploadFile"
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-upload"
+                    class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.24rem] mr-2 mt-1 before"
+                  />
+                  {{ t.upload }}
+                </div>
               </div>
-            </div>
             </Transition>
           </div>
         </div>
@@ -324,9 +325,7 @@
             :class="{ 'bg-[#2b2b2b] bg-[#ffffff10]': n.name == opening }"
           >
             <font-awesome-icon
-              v-if="
-                n.name.replace(/^.*[\\/]/, '').includes('#pin')
-              "
+              v-if="n.name.replace(/^.*[\\/]/, '').includes('#pin')"
               icon="fa-solid fa-thumbtack"
               class="textt-[#FFB800] text-[#ffffffc8] text-[1.035rem] mr-3.5 mt-1"
             />
@@ -341,7 +340,9 @@
               class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
             />
             <font-awesome-icon
-              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp'"
+              v-if="
+                n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp'
+              "
               icon="fa-regular fa-image"
               class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
             />
@@ -351,7 +352,9 @@
               class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
             />
             <font-awesome-icon
-              v-if="n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'"
+              v-if="
+                n.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'
+              "
               icon="fa-regular fa-image"
               class="textt-[#FFB800] text-[#b342ff] text-[1.035rem] mr-2 mt-1"
             />
@@ -384,7 +387,7 @@
               icon="fa-regular fa-square-check"
               class="textt-[#FFB800] text-[#42ff48] text-[1.035rem] mr-2 mt-1"
             />
-            
+
             <div class="max-h-none">
               <button class="w-full text-left max-h-none">
                 <div
@@ -412,13 +415,15 @@
       </div>
 
       <div id="sidebar2" class="bg-[#1f1f1f] flex-grow h-screen max-h-screen">
-        
         <div
           class="bg-[#242424] duration-200 h-[54px] text-white flex px-4 select-none"
         >
           <!-- Left icons -->
           <button @click="showSidebar = !showSidebar" class="hidden sm:block">
-            <font-awesome-icon icon="fa-regular fa-window-maximize" class="text-[20px] opacity-90" />
+            <font-awesome-icon
+              icon="fa-regular fa-window-maximize"
+              class="text-[20px] opacity-90"
+            />
           </button>
 
           <div
@@ -462,94 +467,110 @@
               />
             </button>
             <Transition name="slide-up">
-            <div
-              v-if="NoteMenu"
-              class="absolute bg-[#262626] z-50 min-w-44 right-4 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
-            >
-            <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="pinNote()"
-                v-if="opening.includes('#pin') == false"
+              <div
+                v-if="NoteMenu"
+                class="absolute bg-[#262626] z-50 min-w-44 right-4 rounded-lg top-10 py-3 shadow-md border border-[#5f5f5f]"
               >
-                <font-awesome-icon
-                  icon="fa-solid fa-thumbtack"
-                  class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before"
-                />
-                {{t.pin_note}}
-              </div>
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="pinNote()"
+                  v-if="opening.includes('#pin') == false"
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-thumbtack"
+                    class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before"
+                  />
+                  {{ t.pin_note }}
+                </div>
 
-              <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="unpinNote()"
-                v-if="opening.includes('#pin') == true"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-thumbtack"
-                  class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before transform rotate-180"
-                />
-                {{t.unpin}}
-              </div>
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="unpinNote()"
+                  v-if="opening.includes('#pin') == true"
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-thumbtack"
+                    class="w-6 textt-[#FFB800] text-[#f5f5f5] text-[1.2rem] mr-1 mt-1 before transform rotate-180"
+                  />
+                  {{ t.unpin }}
+                </div>
 
-            <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="copyImg()"
-                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
-                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg' ||
-                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' ||
-                      opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp'"
-              >
-                <font-awesome-icon
-                  icon="fa-brands fa-markdown"
-                  class="w-6 textt-[#FFB800] text-[#6289ff] text-[1.2rem] mr-1 mt-1 before"
-                />
-                {{t.copy_embed}}
-              </div>
-            
-              <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="exportScrap()"
-                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap'"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-download"
-                  class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.2rem] mr-1 mt-1 before"
-                />
-                {{t.export_scrap}}
-              </div>
-              
-              <div
-                class="mt-1 px-4 pb-1 flex hover:bg-[#3f3f3f]"
-                @click="share()"
-                v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'scrap' || opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'"
-              >
-                <img src="../assets/share.png" class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.2rem] mt-1 before inline">
-                <div class="flex flex-col justify-center ml-2">
-                  ideaNote Share
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="copyImg()"
+                  v-if="
+                    opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] ==
+                      'png' ||
+                    opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] ==
+                      'jpeg' ||
+                    opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] ==
+                      'jpg' ||
+                    opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] ==
+                      'webp'
+                  "
+                >
+                  <font-awesome-icon
+                    icon="fa-brands fa-markdown"
+                    class="w-6 textt-[#FFB800] text-[#6289ff] text-[1.2rem] mr-1 mt-1 before"
+                  />
+                  {{ t.copy_embed }}
+                </div>
+
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="exportScrap()"
+                  v-if="
+                    opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] ==
+                    'scrap'
+                  "
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-download"
+                    class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.2rem] mr-1 mt-1 before"
+                  />
+                  {{ t.export_scrap }}
+                </div>
+
+                <div
+                  class="mt-1 px-4 pb-1 flex hover:bg-[#3f3f3f]"
+                  @click="share()"
+                  v-if="
+                    opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] ==
+                      'scrap' ||
+                    opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'md'
+                  "
+                >
+                  <img
+                    src="../assets/share.png"
+                    class="w-6 textt-[#FFB800] text-[#ffffff] text-[1.2rem] mt-1 before inline"
+                  />
+                  <div class="flex flex-col justify-center ml-2">
+                    ideaNote Share
+                  </div>
+                </div>
+
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="copyPath()"
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-paperclip"
+                    class="w-6 textt-[#FFB800] text-[#ffffffcc] text-[1.2rem] mr-1 mt-1 before"
+                  />
+                  {{ t.copy_path }}
+                </div>
+
+                <div
+                  class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
+                  @click="deleteNote()"
+                >
+                  <font-awesome-icon
+                    icon="fa-solid fa-trash"
+                    class="w-6 textt-[#FFB800] text-[#ff6262] text-[1.2rem] mr-1 mt-1 before"
+                  />
+                  {{ t.delete_note }}
                 </div>
               </div>
-
-            <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="copyPath()"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-paperclip"
-                  class="w-6 textt-[#FFB800] text-[#ffffffcc] text-[1.2rem] mr-1 mt-1 before"
-                />
-                {{t.copy_path}}
-              </div>
-
-              <div
-                class="mt-1 px-4 pb-1 hover:bg-[#3f3f3f]"
-                @click="deleteNote()"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-trash"
-                  class="w-6 textt-[#FFB800] text-[#ff6262] text-[1.2rem] mr-1 mt-1 before"
-                />
-                {{ t.delete_note }}
-              </div>
-            </div>
             </Transition>
           </div>
         </div>
@@ -582,7 +603,7 @@
                 type="text"
                 @change="changeNoteTitle"
                 v-model="notetitle"
-                style="outline: none !important; caret-color: white;"
+                style="outline: none !important; caret-color: white"
                 class="bg-transparent text-2xl flex-grow w-full focus:bg-[#303030] focus:mb-1.5 focus:text-[1.4rem] focus:rounded-lg focus:py-1.5 focus:pl-4 focus:pr-[-1rem]"
                 placeholder="Note Name"
               />
@@ -599,17 +620,25 @@
               style="outline: none !important; caret-color: white"
             ></textarea>
 
-            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
-                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp' ||
-                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' ||
-                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'"
-                       class="h-full">
+            <div
+              v-if="
+                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'png' ||
+                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'webp' ||
+                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpg' ||
+                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'jpeg'
+              "
+              class="h-full"
+            >
               <img :src="opening" />
             </div>
 
-            <div v-if="opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'mp3' ||
-                       opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'wav'"
-                       class="h-full">
+            <div
+              v-if="
+                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'mp3' ||
+                opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == 'wav'
+              "
+              class="h-full"
+            >
               <audio controls :src="opening" class="w-full"></audio>
             </div>
 
@@ -659,95 +688,102 @@
   </div>
 
   <Transition name="fade">
-  <div
-    class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
-    v-if="createFolderForm"
-  >
-    <inCloseButton @click="this.createFolderForm = false" />
-    <div class="flex flex-col justify-center">
-      <div
-        class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
-      >
-        <div class="text-center">
-          <div class="text-2xl font-bold mb-3">{{ t.create_folder }}</div>
-          <div class="text-md font-semibold pt-2 py-2.5">
-            {{ t.folder_name }}
-          </div>
-          <input
-            type="text"
-            v-model="foldertitle"
-            class="bg-[#262626] rounded-lg py-2 px-3 text-white text-center w-64"
-            placeholder="Folder"
-          />
-          <div>
-            <inButton @click="createFolder(foldertitle)" :text="t.create"/>
+    <div
+      class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
+      v-if="createFolderForm"
+    >
+      <inCloseButton @click="this.createFolderForm = false" />
+      <div class="flex flex-col justify-center">
+        <div
+          class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
+        >
+          <div class="text-center">
+            <div class="text-2xl font-bold mb-3">{{ t.create_folder }}</div>
+            <div class="text-md font-semibold pt-2 py-2.5">
+              {{ t.folder_name }}
+            </div>
+            <input
+              type="text"
+              v-model="foldertitle"
+              class="bg-[#262626] rounded-lg py-2 px-3 text-white text-center w-64"
+              placeholder="Folder"
+            />
+            <div>
+              <inButton @click="createFolder(foldertitle)" :text="t.create" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </Transition>
   <Transition name="fade">
-  <div
-    class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
-    v-if="createNotebookForm"
-  >
-    <inCloseButton @click="this.createNotebookForm = false" />
-    <div class="flex flex-col justify-center">
-      <div
-        class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
-      >
-        <div class="text-center">
-          <div class="text-2xl font-bold">{{ t.create_notebook }}</div>
-          <div class="text-md font-semibold pt-4 py-2.5">
-            {{ t.notebook_name }}
-          </div>
-          <input
-            type="text"
-            v-model="notebookname"
-            class="bg-[#262626] rounded-lg py-2 px-3 text-white text-center w-64"
-            placeholder="Notebook"
-          />
+    <div
+      class="fixed top-0 left-0 w-screen z-10 h-screen bg-[#00000070] flex justify-center"
+      v-if="createNotebookForm"
+    >
+      <inCloseButton @click="this.createNotebookForm = false" />
+      <div class="flex flex-col justify-center">
+        <div
+          class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
+        >
+          <div class="text-center">
+            <div class="text-2xl font-bold">{{ t.create_notebook }}</div>
+            <div class="text-md font-semibold pt-4 py-2.5">
+              {{ t.notebook_name }}
+            </div>
+            <input
+              type="text"
+              v-model="notebookname"
+              class="bg-[#262626] rounded-lg py-2 px-3 text-white text-center w-64"
+              placeholder="Notebook"
+            />
 
-          <div>
-            <inButton @click="createNotebook()" :text="t.create" />
+            <div>
+              <inButton @click="createNotebook()" :text="t.create" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </Transition>
   <Transition name="fade">
-  <div
-    class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
-    v-if="preferences"
-  >
-    <button class="fixed top-4 z-50 right-4" @click="this.preferences = false">
-      <div
-        class="w-9 h-9 text-left flex justify-center fles-col text-white bg-[#b93232] rounded-lg"
+    <div
+      class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
+      v-if="preferences"
+    >
+      <button
+        class="fixed top-4 z-50 right-4"
+        @click="this.preferences = false"
       >
-        <div class="flex flex-col justify-center">
-          <font-awesome-icon icon="fa-solid fa-xmark" />
+        <div
+          class="w-9 h-9 text-left flex justify-center fles-col text-white bg-[#b93232] rounded-lg"
+        >
+          <div class="flex flex-col justify-center">
+            <font-awesome-icon icon="fa-solid fa-xmark" />
+          </div>
         </div>
-      </div>
-    </button>
-    <div class="flex flex-col justify-center">
-      <div
-        class="flex justify-left bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
-      >
-        <div class="text-center">
-          <div class="text-xl font-bold mb-4">{{t.preferences}}</div>
-          {{t.font}}
-          <select v-model="font" @change="fontChange" class="bg-[#202020] text-white ml-3 rounded-lg p-3">
-            <option value="">Default</option>
-            <option value="sans-serif">Sans Serif</option>
-            <option value="serif">Serif</option>
-          </select>
+      </button>
+      <div class="flex flex-col justify-center">
+        <div
+          class="flex justify-left bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
+        >
+          <div class="text-center">
+            <div class="text-xl font-bold mb-4">{{ t.preferences }}</div>
+            {{ t.font }}
+            <select
+              v-model="font"
+              @change="fontChange"
+              class="bg-[#202020] text-white ml-3 rounded-lg p-3"
+            >
+              <option value="">Default</option>
+              <option value="sans-serif">Sans Serif</option>
+              <option value="serif">Serif</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</Transition>
+  </Transition>
 
   <div
     class="fixed top-0 left-0 z-10 w-screen h-screen bg-[#00000070] flex justify-center"
@@ -758,8 +794,11 @@
         class="flex justify-left bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
       >
         <div class="text-center">
-          <img src="../assets/share.png" class="w-12 h-12 mb-2 inline animate-bounce">
-          <div class="text-xl font-bold mb-4">{{t.sharing}}</div>
+          <img
+            src="../assets/share.png"
+            class="w-12 h-12 mb-2 inline animate-bounce"
+          />
+          <div class="text-xl font-bold mb-4">{{ t.sharing }}</div>
         </div>
       </div>
     </div>
@@ -784,14 +823,14 @@
       >
         <div class="text-center">
           <div>
-            <img src="../assets/share.png" class="w-12 h-12 mb-2 inline">
+            <img src="../assets/share.png" class="w-12 h-12 mb-2 inline" />
           </div>
-          {{t.share_published}}
-          <br>
+          {{ t.share_published }}
+          <br />
           <a :href="sharedUrl" class="text-[#84a4f0]">{{ sharedUrl }}</a>
 
           <div>
-            <inButton @click="this.sharedForm = false" :text="t.close"/>
+            <inButton @click="this.sharedForm = false" :text="t.close" />
           </div>
         </div>
       </div>
@@ -806,7 +845,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.CodeMirror-scroll{
+.CodeMirror-scroll {
   max-width: 39rem;
 }
 
@@ -867,7 +906,7 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   border-left: 1px solid #fff;
 }
 
-.cm-link{
+.cm-link {
   color: #84a4f0 !important;
 }
 
@@ -925,17 +964,18 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   text-decoration: underline;
 }
 
-.mdcontent ul, ol{
+.mdcontent ul,
+ol {
   display: flex;
   flex-direction: column;
 }
 
-.mdcontent ul li{
+.mdcontent ul li {
   list-style: disc;
   list-style-position: inside;
 }
 
-.mdcontent ol li{
+.mdcontent ol li {
   list-style: decimal;
   list-style-position: inside;
 }
@@ -967,8 +1007,8 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
 
 /*-----------------------*/
 
-@media(min-width: 1580px) {
-  #editor-pane{
+@media (min-width: 1580px) {
+  #editor-pane {
     max-width: 50rem;
   }
 }
@@ -989,7 +1029,7 @@ export default {
     scrap,
     todo,
     inButton,
-    inCloseButton
+    inCloseButton,
   },
   data: () => {
     return {
@@ -1022,7 +1062,7 @@ export default {
       preferences: false,
       sharedForm: false,
       sharing: false,
-      sharedUrl: ""
+      sharedUrl: "",
     };
   },
   mounted() {
@@ -1056,74 +1096,81 @@ export default {
 
     let textarea_ = "";
 
-    window.electronAPI.getFont()
-      .then((result) => {
-        this.font = result
-        this.fontChange()
-      })
+    window.electronAPI.getFont().then((result) => {
+      this.font = result;
+      this.fontChange();
+    });
   },
   methods: {
-    share(){
+    share() {
       this.NoteMenu = false;
       this.sharing = true;
       window.electronAPI
         .readFile(this.opening)
         .then((result) => {
-          axios.post("https://share-api-ideanote.koyeb.app/new/", {"title": this.notetitle, "type": this.opening.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0], "data": result})
+          axios
+            .post("https://share-api-ideanote.koyeb.app/new/", {
+              title: this.notetitle,
+              type: this.opening.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0],
+              data: result,
+            })
             .then((res) => {
               this.sharing = false;
               this.sharedForm = true;
-              this.sharedUrl = `https://share.ideanoteapp.com/${res.data}/`
-          })
+              this.sharedUrl = `https://share.ideanoteapp.com/${res.data}/`;
+            });
         })
         .catch((error) => {
           console.error(error);
         });
-      
     },
-    deleteFolder(folder){
+    deleteFolder(folder) {
       window.electronAPI.deleteFolder(folder).then((result) => {
         location.reload();
-      })
+      });
     },
-    pinNote(){
-      this.notetitle = this.notetitle + " #pin"
-      this.changeNoteTitle()
+    pinNote() {
+      this.notetitle = this.notetitle + " #pin";
+      this.changeNoteTitle();
     },
-    unpinNote(){
-      this.notetitle = this.notetitle.replace(" #pin", "")
-      this.notetitle = this.notetitle.replace("#pin", "")
-      this.changeNoteTitle()
+    unpinNote() {
+      this.notetitle = this.notetitle.replace(" #pin", "");
+      this.notetitle = this.notetitle.replace("#pin", "");
+      this.changeNoteTitle();
     },
-    fontChange(){
+    fontChange() {
       const app = document.querySelector("#app");
       app.style.fontFamily = this.font;
-      window.electronAPI.setFont(this.font)
-      
+      window.electronAPI.setFont(this.font);
     },
     openPreferences() {
       this.preferences = true;
     },
-    copyPath(){
-      var copyStr = this.opening.replace(this.currentNotebook, "{notebook}")
-      copyStr = copyStr.replace(/\\/g, "/")
-      navigator.clipboard.writeText(copyStr)
-      this.NoteMenu = false
+    copyPath() {
+      var copyStr = this.opening.replace(this.currentNotebook, "{notebook}");
+      copyStr = copyStr.replace(/\\/g, "/");
+      navigator.clipboard.writeText(copyStr);
+      this.NoteMenu = false;
     },
-    copyImg(){
-      var copyStr = this.opening.replace(this.currentNotebook, "{notebook}")
-      copyStr = copyStr.replace(/\\/g, "/")
-      navigator.clipboard.writeText(`![](${copyStr})`)
-      this.NoteMenu = false
+    copyImg() {
+      var copyStr = this.opening.replace(this.currentNotebook, "{notebook}");
+      copyStr = copyStr.replace(/\\/g, "/");
+      navigator.clipboard.writeText(`![](${copyStr})`);
+      this.NoteMenu = false;
     },
     previewMd() {
       this.mdParsed = true;
       window.electronAPI.readFile(this.opening).then((result) => {
-        this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
+        this.mdContent = marked.parse(
+          result.replace(
+            /{notebook}/g,
+            this.currentNotebook.replace(/\\/g, "/"),
+          ),
+        );
       });
     },
-    exportScrap(){
-      window.electronAPI.exportScrap(this.opening)
+    exportScrap() {
+      window.electronAPI.exportScrap(this.opening);
       this.NoteMenu = false;
     },
     selectRoot() {
@@ -1133,12 +1180,12 @@ export default {
       });
     },
     changeNoteTitle() {
-      document.activeElement.blur()
+      document.activeElement.blur();
 
       window.electronAPI
         .changeNoteTitle(this.opening, this.notetitle + "." + this.ext)
         .then((res) => {
-          this.readNote(res)
+          this.readNote(res);
           //alert(res)
           if (this.openingDir == "") {
             window.electronAPI
@@ -1149,7 +1196,6 @@ export default {
               .catch((error) => {
                 console.error(error);
               });
-            
           } else {
             window.electronAPI
               .openDir(this.openingDir)
@@ -1219,9 +1265,9 @@ export default {
       window.electronAPI.setCurrentNotebook(this.notebook);
     },
     readNote(notee, md = false) {
-      this.editor = ""
-      this.textarea = ""
-      this.easyMDE = undefined
+      this.editor = "";
+      this.textarea = "";
+      this.easyMDE = undefined;
       const elements = document.querySelectorAll(".EasyMDEContainer");
       elements.forEach((element) => {
         element.remove();
@@ -1233,7 +1279,7 @@ export default {
       } catch {}
 
       this.opening = "null.txt";
-      
+
       window.electronAPI
         .readFile(notee)
         .then((result) => {
@@ -1249,12 +1295,14 @@ export default {
             this.notetitle = this.notetitle.split(".").slice(0, -1).join(".");
           }
 
-          if (notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "png" &&
-              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpeg" &&
-              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpg" &&
-              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "webp" &&
-              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "mp3" &&
-              notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "wav"){
+          if (
+            notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "png" &&
+            notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpeg" &&
+            notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "jpg" &&
+            notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "webp" &&
+            notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "mp3" &&
+            notee.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] != "wav"
+          ) {
             this.textarea = result;
           }
           this.opening = notee;
@@ -1279,12 +1327,22 @@ export default {
 
             let open = this.opening;
             window.electronAPI.readFile(this.opening).then((result) => {
-                this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
-              });
+              this.mdContent = marked.parse(
+                result.replace(
+                  /{notebook}/g,
+                  this.currentNotebook.replace(/\\/g, "/"),
+                ),
+              );
+            });
             this.easyMDE.codemirror.on("change", () => {
               window.electronAPI.saveNote(open, this.easyMDE.value());
               window.electronAPI.readFile(this.opening).then((result) => {
-                this.mdContent = marked.parse(result.replace(/{notebook}/g, this.currentNotebook.replace(/\\/g, "/")))
+                this.mdContent = marked.parse(
+                  result.replace(
+                    /{notebook}/g,
+                    this.currentNotebook.replace(/\\/g, "/"),
+                  ),
+                );
               });
               if (this.openingDir == "") {
                 window.electronAPI
@@ -1427,8 +1485,13 @@ export default {
           this.textarea = "";
           this.opening =
             this.currentNotebook + "\\" + this.openingDir + "\\" + noteName;
-          
-          this.readNote(`${this.currentNotebook}/${this.openingDir.replace(/^.*[\\/]/,"",)}/${noteName}`)
+
+          this.readNote(
+            `${this.currentNotebook}/${this.openingDir.replace(
+              /^.*[\\/]/,
+              "",
+            )}/${noteName}`,
+          );
         });
       if (this.openingDir == "") {
         window.electronAPI
