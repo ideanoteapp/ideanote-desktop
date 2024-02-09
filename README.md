@@ -15,24 +15,29 @@
   </p>
 </div>
 
-----
+---
 
 ## 📥 Download
+
 You can download the latest version of ideaNote from the [official website](https://ideanote.korange.work/en/) or from the GitHub Releases page.
 
 ## 📝 License
+
 [Apache License 2.0](./LICENSE)
 
 ## 🌟 Contributing
+
 You are always welcome to contribute to ideaNote!  
 [Contribution Guide](./CONTRIBUTING.md)
 
 ## 📦 How to Build
+
 ```
 npm install
 npm run make
 ```
 
 ## ❤ Special Thanks
- - [@kaoism@misskey.systems](https://misskey.systems/@kaoism)  
-   Suggested a name of いのっぴ/INoppi
+
+- [@kaoism@misskey.systems](https://misskey.systems/@kaoism)  
+  Suggested a name of いのっぴ/INoppi
