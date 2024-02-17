@@ -64,7 +64,7 @@ const text_ja = {
   tell_tutorial: "使い方の説明はいるかな？",
   teach_me: "教えて！",
   no_thanks: "結構です",
-  add_folder: "フォルダを追加"
+  add_folder: "フォルダを追加",
 };
 
 const text_en = {
@@ -117,7 +117,7 @@ const text_en = {
   tell_tutorial: "Do you need tutorials? (Japanese only)",
   teach_me: "Teach me!",
   no_thanks: "No Thanks",
-  add_folder: "Add Folder"
+  add_folder: "Add Folder",
 };
 
 let t = {};
@@ -169,7 +169,7 @@ if (!fs.existsSync(foldersPath)) {
 folders = fs.readFileSync(path.join(userDataPath, "folders.json"), {
   encoding: "utf-8",
 });
-folders = JSON.parse(folders)
+folders = JSON.parse(folders);
 
 function getFilesInDirectory(dir) {
   let files = fs.readdirSync(dir);
@@ -561,14 +561,20 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("addfolder", (event, message) => {
-    dialog.showOpenDialog({
-      properties: ['openDirectory']
-    }).then(result => {
-      folders.push(result.filePaths[0])
-      fs.writeFileSync(path.join(userDataPath, "folders.json"), JSON.stringify(folders), {
-        encoding: "utf-8",
+    dialog
+      .showOpenDialog({
+        properties: ["openDirectory"],
+      })
+      .then((result) => {
+        folders.push(result.filePaths[0]);
+        fs.writeFileSync(
+          path.join(userDataPath, "folders.json"),
+          JSON.stringify(folders),
+          {
+            encoding: "utf-8",
+          },
+        );
       });
-    })
   });
 
   createWindow();
