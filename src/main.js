@@ -39,6 +39,7 @@ import {
   faImage,
   faSquareCheck,
   faWindowMaximize,
+  faFolder
 } from "@fortawesome/free-regular-svg-icons";
 
 import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
@@ -72,6 +73,7 @@ library.add(
   faDownload,
   faMusic,
   faHeart,
+  faFolder
 );
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount("#app");

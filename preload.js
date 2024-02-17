@@ -27,4 +27,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
   changeNoteTitle: (old, newer) =>
     ipcRenderer.invoke("changenotetitle", [old, newer]),
   exportScrap: (message) => ipcRenderer.invoke("exportscrap", message),
+  addFolder: () => ipcRenderer.invoke("addfolder")
 });
