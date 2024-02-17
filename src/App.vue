@@ -1,7 +1,3 @@
-<script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
   <welcome @end="openmain" v-if="welcome_" />
   <ui v-if="main" />
@@ -20,16 +16,14 @@ import HelloWorld from "./components/HelloWorld.vue";
 </style>
 
 <script>
-import ui from "./components/ui.vue";
-import settings from "./components/Settings.vue";
-import welcome from "./components/Welcome.vue";
+import ui from "./views/ui.vue";
+import welcome from "./views/Welcome.vue";
 
 //axios.defaults.withCredentials = true;
 
 export default {
   components: {
     ui,
-    settings,
     welcome,
   },
   data: () => {

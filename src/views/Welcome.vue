@@ -8,7 +8,12 @@
           class="flex justify-center bg-[#2e2e2e] rounded-md shadow-lg min-w-32 min-h-32 px-8 py-8 text-white"
         >
           <div class="text-center" v-if="slide == 0">
-            <img src="../../icon.png" class="inline mb-3" width="64" height="64" />
+            <img
+              src="../../icon.png"
+              class="inline mb-3"
+              width="64"
+              height="64"
+            />
             <div class="text-2xl font-bold">{{ t.welcome }}</div>
             <div>
               <button
@@ -21,7 +26,12 @@
           </div>
 
           <div class="text-center" v-if="slide == 1">
-            <img src="../../icon.png" class="inline mb-3" width="64" height="64" />
+            <img
+              src="../../icon.png"
+              class="inline mb-3"
+              width="64"
+              height="64"
+            />
             <div class="text-2xl font-bold">
               {{ t.set_notebook_name }}
             </div>
@@ -46,27 +56,37 @@
           </div>
 
           <div class="text-center" v-if="slide == 2">
-              <img src="../assets/inoppi.png" class="inline mb-3" width="64" height="64"/>
-              <div class="text-2xl font-bold">{{ t.tell_tutorial }}</div>
-              <div>
-                <button
-                  class="py-2 px-3 rounded-lg bg-[#3250b9] mr-1 w-32 mt-4"
-                  @click="slide = 3"
-                >
-                  {{ t.teach_me }}
-                </button>
+            <img
+              src="../assets/inoppi.png"
+              class="inline mb-3"
+              width="64"
+              height="64"
+            />
+            <div class="text-2xl font-bold">{{ t.tell_tutorial }}</div>
+            <div>
+              <button
+                class="py-2 px-3 rounded-lg bg-[#3250b9] mr-1 w-32 mt-4"
+                @click="slide = 3"
+              >
+                {{ t.teach_me }}
+              </button>
 
-                <button
-                  class="py-2 px-3 rounded-lg bg-[#3f3f3f] ml-1 w-32 mt-4"
-                  @click="go()"
-                >
-                  {{ t.no_thanks }}
-                </button>
-              </div>
+              <button
+                class="py-2 px-3 rounded-lg bg-[#3f3f3f] ml-1 w-32 mt-4"
+                @click="go()"
+              >
+                {{ t.no_thanks }}
+              </button>
             </div>
+          </div>
 
-            <div class="text-center" v-if="slide == 3">
-            <img src="../assets/tutorial_1.png" class="inline mb-3 w-[70vw]" width="64" height="64" />
+          <div class="text-center" v-if="slide == 3">
+            <img
+              src="../assets/tutorial_1.png"
+              class="inline mb-3 w-[70vw]"
+              width="64"
+              height="64"
+            />
             <div class="text-2xl font-bold">
               左側にあるノート一覧の上の(+)ボタンからノートを作成します
             </div>
@@ -82,15 +102,16 @@
           </div>
 
           <div class="text-center" v-if="slide == 4">
-            <div class="text-2xl font-bold">
-              ノートには種類があります...
-            </div>
+            <div class="text-2xl font-bold">ノートには種類があります...</div>
             <p class="opacity-90 text-md text-left w-full">
-              <strong>Markdown… </strong>Markdownのノート。<br>
-              <strong>Scrap… </strong>時間経過とともに情報を記録していけるScrapのノート。使い方は後で説明します。<br>
-              <strong>ToDo… </strong>シンプルなToDoリストです。<br>
-              <strong>Plaintext… </strong>一般的なプレーンテキスト(.txt)のノート。<br>
-              <strong>アップロード… </strong>画像ファイルと音声ファイル（今後さらに追加予定）をアップロードできます。
+              <strong>Markdown… </strong>Markdownのノート。<br />
+              <strong>Scrap… </strong
+              >時間経過とともに情報を記録していけるScrapのノート。使い方は後で説明します。<br />
+              <strong>ToDo… </strong>シンプルなToDoリストです。<br />
+              <strong>Plaintext… </strong
+              >一般的なプレーンテキスト(.txt)のノート。<br />
+              <strong>アップロード… </strong
+              >画像ファイルと音声ファイル（今後さらに追加予定）をアップロードできます。
             </p>
             <div>
               <button
@@ -104,7 +125,12 @@
           </div>
 
           <div class="text-center" v-if="slide == 5">
-            <img src="../assets/tutorial_2.png" class="inline mb-3 w-[70vw]" width="64" height="64" />
+            <img
+              src="../assets/tutorial_2.png"
+              class="inline mb-3 w-[70vw]"
+              width="64"
+              height="64"
+            />
             <div class="text-2xl font-bold">
               左側のノート一覧からノートを選択します
             </div>
@@ -120,7 +146,12 @@
           </div>
 
           <div class="text-center" v-if="slide == 6">
-            <img src="../assets/tutorial_3.png" class="inline mb-3 w-[70vw]" width="64" height="64" />
+            <img
+              src="../assets/tutorial_3.png"
+              class="inline mb-3 w-[70vw]"
+              width="64"
+              height="64"
+            />
             <div class="text-2xl font-bold">
               右側の入力エリアから文字を入力できます
             </div>
@@ -136,7 +167,12 @@
           </div>
 
           <div class="text-center" v-if="slide == 7">
-            <img src="../assets/tutorial_4.png" class="inline mb-3 w-[70vw]" width="64" height="64" />
+            <img
+              src="../assets/tutorial_4.png"
+              class="inline mb-3 w-[70vw]"
+              width="64"
+              height="64"
+            />
             <div class="text-2xl font-bold">
               左側のフォルダ一覧の「新しいフォルダ」からフォルダを作成できます
             </div>
@@ -152,7 +188,12 @@
           </div>
 
           <div class="text-center" v-if="slide == 8">
-            <img src="../assets/tutorial_5.png" class="inline mb-3 w-[70vw]" width="64" height="64" />
+            <img
+              src="../assets/tutorial_5.png"
+              class="inline mb-3 w-[70vw]"
+              width="64"
+              height="64"
+            />
             <div class="text-2xl font-bold">
               左側のフォルダ一覧からフォルダを切り替えられます
             </div>
@@ -186,7 +227,7 @@
           </div>
 
           <div class="text-center" v-if="slide == 10">
-            <img src="../assets/tutorial_6.png" class="inline mb-3 h-[50vh]"/>
+            <img src="../assets/tutorial_6.png" class="inline mb-3 h-[50vh]" />
             <div class="text-2xl font-bold">
               下の入力ボックスに入力するとテキストを追加できます
             </div>
@@ -200,10 +241,9 @@
               </button>
             </div>
           </div>
-          
 
           <div class="text-center" v-if="slide == 11">
-            <img src="../assets/tutorial_7.png" class="inline mb-3 h-[50vh]"/>
+            <img src="../assets/tutorial_7.png" class="inline mb-3 h-[50vh]" />
             <div class="text-2xl font-bold">
               入力したテキストは上に溜まっていきます
             </div>
@@ -221,7 +261,7 @@
             </div>
           </div>
           <div class="text-center" v-if="slide == 12">
-            <img src="../assets/tutorial_7.gif" class="inline mb-3 h-[50vh]"/>
+            <img src="../assets/tutorial_7.gif" class="inline mb-3 h-[50vh]" />
             <div class="text-2xl font-bold">
               溜まったテキストは編集したり、削除したりすることもできます
             </div>
@@ -240,7 +280,12 @@
           </div>
 
           <div class="text-center" v-if="slide == 13">
-            <img src="../assets/tutorial_8.png" class="inline mb-3 w-[70vw]" width="64" height="64" />
+            <img
+              src="../assets/tutorial_8.png"
+              class="inline mb-3 w-[70vw]"
+              width="64"
+              height="64"
+            />
             <div class="text-2xl font-bold">
               最後に、左上のideaNoteアイコンからメニューを開くことができます
             </div>
@@ -259,12 +304,8 @@
           </div>
 
           <div class="text-center" v-if="slide == 14">
-            <div class="text-2xl font-bold">
-              チュートリアルは以上です！
-            </div>
-            <div class="text-sm opacity-90">
-              ideaNoteをお楽しみください！
-            </div>
+            <div class="text-2xl font-bold">チュートリアルは以上です！</div>
+            <div class="text-sm opacity-90">ideaNoteをお楽しみください！</div>
             <div>
               <button
                 class="py-2 px-3 rounded-lg bg-[#3250b9] w-64 mt-4"
@@ -275,8 +316,6 @@
               </button>
             </div>
           </div>
-          
-          
         </div>
       </div>
     </div>
@@ -308,8 +347,8 @@ export default {
   methods: {
     go() {
       window.electronAPI.newNotebook(this.notebookname).then((result) => {
-        if(this.t.next == "進む"){
-          location.href = "https://ideanoteapp.com/welcome"
+        if (this.t.next == "進む") {
+          location.href = "https://ideanoteapp.com/welcome";
         }
         this.$emit("end", "");
       });

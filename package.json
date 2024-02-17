@@ -1,7 +1,7 @@
 {
   "name": "ideanote",
   "private": true,
-  "version": "1.12.1",
+  "version": "1.13.0",
   "main": "main.js",
   "description": "A note-taking app",
   "author": "Korange",
@@ -24,7 +24,10 @@
       "identityName": "53541Korange.ideanoteapp",
       "publisher": "CN=DCA2199D-2621-4F21-9AEB-F72A8E101F6D",
       "publisherDisplayName": "Korange",
-      "languages": ["ja_JP", "en_US"],
+      "languages": [
+        "ja_JP",
+        "en_US"
+      ],
       "backgroundColor": "transparent",
       "showNameOnTiles": true
     },
@@ -73,6 +76,6 @@
     "postcss": "^8.4.29",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
-    "vite": "^4.4.12"
+    "vite": "^4.5.2"
   }
 }

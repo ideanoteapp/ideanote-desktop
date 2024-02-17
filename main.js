@@ -1,5 +1,5 @@
-const DEBUG = false
-const AutoUpdate = false
+const DEBUG = false;
+const AutoUpdate = false;
 
 const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
@@ -41,7 +41,8 @@ const text_ja = {
   unpin: "ピン留めを解除",
   pin_note: "ノートをピン留め",
   warning: "警告",
-  deletenotebook_message: "この動作はノートブックの中のファイルをすべて削除します。",
+  deletenotebook_message:
+    "この動作はノートブックの中のファイルをすべて削除します。",
   deletenotebook_message2: "本当にこのノートブックを削除しますか？",
   delete: "削除",
   cancel: "キャンセル",
@@ -63,6 +64,7 @@ const text_ja = {
   tell_tutorial: "使い方の説明はいるかな？",
   teach_me: "教えて！",
   no_thanks: "結構です",
+  add_folder: "フォルダを追加",
 };
 
 const text_en = {
@@ -115,9 +117,10 @@ const text_en = {
   tell_tutorial: "Do you need tutorials? (Japanese only)",
   teach_me: "Teach me!",
   no_thanks: "No Thanks",
+  add_folder: "Add Folder",
 };
 
-let t = {}
+let t = {};
 
 if (Intl.DateTimeFormat().resolvedOptions().locale == "ja-JP") {
   t = text_ja;
@@ -125,15 +128,13 @@ if (Intl.DateTimeFormat().resolvedOptions().locale == "ja-JP") {
   t = text_en;
 }
 
-let userDataPath
-if(DEBUG){
-  try{
-    fs.mkdirSync(path.join(app.getPath("userData"), "dev"))
-  }catch{
-
-  }
+let userDataPath;
+if (DEBUG) {
+  try {
+    fs.mkdirSync(path.join(app.getPath("userData"), "dev"));
+  } catch {}
   userDataPath = path.join(app.getPath("userData"), "dev");
-}else{
+} else {
   userDataPath = app.getPath("userData");
 }
 
@@ -154,23 +155,46 @@ if (!fs.existsSync(path.join(userDataPath, "notebooks/"))) {
   console.log("dir:notebooks Already exists.");
 }
 
+// もしfolders.jsonがなかったら、作る
+const foldersPath = path.join(userDataPath, "folders.json");
+
+if (!fs.existsSync(foldersPath)) {
+  fs.writeFileSync(foldersPath, "[]");
+  console.log("folders.json Created.");
+} else {
+  console.log("folders.json Already exists.");
+}
+
+// folders.jsonを読み込む
+folders = fs.readFileSync(path.join(userDataPath, "folders.json"), {
+  encoding: "utf-8",
+});
+folders = JSON.parse(folders);
+
 function getFilesInDirectory(dir) {
   let files = fs.readdirSync(dir);
   let fileList = [];
 
   files.forEach((file) => {
-      const filePath = path.join(dir, file);
-      const stat = fs.statSync(filePath);
-      if (stat.isDirectory()) {
-          // fileList = fileList.concat(getFilesInDirectory(filePath));
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    if (stat.isDirectory()) {
+      // fileList = fileList.concat(getFilesInDirectory(filePath));
+    } else {
+      let noteinfo = "";
+      if (
+        filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "md" ||
+        filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"
+      ) {
+        fileList.push({
+          name: filePath,
+          info: fs.readFileSync(filePath, { encoding: "utf-8" }),
+          mtime: stat.mtime,
+        });
       } else {
-          let noteinfo = "" 
-          if(filePath.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == "md" || filePath.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] == "txt"){
-            fileList.push({"name": filePath, "info": fs.readFileSync(filePath, {encoding: "utf-8"}), "mtime": stat.mtime});
-          }else{
-            fileList.push({"name": filePath, "info": "", "mtime": stat.mtime});
-          }
+        fileList.push({ name: filePath, info: "", mtime: stat.mtime });
       }
+    }
   });
 
   // ファイルを更新日時順に並び替え
@@ -301,11 +325,11 @@ async function readFile(file) {
 }
 
 function createWindow() {
-  let icon
-  if(DEBUG){
-    icon = "./dev.ico"
-  }else{
-    icon = "./app.ico"
+  let icon;
+  if (DEBUG) {
+    icon = "./dev.ico";
+  } else {
+    icon = "./app.ico";
   }
   const win = new BrowserWindow({
     width: 1000,
@@ -323,15 +347,15 @@ function createWindow() {
 
   // リンククリック時に OS のデフォルトブラウザで開く
   const handleUrlOpen = (event, url) => {
-    if(url.includes("http")){
+    if (url.includes("http")) {
       event.preventDefault();
       shell.openExternal(url);
-    }  
+    }
   };
 
   // リンククリック時のイベントハンドラを登録
-  win.webContents.on('will-navigate', handleUrlOpen);
-  win.webContents.on('new-window', handleUrlOpen);
+  win.webContents.on("will-navigate", handleUrlOpen);
+  win.webContents.on("new-window", handleUrlOpen);
 }
 
 app.whenReady().then(() => {
@@ -368,24 +392,22 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("exportscrap", (event, message) => {
-    const data = JSON.parse(fs.readFileSync(message, 'utf8'));
+    const data = JSON.parse(fs.readFileSync(message, "utf8"));
 
-    let save = ""
+    let save = "";
     for (const key in data) {
       save = `${save}${data[key].date}\n${data[key].text + "\n\n"}`;
     }
 
     const path = dialog.showSaveDialogSync({
-      filters: [
-        { name: 'Text File', extensions: ['txt'] },
-      ]
+      filters: [{ name: "Text File", extensions: ["txt"] }],
     });
 
-    if( path === undefined ){
-      return
+    if (path === undefined) {
+      return;
     }
 
-    fs.writeFileSync(path, save)
+    fs.writeFileSync(path, save);
   });
 
   ipcMain.handle("newnotebook", (event, message) => {
@@ -411,11 +433,13 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("setfont", (event, message) => {
-    fs.writeFileSync(path.join(userDataPath, "font.txt"), message)
+    fs.writeFileSync(path.join(userDataPath, "font.txt"), message);
   });
 
   ipcMain.handle("getfont", (event, message) => {
-    return fs.readFileSync(path.join(userDataPath, "font.txt"), {encoding: 'utf-8'})
+    return fs.readFileSync(path.join(userDataPath, "font.txt"), {
+      encoding: "utf-8",
+    });
   });
 
   ipcMain.handle("seticon", async (event, message) => {
@@ -439,7 +463,21 @@ app.whenReady().then(() => {
       const filePath = await dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [
-          { name: 'Markdown, Plaintext, Scrap, ToDo, Images, Musics', extensions: ["md", "txt", "scrap", "todo", "png", "jpeg", "jpg", "webp", "mp3", "wav"] },
+          {
+            name: "Markdown, Plaintext, Scrap, ToDo, Images, Musics",
+            extensions: [
+              "md",
+              "txt",
+              "scrap",
+              "todo",
+              "png",
+              "jpeg",
+              "jpg",
+              "webp",
+              "mp3",
+              "wav",
+            ],
+          },
         ],
       });
       if (!filePath.canceled) {
@@ -456,18 +494,15 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("listnotebooks", (event) => {
-    return getDirs(path.join(userDataPath, "notebooks"));
+    return getDirs(path.join(userDataPath, "notebooks")).concat(folders);
   });
 
   ipcMain.handle("changenotetitle", (event, message) => {
     console.log(
       "New note path is " + path.join(path.dirname(message[0]), message[1]),
     );
-    fs.renameSync(
-      message[0],
-      path.join(path.dirname(message[0]), message[1]),
-    );
-    return path.join(path.dirname(message[0]), message[1])
+    fs.renameSync(message[0], path.join(path.dirname(message[0]), message[1]));
+    return path.join(path.dirname(message[0]), message[1]);
   });
 
   ipcMain.handle("getcurrentnotebook", (event) => {
@@ -477,6 +512,8 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("deletenotebook", (event, message) => {
+    folders = folders.filter(item => item !== message);
+
     const options = {
       type: "question",
       title: t.warning,
@@ -525,31 +562,48 @@ app.whenReady().then(() => {
     });
   });
 
+  ipcMain.handle("addfolder", (event, message) => {
+    dialog
+      .showOpenDialog({
+        properties: ["openDirectory"],
+      })
+      .then((result) => {
+        folders.push(result.filePaths[0]);
+        fs.writeFileSync(
+          path.join(userDataPath, "folders.json"),
+          JSON.stringify(folders),
+          {
+            encoding: "utf-8",
+          },
+        );
+      });
+  });
+
   createWindow();
 
-  if(AutoUpdate){
+  if (AutoUpdate) {
     const currentVersion = "1.12.1";
     axios
-    .get("https://ideanote-updates.korange.work/info.json", {})
-    .then((response) => {
-      let { latest, download } = response.data;
-      if (currentVersion != latest) {
-        const options = {
-          type: "question",
-          title: "ideaNote",
-          message: t.update,
-          detail: `${t.update_message_left}${latest}${t.update_message_right}`,
-          buttons: [t.update_now, t.later],
-          cancelId: -1
-        };
+      .get("https://ideanote-updates.korange.work/info.json", {})
+      .then((response) => {
+        let { latest, download } = response.data;
+        if (currentVersion != latest) {
+          const options = {
+            type: "question",
+            title: "ideaNote",
+            message: t.update,
+            detail: `${t.update_message_left}${latest}${t.update_message_right}`,
+            buttons: [t.update_now, t.later],
+            cancelId: -1,
+          };
 
-        let selected = dialog.showMessageBoxSync(options);
-        if (selected == 0) {
-          const { shell } = require("electron");
-          shell.openExternal(download);
+          let selected = dialog.showMessageBoxSync(options);
+          if (selected == 0) {
+            const { shell } = require("electron");
+            shell.openExternal(download);
+          }
         }
-      }
-    });
+      });
   }
 
   app.on("activate", () => {
