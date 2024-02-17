@@ -64,6 +64,7 @@ const text_ja = {
   tell_tutorial: "使い方の説明はいるかな？",
   teach_me: "教えて！",
   no_thanks: "結構です",
+  add_folder: "フォルダを追加"
 };
 
 const text_en = {
@@ -116,6 +117,7 @@ const text_en = {
   tell_tutorial: "Do you need tutorials? (Japanese only)",
   teach_me: "Teach me!",
   no_thanks: "No Thanks",
+  add_folder: "Add Folder"
 };
 
 let t = {};
@@ -152,6 +154,22 @@ if (!fs.existsSync(path.join(userDataPath, "notebooks/"))) {
 } else {
   console.log("dir:notebooks Already exists.");
 }
+
+// もしfolders.jsonがなかったら、作る
+const foldersPath = path.join(userDataPath, "folders.json");
+
+if (!fs.existsSync(foldersPath)) {
+  fs.writeFileSync(foldersPath, "[]");
+  console.log("folders.json Created.");
+} else {
+  console.log("folders.json Already exists.");
+}
+
+// folders.jsonを読み込む
+folders = fs.readFileSync(path.join(userDataPath, "folders.json"), {
+  encoding: "utf-8",
+});
+folders = JSON.parse(folders)
 
 function getFilesInDirectory(dir) {
   let files = fs.readdirSync(dir);
@@ -476,7 +494,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("listnotebooks", (event) => {
-    return getDirs(path.join(userDataPath, "notebooks"));
+    return getDirs(path.join(userDataPath, "notebooks")).concat(folders);
   });
 
   ipcMain.handle("changenotetitle", (event, message) => {
@@ -540,6 +558,17 @@ app.whenReady().then(() => {
     fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"), data, {
       encoding: "utf-8",
     });
+  });
+
+  ipcMain.handle("addfolder", (event, message) => {
+    dialog.showOpenDialog({
+      properties: ['openDirectory']
+    }).then(result => {
+      folders.push(result.filePaths[0])
+      fs.writeFileSync(path.join(userDataPath, "folders.json"), JSON.stringify(folders), {
+        encoding: "utf-8",
+      });
+    })
   });
 
   createWindow();
