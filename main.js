@@ -512,6 +512,8 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("deletenotebook", (event, message) => {
+    folders = folders.filter(item => item !== message);
+
     const options = {
       type: "question",
       title: t.warning,
