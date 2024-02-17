@@ -128,10 +128,7 @@
             </div>
 
             <div class="hover:bg-[#3f3f3f] mt-2 text-white z-50">
-              <button
-                class="px-4 pb-1 text-left flex"
-                @click="addFolder()"
-              >
+              <button class="px-4 pb-1 text-left flex" @click="addFolder()">
                 <font-awesome-icon
                   icon="fa-regular fa-folder"
                   class="w-6 textt-[#FFB800] text-[1.2rem] mr-2 mt-1 before"
