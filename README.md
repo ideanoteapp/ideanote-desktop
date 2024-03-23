@@ -1,7 +1,4 @@
-# Why is it archived?
-I'm currently working on a project called [ideanote-v2](https://github.com/ideanoteapp/ideanote-v2/) to remake ideaNote.  
-Development of this version of ideaNote has ended and I have archived it.
-
+# Development of this version has already ended
 ----
 
 <div align="center">
